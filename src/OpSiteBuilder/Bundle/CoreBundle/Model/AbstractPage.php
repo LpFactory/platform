@@ -9,13 +9,15 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Class AbstractPage
  *
  * @package OpSiteBuilder\Bundle\CoreBundle\Model
- * @author jobou
+ * @author  jobou
  */
-class AbstractPage 
+class AbstractPage
 {
     /**
      * @var int
@@ -26,6 +28,41 @@ class AbstractPage
      * @var string
      */
     protected $title;
+
+    /**
+     * @var int
+     */
+    protected $lft;
+
+    /**
+     * @var int
+     */
+    protected $lvl;
+
+    /**
+     * @var int
+     */
+    protected $rgt;
+
+    /**
+     * @var int
+     */
+    protected $root;
+
+    /**
+     * @var string
+     */
+    protected $slug;
+
+    /**
+     * @var AbstractPage
+     */
+    protected $parent;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $children;
 
     /**
      * @return int
@@ -65,5 +102,46 @@ class AbstractPage
         $this->title = $title;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $slug
+     *
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+
+    /**
+     * @param AbstractPage $parent
+     *
+     * @return $this
+     */
+    public function setParent(AbstractPage $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return AbstractPage
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

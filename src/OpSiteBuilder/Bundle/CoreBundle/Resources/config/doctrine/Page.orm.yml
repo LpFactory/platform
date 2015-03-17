@@ -1,0 +1,17 @@
+OpSiteBuilder\Bundle\CoreBundle\Entity\Page:
+    type: entity
+    table: pages
+    manyToOne:
+        parent:
+            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
+            inversedBy: children
+            joinColumn:
+                name: parent_id
+                referencedColumnName: id
+                onDelete: CASCADE
+            gedmo:
+                - treeParent
+    oneToMany:
+        children:
+          targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
+          mappedBy: parent

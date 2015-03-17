@@ -55,16 +55,6 @@ class AbstractPage
     protected $slug;
 
     /**
-     * @var AbstractPage
-     */
-    protected $parent;
-
-    /**
-     * @var ArrayCollection
-     */
-    protected $children;
-
-    /**
      * @return int
      */
     public function getId()
@@ -124,24 +114,95 @@ class AbstractPage
         return $this;
     }
 
-
     /**
-     * @param AbstractPage $parent
+     * Set lft
      *
-     * @return $this
+     * @param integer $lft
+     * @return AbstractPage
      */
-    public function setParent(AbstractPage $parent = null)
+    public function setLft($lft)
     {
-        $this->parent = $parent;
+        $this->lft = $lft;
 
         return $this;
     }
 
     /**
+     * Get lft
+     *
+     * @return integer 
+     */
+    public function getLft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * Set rgt
+     *
+     * @param integer $rgt
      * @return AbstractPage
      */
-    public function getParent()
+    public function setRgt($rgt)
     {
-        return $this->parent;
+        $this->rgt = $rgt;
+
+        return $this;
+    }
+
+    /**
+     * Get rgt
+     *
+     * @return integer 
+     */
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * Set lvl
+     *
+     * @param integer $lvl
+     * @return AbstractPage
+     */
+    public function setLvl($lvl)
+    {
+        $this->lvl = $lvl;
+
+        return $this;
+    }
+
+    /**
+     * Get lvl
+     *
+     * @return integer 
+     */
+    public function getLvl()
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * Set root
+     *
+     * @param integer $root
+     * @return AbstractPage
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * Get root
+     *
+     * @return integer 
+     */
+    public function getRoot()
+    {
+        return $this->root;
     }
 }

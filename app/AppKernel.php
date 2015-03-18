@@ -19,6 +19,7 @@ class AppKernel extends Kernel
 
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
 
             // OpSiteBuilder Bundles
             new OpSiteBuilder\Bundle\CoreBundle\OpSiteBuilderCoreBundle(),

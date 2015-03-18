@@ -1,4 +1,5 @@
 imports:
+    - { resource: parameters.php }
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
@@ -87,3 +88,13 @@ stof_doctrine_extensions:
             tree: true
             timestampable: true
             sluggable: true
+
+cmf_routing:
+    chain:
+        routers_by_id:
+            cmf_routing.dynamic_router: 200
+            router.default:             100
+    dynamic:
+        persistence:
+            orm:
+                enabled: true

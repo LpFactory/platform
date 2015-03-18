@@ -1,0 +1,12 @@
+parameters:
+    cmf_routing.route_provider.class: OpSiteBuilder\Bundle\CoreBundle\Routing\PageRouteProvider
+    cmf_routing.candidates.page.class: OpSiteBuilder\Bundle\CoreBundle\Routing\Candidates
+
+services:
+    cmf_routing.route_provider:
+        class: %cmf_routing.route_provider.class%
+        arguments:
+          - @cmf_routing.candidates.page
+
+    cmf_routing.candidates.page:
+        class: %cmf_routing.candidates.page.class%

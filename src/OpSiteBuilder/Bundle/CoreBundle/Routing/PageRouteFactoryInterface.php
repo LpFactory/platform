@@ -17,7 +17,7 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing
  * @author jobou
  */
-interface PageRouteFactoryInterface 
+interface PageRouteFactoryInterface
 {
     /**
      * Create a new route instance

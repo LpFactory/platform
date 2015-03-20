@@ -64,7 +64,7 @@ class Page extends AbstractPage
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
@@ -87,7 +87,7 @@ class Page extends AbstractPage
     /**
      * Get parent
      *
-     * @return \OpSiteBuilder\Bundle\CoreBundle\Entity\Page 
+     * @return \OpSiteBuilder\Bundle\CoreBundle\Entity\Page
      */
     public function getParent()
     {

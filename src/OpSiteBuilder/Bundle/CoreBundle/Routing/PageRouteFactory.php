@@ -23,7 +23,17 @@ class PageRouteFactory implements PageRouteFactoryInterface
     /**
      * @var string
      */
-    protected $routePrefix = 'opsite_page_tree_';
+    protected $routePrefix;
+
+    /**
+     * Constructor
+     *
+     * @param string $routeNamePrefix
+     */
+    public function __construct($routeNamePrefix)
+    {
+        $this->routePrefix = $routeNamePrefix;
+    }
 
     /**
      * {@inheritdoc}

@@ -134,7 +134,7 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
 
         // Build uri from tree path
         /** @var $item AbstractPage */
-        $uri = array_reduce($path, function($carry, $item) {
+        $uri = array_reduce($path, function ($carry, $item) {
             return $carry .= '/' . $item->getSlug();
         });
 

@@ -25,13 +25,27 @@ class OpSiteBuilderCoreExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $config, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container)
     {
+        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->loadConfiguration($config, $container);
+
         $loader = new YamlFileLoader(
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('entities.yml');
         $loader->load('cmf_routing.yml');
+    }
+
+    /**
+     * Load configuration in container
+     *
+     * @param array            $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadConfiguration(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('opsite_builder.routing.route_name_prefix', $config['routing']['route_name_prefix']);
     }
 }

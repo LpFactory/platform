@@ -10,6 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
 
 use Symfony\Cmf\Component\Routing\Candidates\Candidates;
+
 /**
  * Class PageCandidates
  *

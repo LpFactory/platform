@@ -17,3 +17,5 @@ services:
 
     opsite_builder.route_factory:
         class: %opsite_builder.route_factory.class%
+        arguments:
+            - %opsite_builder.routing.route_name_prefix%

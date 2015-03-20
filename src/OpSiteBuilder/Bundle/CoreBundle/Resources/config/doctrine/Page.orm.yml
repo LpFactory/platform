@@ -13,5 +13,8 @@ OpSiteBuilder\Bundle\CoreBundle\Entity\Page:
                 - treeParent
     oneToMany:
         children:
-          targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
-          mappedBy: parent
+            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
+            mappedBy: parent
+        blocks:
+            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Block
+            mappedBy: page

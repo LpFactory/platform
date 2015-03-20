@@ -1,0 +1,16 @@
+OpSiteBuilder\Bundle\CoreBundle\Entity\Block:
+    type: entity
+    table: blocks
+    inheritanceType: JOINED
+    discriminatorColumn:
+        name: type
+        type: string
+        length: 255
+    manyToOne:
+        page:
+            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
+            inversedBy: blocks
+            joinColumn:
+                name: page_id
+                referencedColumnName: id
+                onDelete: CASCADE

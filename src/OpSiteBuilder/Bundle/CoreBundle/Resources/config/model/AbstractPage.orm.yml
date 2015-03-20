@@ -39,3 +39,13 @@ OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage:
             nullable: true
             gedmo:
                 - treeRoot
+        created:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        updated:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update

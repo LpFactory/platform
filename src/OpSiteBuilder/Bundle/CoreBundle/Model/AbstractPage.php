@@ -55,23 +55,21 @@ class AbstractPage
     protected $slug;
 
     /**
+     * @var \DateTime
+     */
+    protected $created;
+
+    /**
+     * @var \DateTime
+     */
+    protected $updated;
+
+    /**
      * @return int
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -204,6 +202,22 @@ class AbstractPage
     public function getRoot()
     {
         return $this->root;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
     /**

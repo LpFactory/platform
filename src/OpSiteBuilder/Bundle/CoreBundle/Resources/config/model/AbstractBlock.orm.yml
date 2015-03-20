@@ -1,0 +1,22 @@
+OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock:
+    type: mappedSuperclass
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        title:
+            type: string
+            length: 255
+            nullable: false
+        created:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        updated:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update

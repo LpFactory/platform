@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('routing')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('route_name_prefix')
                             ->defaultValue('opsite_page_tree_')

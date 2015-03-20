@@ -99,7 +99,7 @@ class AbstractPage
      */
     public function getSlug()
     {
-        return $this->title;
+        return $this->slug;
     }
 
     /**
@@ -204,5 +204,15 @@ class AbstractPage
     public function getRoot()
     {
         return $this->root;
+    }
+
+    /**
+     * is Root
+     *
+     * @return bool
+     */
+    public function isRoot()
+    {
+        return $this->getLvl() === 0;
     }
 }

@@ -9,12 +9,13 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
 
+use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\DoctrineProvider;
 use Symfony\Cmf\Component\Routing\Candidates\CandidatesInterface;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * Class PageRouteProvider
@@ -22,31 +23,73 @@ use Symfony\Component\Routing\RouteCollection;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing
  * @author jobou
  */
-class PageRouteProvider implements RouteProviderInterface
+class PageRouteProvider extends DoctrineProvider implements RouteProviderInterface
 {
     /**
      * @var CandidatesInterface
      */
-    protected $candidateStrategy;
+    protected $candidatesStrategy;
+
+    /**
+     * @var PageRouteFactoryInterface
+     */
+    protected $routeFactory;
 
     /**
      * Constructor
      *
-     * @param CandidatesInterface $candidateStrategy
+     * @param PageRouteFactoryInterface $routeFactory
+     * @param ManagerRegistry           $managerRegistry
+     * @param CandidatesInterface       $candidatesStrategy
+     * @param string                    $className
+     *
+     * @internal param CandidatesInterface $candidateStrategy
      */
-    public function __construct(CandidatesInterface $candidateStrategy)
-    {
-        $this->candidateStrategy = $candidateStrategy;
+    public function __construct(
+        PageRouteFactoryInterface $routeFactory,
+        ManagerRegistry $managerRegistry,
+        CandidatesInterface $candidatesStrategy,
+        $className
+    ) {
+        parent::__construct($managerRegistry, $className);
+
+        $this->routeFactory = $routeFactory;
+        $this->candidatesStrategy = $candidatesStrategy;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRouteCollectionForRequest(Request $request)
     {
-        $candidates = $this->candidateStrategy->getCandidates($request);
-        var_dump($candidates);
-        // TODO: Implement getRouteCollectionForRequest() method.
+        $collection = new RouteCollection();
+
+        // Extract uri parts from requested path info
+        $candidates = $this->candidatesStrategy->getCandidates($request);
+        if (empty($candidates)) {
+            return $collection;
+        }
+
+        // Get all pages matching the deepest uri part
+        $deepestCandidate = array_pop($candidates);
+        $pages = $this->getPageRepository()->findBySlug($deepestCandidate, array('lvl' => 'DESC'));
+
+        /** @var $page AbstractPage */
+        foreach ($pages as $page) {
+            $path = $this->getPageRepository()->getPath($page);
+
+            // If page path matches requested uri, add route
+            if ($this->isPageMatchingUri($path, $request)) {
+                $route = $this->routeFactory->create($page, $request->getPathInfo(), $path);
+
+                $collection->add(
+                    $route->getName(),
+                    $route
+                );
+            }
+        }
+
+        return $collection;
     }
 
     /**
@@ -63,5 +106,39 @@ class PageRouteProvider implements RouteProviderInterface
     public function getRoutesByNames($names)
     {
         // TODO: Implement getRoutesByNames() method.
+    }
+
+    /**
+     * @return \Gedmo\Tree\Entity\Repository\NestedTreeRepository
+     */
+    protected function getPageRepository()
+    {
+        return $this->getObjectManager()->getRepository($this->className);
+    }
+
+    /**
+     * Check if a page matches the request
+     *
+     * @param array   $path
+     * @param Request $request
+     *
+     * @return bool
+     *
+     * @internal param AbstractPage $page
+     */
+    protected function isPageMatchingUri(array $path, Request $request)
+    {
+        // Remove root level (no multi tree support for now)
+        // TODO : multi tree support
+        array_shift($path);
+
+        // Build uri from tree path
+        /** @var $item AbstractPage */
+        $uri = array_reduce($path, function($carry, $item) {
+            return $carry .= '/' . $item->getSlug();
+        });
+
+        // Compare requested uri with the built one
+        return $uri === $request->getPathInfo();
     }
 }

@@ -1,0 +1,2 @@
+parameters:
+    opsite.entity.page.class: OpSiteBuilder\Bundle\CoreBundle\Entity\Page

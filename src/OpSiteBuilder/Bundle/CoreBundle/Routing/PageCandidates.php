@@ -9,14 +9,14 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
 
-use Symfony\Cmf\Component\Routing\Candidates\Candidates as BaseCandidates;
+use Symfony\Cmf\Component\Routing\Candidates\Candidates;
 /**
- * Class Candidates
+ * Class PageCandidates
  *
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing
  * @author jobou
  */
-class Candidates extends BaseCandidates
+class PageCandidates extends Candidates
 {
     /**
      * {@inheritdoc}
@@ -44,6 +44,6 @@ class Candidates extends BaseCandidates
             }
         }
 
-        return $candidates;
+        return array_reverse($candidates);
     }
 }

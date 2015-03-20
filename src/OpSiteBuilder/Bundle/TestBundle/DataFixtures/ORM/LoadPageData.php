@@ -75,6 +75,11 @@ class LoadPageData extends AbstractFixture implements OrderedFixtureInterface
                 'title' => 'Child 1 of 1',
                 'key' => 'child_1_1',
                 'parent' => 'child_1'
+            ),
+            array(
+                'title' => 'Child 1 of 1.1',
+                'key' => 'child_1_1_1',
+                'parent' => 'child_1_1'
             )
         );
     }

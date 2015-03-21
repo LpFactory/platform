@@ -10,6 +10,9 @@ OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock:
             type: string
             length: 255
             nullable: false
+        sort:
+            type: integer
+            nullable: false
         created:
             type: datetime
             gedmo:

@@ -26,9 +26,7 @@ class Block extends AbstractBlock
     protected $page;
 
     /**
-     * Get page
-     *
-     * @return AbstractPage
+     * {@inheritdoc}
      */
     public function getPage()
     {
@@ -36,13 +34,9 @@ class Block extends AbstractBlock
     }
 
     /**
-     * Set page
-     *
-     * @param AbstractPage $page
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setPage($page)
+    public function setPage(AbstractPage $page)
     {
         $this->page = $page;
 

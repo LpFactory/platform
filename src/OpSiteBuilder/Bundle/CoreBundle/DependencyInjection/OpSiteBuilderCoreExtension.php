@@ -35,6 +35,7 @@ class OpSiteBuilderCoreExtension extends Extension
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('entities.yml');
+        $loader->load('doctrine.yml');
         $loader->load('cmf_routing.yml');
     }
 

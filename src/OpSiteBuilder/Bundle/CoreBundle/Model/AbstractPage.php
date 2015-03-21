@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @package OpSiteBuilder\Bundle\CoreBundle\Model
  * @author  jobou
  */
-class AbstractPage
+abstract class AbstractPage
 {
     /**
      * @var int
@@ -229,4 +229,66 @@ class AbstractPage
     {
         return $this->getLvl() === 0;
     }
+
+    /**
+     * Add children
+     *
+     * @param AbstractPage $child
+     *
+     * @return AbstractPage
+     */
+    abstract public function addChild(AbstractPage $child);
+
+    /**
+     * Remove children
+     *
+     * @param AbstractPage $child
+     */
+    abstract public function removeChild(AbstractPage $child);
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    abstract public function getChildren();
+
+    /**
+     * Set parent
+     *
+     * @param AbstractPage $parent
+     *
+     * @return AbstractPage
+     */
+    abstract public function setParent(AbstractPage $parent = null);
+
+    /**
+     * Get parent
+     *
+     * @return AbstractPage
+     */
+    abstract public function getParent();
+
+    /**
+     * Add block
+     *
+     * @param AbstractBlock $block
+     *
+     * @return AbstractPage
+     */
+    abstract public function addBlock(AbstractBlock $block);
+
+    /**
+     * Remove block
+     *
+     * @param AbstractBlock $block
+     */
+    abstract public function removeBlock(AbstractBlock $block);
+
+    /**
+     * Get blocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    abstract public function getBlocks();
 }

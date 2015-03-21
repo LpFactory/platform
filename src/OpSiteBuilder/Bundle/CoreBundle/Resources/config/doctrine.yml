@@ -1,0 +1,5 @@
+services:
+    doctrine.orm.listeners.resolve_target_entity:
+        class: %doctrine.orm.listeners.resolve_target_entity.class%
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }

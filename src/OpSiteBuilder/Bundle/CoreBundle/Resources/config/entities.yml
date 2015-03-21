@@ -1,2 +1,3 @@
 parameters:
     opsite.entity.page.class: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
+    opsite.entity.block.class: OpSiteBuilder\Bundle\CoreBundle\Entity\Block

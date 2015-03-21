@@ -9,7 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\TestBundle;
 
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use OpSiteBuilder\Bundle\CoreBundle\DependencyInjection\Compiler\DoctrineResolverTargetModelPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -21,4 +21,12 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class OpSiteBuilderTestBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        $container
+            ->addCompilerPass(new DoctrineResolverTargetModelPass());
+    }
 }

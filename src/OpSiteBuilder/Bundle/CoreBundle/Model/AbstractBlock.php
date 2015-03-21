@@ -15,12 +15,17 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Model;
  * @package OpSiteBuilder\Bundle\CoreBundle\Model
  * @author jobou
  */
-class AbstractBlock
+abstract class AbstractBlock
 {
     /**
      * @var int
      */
     protected $id;
+
+    /**
+     * @var int
+     */
+    protected $sort = 1;
 
     /**
      * @var string
@@ -43,6 +48,25 @@ class AbstractBlock
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSort()
+    {
+        return $this->sort;
+    }
+
+    /**
+     * @param int $sort
+     *
+     * @return $this
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+        return $this;
     }
 
     /**
@@ -80,4 +104,20 @@ class AbstractBlock
     {
         return $this->updated;
     }
+
+    /**
+     * Get page
+     *
+     * @return AbstractPage
+     */
+    abstract public function getPage();
+
+    /**
+     * Set page
+     *
+     * @param AbstractPage $page
+     *
+     * @return $this
+     */
+    abstract public function setPage(AbstractPage $page);
 }

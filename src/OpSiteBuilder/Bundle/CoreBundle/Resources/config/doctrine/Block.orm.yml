@@ -8,7 +8,8 @@ OpSiteBuilder\Bundle\CoreBundle\Entity\Block:
         length: 255
     manyToOne:
         page:
-            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
+            orderBy: { 'sort': 'ASC' }
+            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage
             inversedBy: blocks
             joinColumn:
                 name: page_id

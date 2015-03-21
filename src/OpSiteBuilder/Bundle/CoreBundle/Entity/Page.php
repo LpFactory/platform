@@ -46,32 +46,25 @@ class Page extends AbstractPage
     }
 
     /**
-     * Add children
-     *
-     * @param \OpSiteBuilder\Bundle\CoreBundle\Entity\Page $children
-     * @return Page
+     * {@inheritdoc}
      */
-    public function addChild(Page $children)
+    public function addChild(AbstractPage $child)
     {
-        $this->children[] = $children;
+        $this->children[] = $child;
 
         return $this;
     }
 
     /**
-     * Remove children
-     *
-     * @param \OpSiteBuilder\Bundle\CoreBundle\Entity\Page $children
+     * {@inheritdoc}
      */
-    public function removeChild(Page $children)
+    public function removeChild(AbstractPage $child)
     {
-        $this->children->removeElement($children);
+        $this->children->removeElement($child);
     }
 
     /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * {@inheritdoc}
      */
     public function getChildren()
     {
@@ -79,12 +72,9 @@ class Page extends AbstractPage
     }
 
     /**
-     * Set parent
-     *
-     * @param \OpSiteBuilder\Bundle\CoreBundle\Entity\Page $parent
-     * @return Page
+     * {@inheritdoc}
      */
-    public function setParent(Page $parent = null)
+    public function setParent(AbstractPage $parent = null)
     {
         $this->parent = $parent;
 
@@ -92,9 +82,7 @@ class Page extends AbstractPage
     }
 
     /**
-     * Get parent
-     *
-     * @return \OpSiteBuilder\Bundle\CoreBundle\Entity\Page
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -102,10 +90,7 @@ class Page extends AbstractPage
     }
 
     /**
-     * Add block
-     *
-     * @param \OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock $block
-     * @return Page
+     * {@inheritdoc}
      */
     public function addBlock(AbstractBlock $block)
     {
@@ -115,9 +100,7 @@ class Page extends AbstractPage
     }
 
     /**
-     * Remove block
-     *
-     * @param \OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock $block
+     * {@inheritdoc}
      */
     public function removeBlock(AbstractBlock $block)
     {
@@ -125,9 +108,7 @@ class Page extends AbstractPage
     }
 
     /**
-     * Get blocks
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * {@inheritdoc}
      */
     public function getBlocks()
     {

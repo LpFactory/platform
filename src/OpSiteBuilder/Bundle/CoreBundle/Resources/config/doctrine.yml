@@ -1,5 +1,25 @@
+parameters:
+    doctrine.event_listener.page.discriminator_map.class: OpSiteBuilder\Bundle\CoreBundle\Doctrine\EventListener\MapDiscriminatorListener
+    doctrine.event_listener.block.discriminator_map.class: OpSiteBuilder\Bundle\CoreBundle\Doctrine\EventListener\MapDiscriminatorListener
+
 services:
     doctrine.orm.listeners.resolve_target_entity:
         class: %doctrine.orm.listeners.resolve_target_entity.class%
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
+
+    doctrine.event_listener.page.discriminator_map:
+        class: %doctrine.event_listener.page.discriminator_map.class%
+        arguments:
+            - %opsite.entity.page.class%
+            - []
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
+
+    doctrine.event_listener.block.discriminator_map:
+        class: %doctrine.event_listener.block.discriminator_map.class%
+        arguments:
+            - %opsite.entity.block.class%
+            - []
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }

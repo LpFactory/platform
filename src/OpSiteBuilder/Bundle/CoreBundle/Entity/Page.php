@@ -95,6 +95,7 @@ class Page extends AbstractPage
     public function addBlock(AbstractBlock $block)
     {
         $this->blocks[] = $block;
+        $block->setPage($this);
 
         return $this;
     }

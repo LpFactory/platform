@@ -27,9 +27,6 @@ class OpSiteBuilderCoreExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $config = $this->processConfiguration(new Configuration(), $configs);
-        $this->loadConfiguration($config, $container);
-
         $loader = new YamlFileLoader(
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
@@ -37,6 +34,9 @@ class OpSiteBuilderCoreExtension extends Extension
         $loader->load('entities.yml');
         $loader->load('doctrine.yml');
         $loader->load('cmf_routing.yml');
+
+        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->loadConfiguration($config, $container);
     }
 
     /**
@@ -48,5 +48,11 @@ class OpSiteBuilderCoreExtension extends Extension
     protected function loadConfiguration(array $config, ContainerBuilder $container)
     {
         $container->setParameter('opsite_builder.routing.route_name_prefix', $config['routing']['route_name_prefix']);
+
+        $pageDiscriminatorListener = $container->findDefinition('doctrine.event_listener.page.discriminator_map');
+        $pageDiscriminatorListener->replaceArgument(1, $config['page_map']);
+
+        $blockDiscriminatorListener = $container->findDefinition('doctrine.event_listener.block.discriminator_map');
+        $blockDiscriminatorListener->replaceArgument(1, $config['block_map']);
     }
 }

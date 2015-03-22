@@ -12,7 +12,11 @@ namespace OpSiteBuilder\Bundle\TestBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use OpSiteBuilder\Block\TextBlockBundle\Entity\TextBlock;
 use OpSiteBuilder\Bundle\CoreBundle\Entity\Page;
+use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class LoadPageData
@@ -20,20 +24,38 @@ use OpSiteBuilder\Bundle\CoreBundle\Entity\Page;
  * @package OpSiteBuilder\Bundle\TestBundle\DataFixtures\ORM
  * @author jobou
  */
-class LoadPageData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPageData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager)
     {
+        $pageClass = $this->container->getParameter('opsite.entity.page.class');
+
         foreach ($this->getData() as $item) {
-            $page = new Page();
+            /** @var $page AbstractPage */
+            $page = new $pageClass();
             $page->setTitle($item['title']);
 
             if ($item['parent'] !== null) {
                 $page->setParent($this->getReference('page-' . $item['parent']));
             }
+
+            $this->createBlocks($page, $manager);
 
             $this->addReference('page-' . $item['key'], $page);
 
@@ -51,6 +73,8 @@ class LoadPageData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
+     * Page data
+     *
      * @return array
      */
     public function getData()
@@ -82,5 +106,25 @@ class LoadPageData extends AbstractFixture implements OrderedFixtureInterface
                 'parent' => 'child_1_1'
             )
         );
+    }
+
+    /**
+     * Create blocks in page
+     *
+     * @param AbstractPage  $page
+     * @param ObjectManager $manager
+     */
+    protected function createBlocks(AbstractPage $page, ObjectManager $manager)
+    {
+        $textBlock = new TextBlock();
+        $textBlock->setContent('text '.uniqid());
+        $page->addBlock($textBlock);
+
+        $textBlock2 = new TextBlock();
+        $textBlock2->setContent('text '.uniqid());
+        $page->addBlock($textBlock2);
+
+        $manager->persist($textBlock);
+        $manager->persist($textBlock2);
     }
 }

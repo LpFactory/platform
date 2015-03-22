@@ -1,0 +1,7 @@
+OpSiteBuilder\Block\TextBlockBundle\Entity\TextBlock:
+    type: entity
+    table: blocks_text
+    fields:
+        content:
+            type: text
+            nullable: true

@@ -9,7 +9,7 @@ OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock:
         title:
             type: string
             length: 255
-            nullable: false
+            nullable: true
         sort:
             type: integer
             nullable: false

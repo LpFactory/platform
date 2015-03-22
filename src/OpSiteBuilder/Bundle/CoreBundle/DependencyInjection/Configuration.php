@@ -29,13 +29,25 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('op_site_builder_core');
 
         $rootNode
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('routing')
-                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('route_name_prefix')
                             ->defaultValue('opsite_page_tree_')
                         ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('page_map')
+                    ->useAttributeAsKey('name')
+                    ->defaultValue(array())
+                    ->prototype('scalar')
+                    ->end()
+                ->end()
+                ->arrayNode('block_map')
+                    ->useAttributeAsKey('name')
+                    ->defaultValue(array())
+                    ->prototype('scalar')
                     ->end()
                 ->end()
             ->end();

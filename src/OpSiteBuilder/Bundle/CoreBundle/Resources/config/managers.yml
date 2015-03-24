@@ -1,0 +1,18 @@
+parameters:
+    opsite_builder.block.manager.class: OpSiteBuilder\Bundle\CoreBundle\Block\BlockManager
+    opsite_builder.block.data_provider.chain.class: OpSiteBuilder\Bundle\CoreBundle\Block\BlockDataProviderChain
+    opsite_builder.block.data_provider.default.class: OpSiteBuilder\Bundle\CoreBundle\Block\Provider\DefaultDataProvider
+
+services:
+    opsite_builder.block.data_provider.chain:
+        class: %opsite_builder.block.data_provider.chain.class%
+
+    opsite_builder.block.manager:
+        class: %opsite_builder.block.manager.class%
+        arguments:
+            - @opsite_builder.block.data_provider.chain
+
+    opsite_builder.block.data_provider.default:
+        class: %opsite_builder.block.data_provider.default.class%
+        tags:
+            - { name: opsite_builder.block.data_provider, alias: default }

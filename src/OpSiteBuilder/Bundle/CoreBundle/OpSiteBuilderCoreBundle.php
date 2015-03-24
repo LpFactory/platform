@@ -10,6 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use OpSiteBuilder\Bundle\CoreBundle\DependencyInjection\Compiler\BlockDataProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -41,5 +42,7 @@ class OpSiteBuilderCoreBundle extends Bundle
                 $mappings
             )
         );
+
+        $container->addCompilerPass(new BlockDataProviderPass());
     }
 }

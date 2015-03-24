@@ -30,8 +30,11 @@ class BlockController extends Controller
      */
     public function viewAction(AbstractBlock $block)
     {
+        $data = $this->get('opsite_builder.block.manager')->getData($block);
+
         return $this->render('OpSiteBuilderWebBundle:Block/view:default.html.twig', array(
-            'block' => $block
+            'block' => $block,
+            'data' => $data
         ));
     }
 }

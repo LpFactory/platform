@@ -26,4 +26,12 @@ class BlogBlock extends Block
     {
         return 'blog';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEmpty()
+    {
+        return null;
+    }
 }

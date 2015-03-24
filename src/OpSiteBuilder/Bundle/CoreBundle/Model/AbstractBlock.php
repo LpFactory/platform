@@ -127,4 +127,12 @@ abstract class AbstractBlock
      * @return string
      */
     abstract public function getAlias();
+
+    /**
+     * Check if block is empty
+     * If null, use the manager to fetch data and see if block is empty
+     *
+     * @return bool
+     */
+    abstract public function isEmpty();
 }

@@ -34,6 +34,7 @@ class OpSiteBuilderCoreExtension extends Extension
         $loader->load('entities.yml');
         $loader->load('doctrine.yml');
         $loader->load('cmf_routing.yml');
+        $loader->load('managers.yml');
 
         $config = $this->processConfiguration(new Configuration(), $configs);
         $this->loadConfiguration($config, $container);

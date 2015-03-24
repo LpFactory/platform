@@ -53,4 +53,12 @@ class TextBlock extends Block
     {
         return 'text';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEmpty()
+    {
+        return empty($this->content);
+    }
 }

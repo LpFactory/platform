@@ -18,7 +18,7 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
  * @package OpSiteBuilder\Bundle\CoreBundle\Entity
  * @author jobou
  */
-class Block extends AbstractBlock
+abstract class Block extends AbstractBlock
 {
     /**
      * @var AbstractPage

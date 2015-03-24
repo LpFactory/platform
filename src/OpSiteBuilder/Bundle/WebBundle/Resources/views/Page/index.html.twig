@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {% for block in page.blocks %}
+        <div id="zone-{{ block.alias }}-{{ block.id }}" class="zone-block zone-{{ block.alias }}">
+            {% render(controller('OpSiteBuilderCoreBundle:Block:view', {
+                'block': block
+            })) %}
+        </div>
+    {% endfor %}
+{% endblock %}

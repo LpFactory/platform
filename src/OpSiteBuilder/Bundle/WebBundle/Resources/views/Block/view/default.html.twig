@@ -1,0 +1,3 @@
+<h2>{{ block.title|default( 'default_title'|trans({}, block.alias) ) }}</h2>
+
+<p>{{ 'default_message'|trans({'%block_id%': block.id, '%block_type%': block.alias})|raw }}</p>

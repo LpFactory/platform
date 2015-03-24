@@ -23,10 +23,11 @@ class AppKernel extends Kernel
 
             // OpSiteBuilder Bundles
             new OpSiteBuilder\Bundle\CoreBundle\OpSiteBuilderCoreBundle(),
+            new OpSiteBuilder\Bundle\WebBundle\OpSiteBuilderWebBundle(),
 
             // Block bundles
             new OpSiteBuilder\Block\BlogBlockBundle\OpSiteBuilderBlogBlockBundle(),
-            new \OpSiteBuilder\Block\TextBlockBundle\OpSiteBuilderTextBlockBundle(),
+            new OpSiteBuilder\Block\TextBlockBundle\OpSiteBuilderTextBlockBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

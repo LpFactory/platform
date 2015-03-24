@@ -19,4 +19,11 @@ use OpSiteBuilder\Bundle\CoreBundle\Entity\Block;
  */
 class BlogBlock extends Block
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getAlias()
+    {
+        return 'blog';
+    }
 }

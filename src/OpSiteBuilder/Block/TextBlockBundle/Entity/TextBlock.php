@@ -45,4 +45,12 @@ class TextBlock extends Block
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAlias()
+    {
+        return 'text';
+    }
 }

@@ -120,4 +120,11 @@ abstract class AbstractBlock
      * @return $this
      */
     abstract public function setPage(AbstractPage $page);
+
+    /**
+     * Get the name of a block
+     *
+     * @return string
+     */
+    abstract public function getAlias();
 }

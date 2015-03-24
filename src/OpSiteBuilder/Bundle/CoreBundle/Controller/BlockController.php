@@ -9,31 +9,29 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Controller;
 
-use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
+use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class PageController
+ * Class BlockController
  *
  * @package OpSiteBuilder\Bundle\CoreBundle\Controller
  * @author jobou
  */
-class PageController extends Controller
+class BlockController extends Controller
 {
     /**
-     * Page detail
+     * Display a block view
      *
-     * @param AbstractPage $page
-     * @param array        $path
+     * @param AbstractBlock $block
      *
      * @return Response
      */
-    public function indexAction(AbstractPage $page, $path)
+    public function viewAction(AbstractBlock $block)
     {
-        return $this->render('OpSiteBuilderWebBundle:Page:index.html.twig', array(
-            'page' => $page,
-            'breadcrumbs' => $path
+        return $this->render('OpSiteBuilderWebBundle:Block/view:default.html.twig', array(
+            'block' => $block
         ));
     }
 }

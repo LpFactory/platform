@@ -3,8 +3,9 @@
 {% block body %}
     {% for block in page.blocks %}
         <div id="zone-{{ block.alias }}-{{ block.id }}" class="zone-block zone-{{ block.alias }}">
-            {% render(controller('OpSiteBuilderCoreBundle:Block:view', {
-                'block': block
+            {% render(controller(get_block_view_controller(block), {
+                'block': block,
+                'page': page
             })) %}
         </div>
     {% endfor %}

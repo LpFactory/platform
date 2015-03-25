@@ -10,6 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Block;
 
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
+use OpSiteBuilder\Bundle\CoreBundle\Block\Provider\BlockDataProviderChainInterface;
 
 /**
  * Class BlockManager

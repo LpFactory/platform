@@ -7,7 +7,7 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Block;
+namespace OpSiteBuilder\Bundle\CoreBundle\Block\Provider;
 
 /**
  * Class BlockDataProviderChain

@@ -10,6 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Controller;
 
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
+use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,10 +26,11 @@ class BlockController extends Controller
      * Display a block view
      *
      * @param AbstractBlock $block
+     * @param AbstractPage  $page
      *
      * @return Response
      */
-    public function viewAction(AbstractBlock $block)
+    public function viewAction(AbstractBlock $block, AbstractPage $page)
     {
         $data = $this->get('opsite_builder.block.manager')->getData($block);
 

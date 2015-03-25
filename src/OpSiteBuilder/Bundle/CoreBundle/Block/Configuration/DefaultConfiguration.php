@@ -7,23 +7,21 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Block\Provider;
-
-use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
+namespace OpSiteBuilder\Bundle\CoreBundle\Block\Configuration;
 
 /**
- * Class DefaultDataProvider
+ * Class DefaultConfiguration
  *
- * @package OpSiteBuilder\Bundle\CoreBundle\Block\Provider
+ * @package OpSiteBuilder\Bundle\CoreBundle\Block\Configuration
  * @author jobou
  */
-class DefaultDataProvider implements BlockDataProviderInterface
+class DefaultConfiguration implements BlockConfigurationInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function getData(AbstractBlock $block)
+    public function getViewController()
     {
-        return array();
+        return 'OpSiteBuilderCoreBundle:Block:view';
     }
 }

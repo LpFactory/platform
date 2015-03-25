@@ -1,0 +1,11 @@
+parameters:
+    opsite_builder.twig_extension.block.class: OpSiteBuilder\Bundle\CoreBundle\Twig\BlockExtension
+
+services:
+    opsite_builder.twig_extension.block:
+        class: %opsite_builder.twig_extension.block.class%
+        arguments:
+            - @opsite_builder.block.configuration.chain
+        public: false
+        tags:
+            - { name: twig.extension }

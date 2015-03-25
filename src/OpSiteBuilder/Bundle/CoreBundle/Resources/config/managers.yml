@@ -1,7 +1,9 @@
 parameters:
     opsite_builder.block.manager.class: OpSiteBuilder\Bundle\CoreBundle\Block\BlockManager
-    opsite_builder.block.data_provider.chain.class: OpSiteBuilder\Bundle\CoreBundle\Block\BlockDataProviderChain
+    opsite_builder.block.data_provider.chain.class: OpSiteBuilder\Bundle\CoreBundle\Block\Provider\BlockDataProviderChain
     opsite_builder.block.data_provider.default.class: OpSiteBuilder\Bundle\CoreBundle\Block\Provider\DefaultDataProvider
+    opsite_builder.block.configuration.chain.class: OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChain
+    opsite_builder.block.configuration.default.class: OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\DefaultConfiguration
 
 services:
     opsite_builder.block.data_provider.chain:
@@ -16,3 +18,11 @@ services:
         class: %opsite_builder.block.data_provider.default.class%
         tags:
             - { name: opsite_builder.block.data_provider, alias: default }
+
+    opsite_builder.block.configuration.chain:
+        class: %opsite_builder.block.configuration.chain.class%
+
+    opsite_builder.block.configuration.default:
+        class: %opsite_builder.block.configuration.default.class%
+        tags:
+            - { name: opsite_builder.block.configuration, alias: default }

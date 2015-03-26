@@ -61,7 +61,7 @@
             "file": "app/config/parameters.yml"
         },
         "branch-alias": {
-            "dev-master": "develop"
+            "dev-master": "develop-dev"
         }
     }
 }

@@ -49,7 +49,7 @@ class OpSiteBuilderCoreExtension extends Extension
      */
     protected function loadConfiguration(array $config, ContainerBuilder $container)
     {
-        $container->setParameter('opsite_builder.routing.route_name_prefix', $config['routing']['route_name_prefix']);
+        $container->setParameter('opsite_builder.routing.page_view_route_prefix', $config['routing']['page_view_route_prefix']);
 
         $pageDiscriminatorListener = $container->findDefinition('doctrine.event_listener.page.discriminator_map');
         $pageDiscriminatorListener->replaceArgument(1, $config['page_map']);

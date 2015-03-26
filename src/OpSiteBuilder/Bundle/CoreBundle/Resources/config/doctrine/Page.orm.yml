@@ -3,7 +3,7 @@ OpSiteBuilder\Bundle\CoreBundle\Entity\Page:
     table: pages
     manyToOne:
         parent:
-            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage
+            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
             inversedBy: children
             joinColumn:
                 name: parent_id
@@ -13,7 +13,7 @@ OpSiteBuilder\Bundle\CoreBundle\Entity\Page:
                 - treeParent
     oneToMany:
         children:
-            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage
+            targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page
             mappedBy: parent
         blocks:
             targetEntity: OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock

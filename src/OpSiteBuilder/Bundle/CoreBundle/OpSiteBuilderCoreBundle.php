@@ -32,7 +32,7 @@ class OpSiteBuilderCoreBundle extends Bundle
     {
         parent::build($container);
 
-        $modelDir = realpath(__DIR__ . '/Resources/config/model');
+        $modelDir = realpath($this->getPath() . '/Resources/config/model');
 
         $mappings = array(
             $modelDir => 'OpSiteBuilder\Bundle\CoreBundle\Model',

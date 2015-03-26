@@ -1,6 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+    {% if is_granted('OPSITE_BUILDER_PAGE_EDIT', page) %}
+        <a href="{{ path(page) }}">{{ 'page_edit_link'|trans }}</a>
+    {% endif %}
+
     {% for block in page.blocks %}
         <div id="zone-{{ block.alias }}-{{ block.id }}" class="zone-block zone-{{ block.alias }}">
             {% render(controller(get_block_view_controller(block), {

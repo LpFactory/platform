@@ -14,6 +14,7 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\DoctrineProvider;
 use Symfony\Cmf\Component\Routing\Candidates\CandidatesInterface;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RouteCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -97,7 +98,7 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
      */
     public function getRouteByName($name)
     {
-        // TODO: Implement getRouteByName() method.
+        throw new RouteNotFoundException('toto');
     }
 
     /**
@@ -105,7 +106,7 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
      */
     public function getRoutesByNames($names)
     {
-        // TODO: Implement getRoutesByNames() method.
+        return array();
     }
 
     /**
@@ -134,7 +135,7 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
 
         // Build uri from tree path
         /** @var $item AbstractPage */
-        $uri = array_reduce($path, function ($carry, $item) {
+        $uri = array_reduce($path, function ($carry, AbstractPage $item) {
             return $carry .= '/' . $item->getSlug();
         });
 

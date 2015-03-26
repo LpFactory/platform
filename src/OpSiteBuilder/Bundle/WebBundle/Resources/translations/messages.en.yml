@@ -1,5 +1,7 @@
-default_message: |
-    This is the default template for block<br />
-    If you see this, it means you are missing some files like the view or edit template for this block<br />
-    <strong>Block ID :</strong> %block_id%<br />
-    <strong>Block Type :</strong> %block_type%
+page_edit_link: Edit
+
+default_message:
+    default_template: This is the default template for block
+    missing_dev: If you see this, it means you are missing some files like the view or edit template for this block
+    block_id: "Block ID :"
+    block_type: "Block Type :"

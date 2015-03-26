@@ -9,8 +9,6 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * Class AbstractPage
  *

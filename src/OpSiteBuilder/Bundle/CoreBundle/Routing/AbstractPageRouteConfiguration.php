@@ -39,6 +39,18 @@ abstract class AbstractPageRouteConfiguration implements PageRouteConfigurationI
     }
 
     /**
+     * Get page route name
+     *
+     * @param AbstractPage $page
+     *
+     * @return string
+     */
+    public function getPageRouteName(AbstractPage $page)
+    {
+        return sprintf('%s%s', $this->getRoutePrefix(), $page->getId());
+    }
+
+    /**
      * {@inheritdoc}
      */
     abstract public function getRoutePrefix();

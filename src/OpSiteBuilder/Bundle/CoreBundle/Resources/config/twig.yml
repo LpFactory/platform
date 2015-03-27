@@ -1,5 +1,6 @@
 parameters:
     opsite_builder.twig_extension.block.class: OpSiteBuilder\Bundle\CoreBundle\Twig\BlockExtension
+    opsite_builder.twig_extension.routing.class: OpSiteBuilder\Bundle\CoreBundle\Twig\RoutingExtension
 
 services:
     opsite_builder.twig_extension.block:
@@ -9,3 +10,12 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    opsite_builder.twig_extension.routing:
+            class: %opsite_builder.twig_extension.routing.class%
+            arguments:
+                - @cmf_routing.generator
+                - @opsite_builder.route_configuration.chain
+            public: false
+            tags:
+                - { name: twig.extension }

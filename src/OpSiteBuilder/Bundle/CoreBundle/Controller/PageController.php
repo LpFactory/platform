@@ -36,4 +36,20 @@ class PageController extends Controller
             'breadcrumbs' => $path
         ));
     }
+
+    /**
+     * Page edit
+     *
+     * @param AbstractPage $page
+     * @param array        $path
+     *
+     * @return Response
+     */
+    public function editAction(AbstractPage $page, $path)
+    {
+        return $this->render('OpSiteBuilderWebBundle:Page:edit.html.twig', array(
+            'page' => $page,
+            'breadcrumbs' => $path
+        ));
+    }
 }

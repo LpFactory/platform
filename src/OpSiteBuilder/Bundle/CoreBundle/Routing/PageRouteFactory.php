@@ -30,7 +30,7 @@ class PageRouteFactory implements PageRouteFactoryInterface
         array $breadcrumbs = array()
     ) {
         $route = new Route();
-        $route->setName($routeConfiguration->getRoutePrefix() . $page->getId());
+        $route->setName($routeConfiguration->getPageRouteName($page));
         $route->setPath($path);
         $route->setDefaults(array(
             '_controller' => $routeConfiguration->getController(),

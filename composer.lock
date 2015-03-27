@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aadb3a6f9769e11cb3efa0fd1d1bf354",
+    "hash": "3f49b7d3361c7dd44b75774313f2fe8b",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1229,17 +1229,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v3.0.19",
+            "version": "v3.0.20",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "c68d47e3bcdfca74d92ab9d9382e276adf451424"
+                "reference": "48c76189fb0a76a20a4a67a750b513ed06074b55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/c68d47e3bcdfca74d92ab9d9382e276adf451424",
-                "reference": "c68d47e3bcdfca74d92ab9d9382e276adf451424",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/48c76189fb0a76a20a4a67a750b513ed06074b55",
+                "reference": "48c76189fb0a76a20a4a67a750b513ed06074b55",
                 "shasum": ""
             },
             "require": {
@@ -1285,7 +1285,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-03-25 09:01:40"
+            "time": "2015-03-26 11:09:50"
         },
         {
             "name": "sensio/framework-extra-bundle",

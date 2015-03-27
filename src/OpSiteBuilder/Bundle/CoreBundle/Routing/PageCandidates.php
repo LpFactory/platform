@@ -20,17 +20,27 @@ use Symfony\Cmf\Component\Routing\Candidates\Candidates;
 class PageCandidates extends Candidates
 {
     /**
+     * {@inheritDoc}
+     */
+    public function getCandidateFromPathInfo($url)
+    {
+        $candidates = $this->getCandidatesFor($url);
+
+        $locale = $this->determineLocale($url);
+        if ($locale) {
+            $candidates = array_unique(array_merge($candidates, $this->getCandidatesFor(substr($url, strlen($locale) + 1))));
+        }
+
+        return $candidates;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getCandidatesFor($url, $prefix = '')
     {
         $candidates = array();
         if ('/' !== $url) {
-            // handle format extension, like .html or .json
-            if (preg_match('/(.+)\.[a-z]+$/i', $url, $matches)) {
-                $url = $matches[1];
-            }
-
             $part = $url;
             $count = 0;
             while (false !== ($pos = strrpos($part, '/'))) {

@@ -100,6 +100,5 @@ cmf_routing:
         route_provider_service_id: opsite_builder.route_provider
 
 op_site_builder_core:
-    routing: ~
     block_map:
         text: OpSiteBuilder\Block\TextBlockBundle\Entity\TextBlock

@@ -21,30 +21,19 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route;
 class PageRouteFactory implements PageRouteFactoryInterface
 {
     /**
-     * @var string
-     */
-    protected $routePrefix;
-
-    /**
-     * Constructor
-     *
-     * @param string $routeNamePrefix
-     */
-    public function __construct($routeNamePrefix)
-    {
-        $this->routePrefix = $routeNamePrefix;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function create(AbstractPage $page, $path, array $breadcrumbs = array())
-    {
+    public function create(
+        PageRouteConfigurationInterface $routeConfiguration,
+        AbstractPage $page,
+        $path,
+        array $breadcrumbs = array()
+    ) {
         $route = new Route();
-        $route->setName($this->routePrefix . $page->getId());
+        $route->setName($routeConfiguration->getRoutePrefix() . $page->getId());
         $route->setPath($path);
         $route->setDefaults(array(
-            '_controller' => 'OpSiteBuilderCoreBundle:Page:index',
+            '_controller' => $routeConfiguration->getController(),
             'page' => $page,
             'path' => $breadcrumbs
         ));

@@ -32,9 +32,29 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('routing')
+                    ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('page_view_route_prefix')
-                            ->defaultValue('opsite_page_tree_view_')
+                        ->arrayNode('routes')
+                            ->useAttributeAsKey('name')
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('route_prefix')->isRequired()->end()
+                                    ->scalarNode('route_regex')->defaultNull()->end()
+                                    ->scalarNode('controller')->isRequired()->end()
+                                ->end()
+                            ->end()
+                            ->defaultValue(array(
+                                'edit' => array(
+                                    'route_prefix' => 'opsite_page_tree_edit_',
+                                    'route_regex' => '/(.+)\/edit$/',
+                                    'controller' => 'OpSiteBuilderCoreBundle:Page:edit'
+                                ),
+                                'view' => array(
+                                    'route_prefix' => 'opsite_page_tree_view_',
+                                    'route_regex' => null,
+                                    'controller' => 'OpSiteBuilderCoreBundle:Page:index'
+                                )
+                            ))
                         ->end()
                     ->end()
                 ->end()

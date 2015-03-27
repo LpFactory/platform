@@ -22,10 +22,11 @@ interface PageRouteFactoryInterface
     /**
      * Create a new route instance
      *
-     * @param AbstractPage $page
-     * @param string       $path
+     * @param PageRouteConfigurationInterface $routeConfiguration
+     * @param AbstractPage                    $page
+     * @param string                          $path
      *
      * @return \Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route
      */
-    public function create(AbstractPage $page, $path);
+    public function create(PageRouteConfigurationInterface $routeConfiguration, AbstractPage $page, $path);
 }

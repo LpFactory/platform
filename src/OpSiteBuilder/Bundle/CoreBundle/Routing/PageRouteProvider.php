@@ -37,17 +37,24 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
     protected $routeFactory;
 
     /**
+     * @var PageRouteConfigurationChainInterface
+     */
+    protected $routeConfigurationChain;
+
+    /**
      * Constructor
      *
-     * @param PageRouteFactoryInterface $routeFactory
-     * @param ManagerRegistry           $managerRegistry
-     * @param CandidatesInterface       $candidatesStrategy
-     * @param string                    $className
+     * @param PageRouteFactoryInterface            $routeFactory
+     * @param PageRouteConfigurationChainInterface $routeConfigurationChain
+     * @param ManagerRegistry                      $managerRegistry
+     * @param CandidatesInterface                  $candidatesStrategy
+     * @param string                               $className
      *
      * @internal param CandidatesInterface $candidateStrategy
      */
     public function __construct(
         PageRouteFactoryInterface $routeFactory,
+        PageRouteConfigurationChainInterface $routeConfigurationChain,
         ManagerRegistry $managerRegistry,
         CandidatesInterface $candidatesStrategy,
         $className
@@ -56,6 +63,7 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
 
         $this->routeFactory = $routeFactory;
         $this->candidatesStrategy = $candidatesStrategy;
+        $this->routeConfigurationChain = $routeConfigurationChain;
     }
 
     /**
@@ -65,8 +73,30 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
     {
         $collection = new RouteCollection();
 
+        $pathInfo = $request->getPathInfo();
+        // handle format extension, like .html or .json
+        if (preg_match('/(.+)\.[a-z]+$/i', $pathInfo, $matches)) {
+            $pathInfo = $matches[1];
+        }
+
+        // Find a route configuration matching the request
+        $routeConfiguration = null;
+        /** @var AbstractPageRouteConfiguration $configuration */
+        foreach ($this->routeConfigurationChain->all() as $configuration) {
+            if ($sanitizePath = $configuration->isMatching($pathInfo)) {
+                $routeConfiguration = $configuration;
+                $pathInfo = $sanitizePath;
+                break;
+            }
+        }
+
+        // No route configuration found. No match.
+        if (!$routeConfiguration) {
+            return $collection;
+        }
+
         // Extract uri parts from requested path info
-        $candidates = $this->candidatesStrategy->getCandidates($request);
+        $candidates = $this->candidatesStrategy->getCandidateFromPathInfo($pathInfo);
         if (empty($candidates)) {
             return $collection;
         }
@@ -75,13 +105,14 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
         $deepestCandidate = array_pop($candidates);
         $pages = $this->getPageRepository()->findBySlug($deepestCandidate, array('lvl' => 'DESC'));
 
+        // Verify if page matches uri
         /** @var $page AbstractPage */
         foreach ($pages as $page) {
             $path = $this->getPageRepository()->getPath($page);
 
             // If page path matches requested uri, add route
-            if ($this->isPageMatchingUri($path, $request)) {
-                $route = $this->routeFactory->create($page, $request->getPathInfo(), $path);
+            if ($this->isPageMatchingUri($path, $pathInfo)) {
+                $route = $this->routeFactory->create($routeConfiguration, $page, $request->getPathInfo(), $path);
 
                 $collection->add(
                     $route->getName(),
@@ -121,13 +152,13 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
      * Check if a page matches the request
      *
      * @param array   $path
-     * @param Request $request
+     * @param string  $url
      *
      * @return bool
      *
      * @internal param AbstractPage $page
      */
-    protected function isPageMatchingUri(array $path, Request $request)
+    protected function isPageMatchingUri(array $path, $url)
     {
         // Remove root level (no multi tree support for now)
         // TODO : multi tree support
@@ -140,6 +171,6 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
         });
 
         // Compare requested uri with the built one
-        return $uri === $request->getPathInfo();
+        return $uri === $url;
     }
 }

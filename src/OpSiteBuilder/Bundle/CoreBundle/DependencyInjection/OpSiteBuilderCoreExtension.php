@@ -36,6 +36,7 @@ class OpSiteBuilderCoreExtension extends Extension
         $loader->load('repositories.yml');
         $loader->load('cmf_routing.yml');
         $loader->load('managers.yml');
+        $loader->load('security.yml');
         $loader->load('twig.yml');
 
         $config = $this->processConfiguration(new Configuration(), $configs);

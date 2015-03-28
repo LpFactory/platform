@@ -9,7 +9,6 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Strategy;
 
-use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use OpSiteBuilder\Bundle\CoreBundle\Entity\Repository\PageRepositoryInterface;
 
 /**

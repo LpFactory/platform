@@ -43,6 +43,11 @@ abstract class AbstractBlock
     protected $updated;
 
     /**
+     * @var AbstractPage
+     */
+    protected $page;
+
+    /**
      * @return int
      */
     public function getId()

@@ -12,7 +12,6 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Security;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class AllowAllPageVoter

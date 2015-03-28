@@ -9,7 +9,6 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Provider;
 
-use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use OpSiteBuilder\Bundle\CoreBundle\Entity\Repository\PageRepositoryInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
@@ -17,13 +16,10 @@ use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfiguration
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Factory\PageRouteFactoryInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer\UrlSatinizerChainInterface;
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\DoctrineProvider;
-use Symfony\Cmf\Component\Routing\Candidates\CandidatesInterface;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RouteCollection;
-use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * Class PageRouteProvider

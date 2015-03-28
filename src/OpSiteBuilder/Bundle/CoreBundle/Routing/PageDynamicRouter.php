@@ -10,15 +10,12 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
 
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
-use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationChainInterface;
-use OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer\UrlSatinizerChainInterface;
 use Symfony\Cmf\Component\Routing\ChainedRouterInterface;
 use Symfony\Cmf\Component\Routing\LazyRouteCollection;
 use Symfony\Cmf\Component\Routing\NestedMatcher\FinalMatcherInterface;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
 use Symfony\Cmf\Component\Routing\VersatileGeneratorInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

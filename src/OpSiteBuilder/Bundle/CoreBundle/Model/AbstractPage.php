@@ -9,6 +9,8 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Class AbstractPage
  *
@@ -61,6 +63,11 @@ abstract class AbstractPage
      * @var \DateTime
      */
     protected $updated;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $blocks;
 
     /**
      * @return int

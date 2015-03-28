@@ -15,7 +15,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer
  * @author jobou
  */
-interface UrlSatinizerChainInterface 
+interface UrlSatinizerChainInterface
 {
     /**
      * Add a satinizer

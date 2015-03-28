@@ -9,7 +9,8 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration;
 
-use IteratorAggregate, ArrayIterator;
+use IteratorAggregate;
+use ArrayIterator;
 
 /**
  * Class PageRouteConfigurationChain
@@ -74,6 +75,7 @@ class PageRouteConfigurationChain implements PageRouteConfigurationChainInterfac
      */
     public function supports($name)
     {
+        /** @var PageRouteConfigurationInterface $configuration */
         foreach ($this->all() as $configuration) {
             if ($configuration->supports($name)) {
                 return true;

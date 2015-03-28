@@ -15,7 +15,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration
  * @author jobou
  */
-interface PageRouteConfigurationChainInterface 
+interface PageRouteConfigurationChainInterface
 {
     /**
      * Add a route configuration

@@ -52,6 +52,22 @@ abstract class AbstractPageRouteConfiguration implements PageRouteConfigurationI
     }
 
     /**
+     * Extract a page id from the route name
+     *
+     * @param string $routeName
+     *
+     * @return int|null
+     */
+    public function extractId($routeName)
+    {
+        if (!$this->supports($routeName)) {
+            return null;
+        }
+
+        return (int) str_replace($this->getPrefix(), '', $routeName);
+    }
+
+    /**
      * Build a path
      *
      * @param string $pathInfo

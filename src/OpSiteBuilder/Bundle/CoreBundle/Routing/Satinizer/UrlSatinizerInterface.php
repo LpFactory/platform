@@ -15,7 +15,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer
  * @author jobou
  */
-interface UrlSatinizerInterface 
+interface UrlSatinizerInterface
 {
     /**
      * Clean the url

@@ -111,7 +111,7 @@ class PageRouteProvider implements RouteProviderInterface
             $path = $this->pageRepository->getPath($page);
 
             // If page path matches requested uri, add route
-            if ($this->isPageMatchingUri($path, $pathInfo)) {
+            if ($pathInfo === $this->buildUrlFromPath($path)) {
                 $route = $this->routeFactory->create($configuration, $page, $pathInfo, $path);
 
                 $collection->add(
@@ -127,7 +127,22 @@ class PageRouteProvider implements RouteProviderInterface
      */
     public function getRouteByName($name)
     {
-        throw new RouteNotFoundException('toto');
+        /** @var PageRouteConfigurationInterface $configuration */
+        foreach ($this->routeConfigurationChain as $configuration) {
+            if (null !== $pageId = $configuration->extractId($name)) {
+                $page = $this->pageRepository->find($pageId);
+                $path = $this->pageRepository->getPath($page);
+
+                return $this->routeFactory->create(
+                    $configuration,
+                    $page,
+                    $this->buildUrlFromPath($path),
+                    $path
+                );
+            }
+        }
+
+        throw new RouteNotFoundException($name);
     }
 
     /**
@@ -139,27 +154,21 @@ class PageRouteProvider implements RouteProviderInterface
     }
 
     /**
-     * Check if a page matches the request
+     * Build an url from a path
      *
-     * @param array   $path
-     * @param string  $url
+     * @param array $path
      *
-     * @return bool
-     *
-     * @internal param AbstractPage $page
+     * @return string
      */
-    protected function isPageMatchingUri(array $path, $url)
+    protected function buildUrlFromPath(array $path)
     {
         // Remove root level (no multi tree support for now)
         // TODO : multi tree support
         array_shift($path);
 
         // Build uri from tree path
-        $builtUrl = array_reduce($path, function ($carry, AbstractPage $item) {
+        return array_reduce($path, function ($carry, AbstractPage $item) {
             return $carry .= '/' . $item->getSlug();
         });
-
-        // Compare requested uri with the built one
-        return $builtUrl === $url;
     }
 }

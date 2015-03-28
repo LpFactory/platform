@@ -17,9 +17,11 @@ use Symfony\Cmf\Component\Routing\ChainedRouterInterface;
 use Symfony\Cmf\Component\Routing\LazyRouteCollection;
 use Symfony\Cmf\Component\Routing\NestedMatcher\FinalMatcherInterface;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
+use Symfony\Cmf\Component\Routing\VersatileGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
@@ -58,20 +60,32 @@ class PageDynamicRouter implements ChainedRouterInterface, RequestMatcherInterfa
     protected $finalMatcher;
 
     /**
+     * @var UrlGeneratorInterface
+     */
+    protected $generator;
+
+    /**
      * Constructor
      *
+     * @param RequestContext                       $context
      * @param PageRouteConfigurationChainInterface $routeConfigurationChain
      * @param RouteProviderInterface               $provider
      * @param FinalMatcherInterface                $finalMatcher
+     * @param UrlGeneratorInterface                $generator
      */
     public function __construct(
+        RequestContext $context,
         PageRouteConfigurationChainInterface $routeConfigurationChain,
         RouteProviderInterface $provider,
-        FinalMatcherInterface $finalMatcher
+        FinalMatcherInterface $finalMatcher,
+        UrlGeneratorInterface $generator
     ) {
         $this->routeConfigurationChain = $routeConfigurationChain;
         $this->provider = $provider;
         $this->finalMatcher = $finalMatcher;
+        $this->generator = $generator;
+
+        $this->generator->setContext($context);
     }
 
     /**
@@ -92,7 +106,11 @@ class PageDynamicRouter implements ChainedRouterInterface, RequestMatcherInterfa
      */
     public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
     {
-        // TODO: Implement generate() method.
+        return $this->generator->generate(
+            $this->provider->getRouteByName($name),
+            $parameters,
+            $referenceType ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH
+        );
     }
 
     /**
@@ -138,7 +156,11 @@ class PageDynamicRouter implements ChainedRouterInterface, RequestMatcherInterfa
      */
     public function getRouteDebugMessage($name, array $parameters = array())
     {
-        // TODO: Implement getRouteDebugMessage() method.
+        if ($this->generator instanceof VersatileGeneratorInterface) {
+            return $this->generator->getRouteDebugMessage($name, $parameters);
+        }
+
+        return "Route '$name' not found";
     }
 
     /**

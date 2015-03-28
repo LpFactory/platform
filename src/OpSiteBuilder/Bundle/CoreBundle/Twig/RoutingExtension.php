@@ -54,7 +54,11 @@ class RoutingExtension extends BaseRoutingExtension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('op_path_page', array($this, 'getOpPath'), array('is_safe_callback' => array($this, 'isUrlGenerationSafe')))
+            new \Twig_SimpleFunction(
+                'op_path_page',
+                array($this, 'getOpPath'),
+                array('is_safe_callback' => array($this, 'isUrlGenerationSafe'))
+            )
         );
     }
 

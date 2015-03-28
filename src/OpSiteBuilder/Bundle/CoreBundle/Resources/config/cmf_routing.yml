@@ -13,9 +13,11 @@ services:
     opsite_builder.page_dynamic_router:
         class: %opsite_builder.page_dynamic_router.class%
         arguments:
+            - @router.request_context
             - @opsite_builder.route_configuration.chain
             - @opsite_builder.route_provider
             - @opsite_builder.routing.final_matcher
+            - @opsite_builder.routing.generator
 
     opsite_builder.routing.generator:
         class: %opsite_builder.routing.generator.class%

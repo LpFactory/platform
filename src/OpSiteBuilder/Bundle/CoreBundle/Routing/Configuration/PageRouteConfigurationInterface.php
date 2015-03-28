@@ -15,7 +15,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration
  * @author jobou
  */
-interface PageRouteConfigurationInterface 
+interface PageRouteConfigurationInterface
 {
     /**
      * Get the prefix used in the route

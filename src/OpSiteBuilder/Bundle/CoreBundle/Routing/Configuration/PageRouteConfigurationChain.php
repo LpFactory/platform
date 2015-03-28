@@ -9,13 +9,15 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration;
 
+use IteratorAggregate, ArrayIterator;
+
 /**
  * Class PageRouteConfigurationChain
  *
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration
  * @author jobou
  */
-class PageRouteConfigurationChain implements PageRouteConfigurationChainInterface
+class PageRouteConfigurationChain implements PageRouteConfigurationChainInterface, IteratorAggregate
 {
     /**
      * @var string
@@ -65,5 +67,27 @@ class PageRouteConfigurationChain implements PageRouteConfigurationChainInterfac
     public function all()
     {
         return $this->configurations;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supports($name)
+    {
+        foreach ($this->all() as $configuration) {
+            if ($configuration->supports($name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->configurations);
     }
 }

@@ -1,6 +1,7 @@
 OpSiteBuilder\Bundle\CoreBundle\Entity\Page:
     type: entity
     table: pages
+    repositoryClass: OpSiteBuilder\Bundle\CoreBundle\Entity\Repository\PageRepository
     manyToOne:
         parent:
             targetEntity: OpSiteBuilder\Bundle\CoreBundle\Entity\Page

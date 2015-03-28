@@ -33,6 +33,7 @@ class OpSiteBuilderCoreExtension extends Extension
         );
         $loader->load('entities.yml');
         $loader->load('doctrine.yml');
+        $loader->load('repositories.yml');
         $loader->load('cmf_routing.yml');
         $loader->load('managers.yml');
         $loader->load('twig.yml');

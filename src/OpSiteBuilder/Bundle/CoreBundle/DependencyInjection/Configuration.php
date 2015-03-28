@@ -38,20 +38,22 @@ class Configuration implements ConfigurationInterface
                             ->useAttributeAsKey('name')
                             ->prototype('array')
                                 ->children()
-                                    ->scalarNode('route_prefix')->isRequired()->end()
-                                    ->scalarNode('route_regex')->defaultNull()->end()
+                                    ->scalarNode('prefix')->isRequired()->end()
                                     ->scalarNode('controller')->isRequired()->end()
+                                    ->scalarNode('regex')->defaultNull()->end()
+                                    ->scalarNode('path')->defaultNull()->end()
                                 ->end()
                             ->end()
                             ->defaultValue(array(
                                 'edit' => array(
-                                    'route_prefix' => 'opsite_page_tree_edit_',
-                                    'route_regex' => '/(.+)\/edit$/',
-                                    'controller' => 'OpSiteBuilderCoreBundle:Page:edit'
+                                    'prefix' => 'opsite_page_tree_edit_',
+                                    'regex' => '/(.+)\/edit$/',
+                                    'controller' => 'OpSiteBuilderCoreBundle:Page:edit',
+                                    'path' => '%s/edit'
                                 ),
                                 'view' => array(
-                                    'route_prefix' => 'opsite_page_tree_view_',
-                                    'route_regex' => null,
+                                    'prefix' => 'opsite_page_tree_view_',
+                                    'regex' => null,
                                     'controller' => 'OpSiteBuilderCoreBundle:Page:index'
                                 )
                             ))

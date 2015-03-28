@@ -93,11 +93,10 @@ stof_doctrine_extensions:
 cmf_routing:
     chain:
         routers_by_id:
-            cmf_routing.dynamic_router: 200
-            router.default:             100
+            opsite_builder.page_dynamic_router: 200
+            router.default:                     100
     dynamic:
-        enabled: true
-        route_provider_service_id: opsite_builder.route_provider
+        enabled: false
 
 op_site_builder_core:
     block_map:

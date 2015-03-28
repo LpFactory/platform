@@ -40,4 +40,13 @@ interface PageRouteConfigurationChainInterface
      * @return array
      */
     public function all();
+
+    /**
+     * Check if a route configuration supports this route name
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function supports($name);
 }

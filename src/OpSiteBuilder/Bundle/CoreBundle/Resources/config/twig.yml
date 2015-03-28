@@ -14,7 +14,7 @@ services:
     opsite_builder.twig_extension.routing:
             class: %opsite_builder.twig_extension.routing.class%
             arguments:
-                - @cmf_routing.generator
+                - @opsite_builder.routing.generator
                 - @opsite_builder.route_configuration.chain
             public: false
             tags:

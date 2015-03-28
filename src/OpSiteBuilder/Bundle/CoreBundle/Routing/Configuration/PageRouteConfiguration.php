@@ -22,17 +22,22 @@ class PageRouteConfiguration extends AbstractPageRouteConfiguration
     /**
      * @var string
      */
-    protected $routePrefix;
+    protected $prefix;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $matchingRegex;
+    protected $regex;
 
     /**
      * @var string
      */
     protected $controller;
+
+    /**
+     * @var string|null
+     */
+    protected $path;
 
     /**
      * Constructor
@@ -42,33 +47,38 @@ class PageRouteConfiguration extends AbstractPageRouteConfiguration
     public function __construct(array $routeConfiguration)
     {
         $resolver = new OptionsResolver();
-        $resolver->setRequired(array(
-            'route_prefix',
-            'route_regex',
-            'controller'
-        ));
+        $resolver
+            ->setRequired(array(
+                'prefix',
+                'controller'
+            ))
+            ->setDefined(array(
+                'regex',
+                'path'
+            ));
 
         $routeConfiguration = $resolver->resolve($routeConfiguration);
 
-        $this->routePrefix = $routeConfiguration['route_prefix'];
-        $this->matchingRegex = $routeConfiguration['route_regex'];
+        $this->prefix = $routeConfiguration['prefix'];
         $this->controller = $routeConfiguration['controller'];
+        $this->regex = isset($routeConfiguration['regex']) ? $routeConfiguration['regex'] : null;
+        $this->path = isset($routeConfiguration['path']) ? $routeConfiguration['path'] : null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRoutePrefix()
+    public function getPrefix()
     {
-        return $this->routePrefix;
+        return $this->prefix;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getMatchingRegex()
+    public function getRegex()
     {
-        return $this->matchingRegex;
+        return $this->regex;
     }
 
     /**
@@ -77,5 +87,13 @@ class PageRouteConfiguration extends AbstractPageRouteConfiguration
     public function getController()
     {
         return $this->controller;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 }

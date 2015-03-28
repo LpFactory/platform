@@ -7,12 +7,16 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
+namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Provider;
 
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use OpSiteBuilder\Bundle\CoreBundle\Entity\Repository\PageRepositoryInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationChainInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Factory\PageRouteFactoryInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer\UrlSatinizerChainInterface;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\DoctrineProvider;
 use Symfony\Cmf\Component\Routing\Candidates\CandidatesInterface;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
@@ -27,13 +31,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing
  * @author jobou
  */
-class PageRouteProvider extends DoctrineProvider implements RouteProviderInterface
+class PageRouteProvider implements RouteProviderInterface
 {
-    /**
-     * @var CandidatesInterface
-     */
-    protected $candidatesStrategy;
-
     /**
      * @var PageRouteFactoryInterface
      */
@@ -45,28 +44,33 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
     protected $routeConfigurationChain;
 
     /**
+     * @var UrlSatinizerChainInterface
+     */
+    protected $urlSatinizerChain;
+
+    /**
+     * @var PageRepositoryInterface
+     */
+    protected $pageRepository;
+
+    /**
      * Constructor
      *
      * @param PageRouteFactoryInterface            $routeFactory
+     * @param UrlSatinizerChainInterface           $urlSatinizerChain
      * @param PageRouteConfigurationChainInterface $routeConfigurationChain
-     * @param ManagerRegistry                      $managerRegistry
-     * @param CandidatesInterface                  $candidatesStrategy
-     * @param string                               $className
-     *
-     * @internal param CandidatesInterface $candidateStrategy
+     * @param PageRepositoryInterface              $pageRepository
      */
     public function __construct(
         PageRouteFactoryInterface $routeFactory,
+        UrlSatinizerChainInterface $urlSatinizerChain,
         PageRouteConfigurationChainInterface $routeConfigurationChain,
-        ManagerRegistry $managerRegistry,
-        CandidatesInterface $candidatesStrategy,
-        $className
+        PageRepositoryInterface $pageRepository
     ) {
-        parent::__construct($managerRegistry, $className);
-
         $this->routeFactory = $routeFactory;
-        $this->candidatesStrategy = $candidatesStrategy;
+        $this->urlSatinizerChain = $urlSatinizerChain;
         $this->routeConfigurationChain = $routeConfigurationChain;
+        $this->pageRepository = $pageRepository;
     }
 
     /**
@@ -76,46 +80,39 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
     {
         $collection = new RouteCollection();
 
-        $pathInfo = $request->getPathInfo();
-        // handle format extension, like .html or .json
-        if (preg_match('/(.+)\.[a-z]+$/i', $pathInfo, $matches)) {
-            $pathInfo = $matches[1];
-        }
+        $pathInfo = $this->urlSatinizerChain->clean($request->getPathInfo());
+        $hostName = $request->getHost();
 
-        // Find a route configuration matching the request
-        $routeConfiguration = null;
         /** @var AbstractPageRouteConfiguration $configuration */
-        foreach ($this->routeConfigurationChain->all() as $configuration) {
-            if ($sanitizePath = $configuration->isMatching($pathInfo)) {
-                $routeConfiguration = $configuration;
-                $pathInfo = $sanitizePath;
+        foreach ($this->routeConfigurationChain as $configuration) {
+            if (null !== $extractedPathInfo = $configuration->isMatching($pathInfo)) {
+                $this->appendRouteToCollection($collection, $configuration, $extractedPathInfo, $hostName);
                 break;
             }
         }
 
-        // No route configuration found. No match.
-        if (!$routeConfiguration) {
-            return $collection;
-        }
+        return $collection;
+    }
 
-        // Extract uri parts from requested path info
-        $candidates = $this->candidatesStrategy->getCandidateFromPathInfo($pathInfo);
-        if (empty($candidates)) {
-            return $collection;
-        }
+    protected function appendRouteToCollection(
+        RouteCollection $collection,
+        PageRouteConfigurationInterface $configuration,
+        $pathInfo,
+        $hostName
+    ) {
+        $explodedPathInfo = explode('/', $pathInfo);
+        $deepestCandidate = array_pop($explodedPathInfo);
 
-        // Get all pages matching the deepest uri part
-        $deepestCandidate = array_pop($candidates);
-        $pages = $this->getPageRepository()->findBySlug($deepestCandidate, array('lvl' => 'DESC'));
+        $rootPage = $this->pageRepository->getRootPageForHostname($hostName);
+        $pages = $this->pageRepository->getPageInTree($deepestCandidate, $rootPage);
 
-        // Verify if page matches uri
-        /** @var $page AbstractPage */
+        /** @var AbstractPage $page */
         foreach ($pages as $page) {
-            $path = $this->getPageRepository()->getPath($page);
+            $path = $this->pageRepository->getPath($page);
 
             // If page path matches requested uri, add route
             if ($this->isPageMatchingUri($path, $pathInfo)) {
-                $route = $this->routeFactory->create($routeConfiguration, $page, $request->getPathInfo(), $path);
+                $route = $this->routeFactory->create($configuration, $page, $pathInfo, $path);
 
                 $collection->add(
                     $route->getName(),
@@ -123,8 +120,6 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
                 );
             }
         }
-
-        return $collection;
     }
 
     /**
@@ -144,14 +139,6 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
     }
 
     /**
-     * @return \Gedmo\Tree\Entity\Repository\NestedTreeRepository
-     */
-    protected function getPageRepository()
-    {
-        return $this->getObjectManager()->getRepository($this->className);
-    }
-
-    /**
      * Check if a page matches the request
      *
      * @param array   $path
@@ -168,12 +155,11 @@ class PageRouteProvider extends DoctrineProvider implements RouteProviderInterfa
         array_shift($path);
 
         // Build uri from tree path
-        /** @var $item AbstractPage */
-        $uri = array_reduce($path, function ($carry, AbstractPage $item) {
+        $builtUrl = array_reduce($path, function ($carry, AbstractPage $item) {
             return $carry .= '/' . $item->getSlug();
         });
 
         // Compare requested uri with the built one
-        return $uri === $url;
+        return $builtUrl === $url;
     }
 }

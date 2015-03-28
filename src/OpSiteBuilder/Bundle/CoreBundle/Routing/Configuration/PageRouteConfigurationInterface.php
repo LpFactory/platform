@@ -22,14 +22,14 @@ interface PageRouteConfigurationInterface
      *
      * @return string
      */
-    public function getRoutePrefix();
+    public function getPrefix();
 
     /**
      * Get the request to be match with the request
      *
      * @return string|null
      */
-    public function getMatchingRegex();
+    public function getRegex();
 
     /**
      * Get the controller to execute when route is matching
@@ -37,4 +37,20 @@ interface PageRouteConfigurationInterface
      * @return string
      */
     public function getController();
+
+    /**
+     * Get optional path if the one built with page path must be changed
+     *
+     * @return string|null
+     */
+    public function getPath();
+
+    /**
+     * Check if the route configuration supports this route name
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function supports($name);
 }

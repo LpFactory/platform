@@ -32,7 +32,7 @@ class PageRouteFactory implements PageRouteFactoryInterface
     ) {
         $route = new Route();
         $route->setName($routeConfiguration->getPageRouteName($page));
-        $route->setPath($path);
+        $route->setPath($routeConfiguration->buildPath($path));
         $route->setDefaults(array(
             '_controller' => $routeConfiguration->getController(),
             'page' => $page,

@@ -1,0 +1,8 @@
+services:
+    opsite_builder.repository.page:
+        class: OpSiteBuilder\Bundle\CoreBundle\Entity\Repository\PageRepositoryInterface
+        factory:
+            - @doctrine
+            - "getRepository"
+        arguments:
+            - %opsite.entity.page.class%

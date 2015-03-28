@@ -28,11 +28,11 @@ abstract class AbstractPageRouteConfiguration implements PageRouteConfigurationI
      */
     public function isMatching($url)
     {
-        if (!$this->getMatchingRegex()) {
+        if (!$this->getRegex()) {
             return $url;
         }
 
-        if (preg_match($this->getMatchingRegex(), $url, $matches)) {
+        if (preg_match($this->getRegex(), $url, $matches)) {
             return $matches[1];
         }
 
@@ -48,21 +48,50 @@ abstract class AbstractPageRouteConfiguration implements PageRouteConfigurationI
      */
     public function getPageRouteName(AbstractPage $page)
     {
-        return sprintf('%s%s', $this->getRoutePrefix(), $page->getId());
+        return sprintf('%s%s', $this->getPrefix(), $page->getId());
+    }
+
+    /**
+     * Build a path
+     *
+     * @param string $pathInfo
+     *
+     * @return string
+     */
+    public function buildPath($pathInfo)
+    {
+        if (null === $this->getPath()) {
+            return $pathInfo;
+        }
+
+        return sprintf($this->getPath(), $pathInfo);
     }
 
     /**
      * {@inheritdoc}
      */
-    abstract public function getRoutePrefix();
+    public function supports($name)
+    {
+        return strpos($name, $this->getPrefix()) === 0;
+    }
 
     /**
      * {@inheritdoc}
      */
-    abstract public function getMatchingRegex();
+    abstract public function getPrefix();
+
+    /**
+     * {@inheritdoc}
+     */
+    abstract public function getRegex();
 
     /**
      * {@inheritdoc}
      */
     abstract public function getController();
+
+    /**
+     * {@inheritdoc}
+     */
+    abstract public function getPath();
 }

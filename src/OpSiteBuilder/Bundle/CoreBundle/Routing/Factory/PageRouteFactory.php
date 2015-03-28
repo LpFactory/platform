@@ -7,15 +7,16 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
+namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Factory;
 
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
+use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationInterface;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route;
 
 /**
  * Class PageRouteFactory
  *
- * @package OpSiteBuilder\Bundle\CoreBundle\Routing
+ * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Factory
  * @author jobou
  */
 class PageRouteFactory implements PageRouteFactoryInterface

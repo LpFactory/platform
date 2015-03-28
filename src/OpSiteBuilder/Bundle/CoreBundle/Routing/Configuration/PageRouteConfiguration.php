@@ -7,14 +7,14 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
+namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class PageRouteConfiguration
  *
- * @package OpSiteBuilder\Bundle\CoreBundle\Routing
+ * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration
  * @author jobou
  */
 class PageRouteConfiguration extends AbstractPageRouteConfiguration

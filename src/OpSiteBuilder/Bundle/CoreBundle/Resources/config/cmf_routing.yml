@@ -1,8 +1,8 @@
 parameters:
     opsite_builder.route_provider.class: OpSiteBuilder\Bundle\CoreBundle\Routing\PageRouteProvider
     opsite_builder.candidates.page.class: OpSiteBuilder\Bundle\CoreBundle\Routing\PageCandidates
-    opsite_builder.route_factory.class: OpSiteBuilder\Bundle\CoreBundle\Routing\PageRouteFactory
-    opsite_builder.route_configuration.chain.class: OpSiteBuilder\Bundle\CoreBundle\Routing\PageRouteConfigurationChain
+    opsite_builder.route_factory.class: OpSiteBuilder\Bundle\CoreBundle\Routing\Factory\PageRouteFactory
+    opsite_builder.route_configuration.chain.class: OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationChain
 
 services:
     opsite_builder.route_provider:

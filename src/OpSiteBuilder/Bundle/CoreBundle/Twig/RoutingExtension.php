@@ -9,10 +9,10 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Twig;
 
+use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationChainInterface;
 use Symfony\Bridge\Twig\Extension\RoutingExtension as BaseRoutingExtension;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
-use OpSiteBuilder\Bundle\CoreBundle\Routing\PageRouteConfigurationChainInterface;
 
 /**
  * Class RoutingExtension
@@ -35,8 +35,8 @@ class RoutingExtension extends BaseRoutingExtension
     /**
      * Constructor
      *
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface                    $generator
-     * @param \OpSiteBuilder\Bundle\CoreBundle\Routing\PageRouteConfigurationChainInterface $routeConfiguration
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
+     * @param PageRouteConfigurationChainInterface                       $routeConfiguration
      */
     public function __construct(
         UrlGeneratorInterface $generator,

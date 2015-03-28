@@ -7,12 +7,12 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
+namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration;
 
 /**
  * Interface PageRouteConfigurationInterface
  *
- * @package OpSiteBuilder\Bundle\CoreBundle\Routing
+ * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration
  * @author jobou
  */
 interface PageRouteConfigurationInterface 

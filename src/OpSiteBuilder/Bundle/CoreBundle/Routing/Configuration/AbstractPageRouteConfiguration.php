@@ -7,13 +7,14 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
+namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration;
+
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 
 /**
  * Class AbstractPageRouteConfiguration
  *
- * @package OpSiteBuilder\Bundle\CoreBundle\Routing
+ * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration
  * @author jobou
  */
 abstract class AbstractPageRouteConfiguration implements PageRouteConfigurationInterface

@@ -7,13 +7,12 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Routing;
-use Symfony\Component\HttpFoundation\Request;
+namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration;
 
 /**
  * Class PageRouteConfigurationChain
  *
- * @package OpSiteBuilder\Bundle\CoreBundle\Routing
+ * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration
  * @author jobou
  */
 class PageRouteConfigurationChain implements PageRouteConfigurationChainInterface

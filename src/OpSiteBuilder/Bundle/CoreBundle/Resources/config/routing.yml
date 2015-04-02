@@ -1,0 +1,3 @@
+opsite_builder_api:
+    resource: @OpSiteBuilderCoreBundle/Resources/config/routing/api.yml
+    prefix: /api

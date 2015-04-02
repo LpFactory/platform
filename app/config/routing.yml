@@ -1,0 +1,2 @@
+opsite_builder_core:
+    resource: @OpSiteBuilderCoreBundle/Resources/config/routing.yml

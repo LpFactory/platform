@@ -111,6 +111,18 @@ abstract class AbstractBlock
     }
 
     /**
+     * Increment the sort value
+     *
+     * @return $this
+     */
+    public function incSort()
+    {
+        $this->setSort($this->getSort() + 1);
+
+        return $this;
+    }
+
+    /**
      * Get page
      *
      * @return AbstractPage

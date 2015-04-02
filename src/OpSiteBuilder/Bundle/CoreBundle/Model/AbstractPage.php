@@ -10,6 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpSiteBuilder\Bundle\CoreBundle\Exception\OpSiteBuilderException;
 
 /**
  * Class AbstractPage
@@ -233,6 +234,33 @@ abstract class AbstractPage
     public function isRoot()
     {
         return $this->getLvl() === 0;
+    }
+
+    /**
+     * Insert a block
+     *
+     * @param AbstractBlock $block
+     *
+     * @return AbstractPage
+     *
+     * @throws OpSiteBuilderException
+     */
+    public function insertBlock(AbstractBlock $block)
+    {
+        $position = $block->getSort();
+        if ($position === null) {
+            throw new OpSiteBuilderException('Block should have a sort value');
+        }
+
+        $this->getBlocks()->map(function (AbstractBlock $block) use ($position) {
+            if ($block->getSort() >= $position) {
+                $block->incSort();
+            }
+        });
+
+        $this->addBlock($block);
+
+        return $this;
     }
 
     /**

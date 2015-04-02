@@ -9,8 +9,10 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Controller;
 
+use OpSiteBuilder\Bundle\CoreBundle\Block\Exception\UnknownBlockTypeException;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -51,5 +53,42 @@ class PageController extends Controller
             'page' => $page,
             'breadcrumbs' => $path
         ));
+    }
+
+    /**
+     * Add a block to a page
+     *
+     * @param int    $id
+     * @param string $type
+     *
+     * @return \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @throws \OpSiteBuilder\Bundle\CoreBundle\Exception\OpSiteBuilderException
+     */
+    public function addBlockAction($id, $type)
+    {
+        /** @var AbstractPage $page */
+        $page = $this->get('opsite_builder.repository.page')->find($id);
+        if (!$page) {
+            throw $this->createNotFoundException('Unknown page id ' . $id);
+        }
+
+        try {
+            $block = $this->get('opsite_builder.block.factory')->create($type);
+        } catch (UnknownBlockTypeException $e) {
+            throw $this->createNotFoundException('Unknown block type ' . $type, $e);
+        }
+
+        // Insert a block at its sort position
+        $position = $this->get('opsite_builder.block.strategy.position')->getPosition($block, $page);
+        $block->setSort($position);
+        $page->insertBlock($block);
+
+        // Persist new block and page
+        $this->get('doctrine.orm.entity_manager')->persist($block);
+        $this->get('doctrine.orm.entity_manager')->persist($page);
+        $this->get('doctrine.orm.entity_manager')->flush();
+
+        return new JsonResponse($this->get('serializer')->normalize($block));
     }
 }

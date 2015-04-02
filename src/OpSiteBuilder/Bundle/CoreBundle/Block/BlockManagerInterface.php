@@ -36,4 +36,24 @@ interface BlockManagerInterface
      * @return mixed
      */
     public function getData(AbstractBlock $block);
+
+    /**
+     * Save a block
+     *
+     * @param AbstractBlock $block
+     * @param bool          $flush
+     *
+     * @return null
+     */
+    public function save(AbstractBlock $block, $flush = true);
+
+    /**
+     * Render the template for the block
+     *
+     * @param AbstractBlock $block
+     * @param bool          $edit
+     *
+     * @return string
+     */
+    public function renderView(AbstractBlock $block, $edit = false);
 }

@@ -1,0 +1,4 @@
+opsite_builder_api_add_block_to_page:
+    path: /page/{id}/block/{type}.json
+    defaults:
+        _controller: OpSiteBuilderCoreBundle:Page:addBlock

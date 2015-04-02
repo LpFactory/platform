@@ -9,8 +9,10 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Block;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 use OpSiteBuilder\Bundle\CoreBundle\Block\Provider\BlockDataProviderChainInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * Class BlockManager
@@ -36,13 +38,30 @@ class BlockManager implements BlockManagerInterface
     protected $providerChain;
 
     /**
+     * @var ObjectManager
+     */
+    protected $manager;
+
+    /**
+     * @var EngineInterface
+     */
+    protected $templating;
+
+    /**
      * Constructor
      *
      * @param BlockDataProviderChainInterface $providerChain
+     * @param ObjectManager                   $manager
+     * @param EngineInterface                 $templating
      */
-    public function __construct(BlockDataProviderChainInterface $providerChain)
-    {
+    public function __construct(
+        BlockDataProviderChainInterface $providerChain,
+        ObjectManager $manager,
+        EngineInterface $templating
+    ) {
         $this->providerChain = $providerChain;
+        $this->manager = $manager;
+        $this->templating = $templating;
     }
 
     /**
@@ -77,5 +96,28 @@ class BlockManager implements BlockManagerInterface
 
         // Return data
         return $this->data[$block->getId()];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(AbstractBlock $block, $flush = true)
+    {
+        $this->manager->persist($block);
+        if ($flush) {
+            $this->manager->flush();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function renderView(AbstractBlock $block, $edit = false)
+    {
+        return $this->templating->render('OpSiteBuilderWebBundle:Block/view:default.html.twig', array(
+            'block' => $block,
+            'data' => $this->getData($block),
+            'edit' => $edit
+        ));
     }
 }

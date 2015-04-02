@@ -1,0 +1,10 @@
+parameters:
+    opsite_builder.block.normalizer.class: OpSiteBuilder\Bundle\CoreBundle\Block\Normalizer\BlockNormalizer
+
+services:
+    opsite_builder.block.normalizer:
+        class: %opsite_builder.block.normalizer.class%
+        arguments:
+            - @opsite_builder.block.manager
+        tags:
+             - { name: serializer.normalizer }

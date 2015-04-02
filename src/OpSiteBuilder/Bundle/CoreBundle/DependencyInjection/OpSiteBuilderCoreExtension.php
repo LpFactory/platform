@@ -38,6 +38,7 @@ class OpSiteBuilderCoreExtension extends Extension
         $loader->load('managers.yml');
         $loader->load('security.yml');
         $loader->load('twig.yml');
+        $loader->load('serializer.yml');
 
         $config = $this->processConfiguration(new Configuration(), $configs);
         $this->loadConfiguration($config, $container);
@@ -59,6 +60,7 @@ class OpSiteBuilderCoreExtension extends Extension
         $pageDiscriminatorListener = $container->findDefinition('doctrine.event_listener.page.discriminator_map');
         $pageDiscriminatorListener->replaceArgument(1, $config['page_map']);
 
+        $container->setParameter('opsite_builder.block.class_map', $config['block_map']);
         $blockDiscriminatorListener = $container->findDefinition('doctrine.event_listener.block.discriminator_map');
         $blockDiscriminatorListener->replaceArgument(1, $config['block_map']);
     }

@@ -11,6 +11,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Entity\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
+use OpSiteBuilder\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
 
 /**
  * Class PageRepository

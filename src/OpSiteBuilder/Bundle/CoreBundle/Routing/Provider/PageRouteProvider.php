@@ -9,8 +9,8 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Provider;
 
-use OpSiteBuilder\Bundle\CoreBundle\Entity\Repository\PageRepositoryInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
+use OpSiteBuilder\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationChainInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationInterface;

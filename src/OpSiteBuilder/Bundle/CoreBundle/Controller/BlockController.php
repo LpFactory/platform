@@ -38,4 +38,24 @@ class BlockController extends Controller
             $this->get('opsite_builder.block.manager')->renderView($block)
         );
     }
+
+    /**
+     * Remove a block
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function removeAction($id)
+    {
+        /** @var AbstractBlock $block */
+        $block = $this->get('opsite_builder.repository.block')->find($id);
+        if (!$block) {
+            throw $this->createNotFoundException('Unknown block #' . $id);
+        }
+
+        $this->get('opsite_builder.block.manager')->remove($block);
+
+        return new Response('', 204);
+    }
 }

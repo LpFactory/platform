@@ -2,3 +2,10 @@ opsite_builder_api_add_block_to_page:
     path: /page/{id}/block/{type}.json
     defaults:
         _controller: OpSiteBuilderCoreBundle:Page:addBlock
+
+opsite_builder_api_remove_block:
+    path: /block/{id}
+    defaults:
+        _controller: OpSiteBuilderCoreBundle:Block:remove
+    methods:
+        - DELETE

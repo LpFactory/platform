@@ -7,10 +7,11 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Entity\Repository;
+namespace OpSiteBuilder\Bundle\CoreBundle\Model\Repository;
 
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use Gedmo\Tree\RepositoryInterface;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
  * Interface PageRepositoryInterface
@@ -18,7 +19,7 @@ use Gedmo\Tree\RepositoryInterface;
  * @package OpSiteBuilder\Bundle\CoreBundle\Entity\Repository
  * @author jobou
  */
-interface PageRepositoryInterface extends RepositoryInterface
+interface PageRepositoryInterface extends RepositoryInterface, ObjectRepository
 {
     /**
      * Get a root page for a specific hostname

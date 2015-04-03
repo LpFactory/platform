@@ -9,7 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Strategy;
 
-use OpSiteBuilder\Bundle\CoreBundle\Entity\Repository\PageRepositoryInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
 
 /**
  * Class SingleTreeStrategy

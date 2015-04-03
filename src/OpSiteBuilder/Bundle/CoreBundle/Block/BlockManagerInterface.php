@@ -48,6 +48,16 @@ interface BlockManagerInterface
     public function save(AbstractBlock $block, $flush = true);
 
     /**
+     * Remove a block
+     *
+     * @param AbstractBlock $block
+     * @param bool          $flush
+     *
+     * @return null
+     */
+    public function remove(AbstractBlock $block, $flush = true);
+
+    /**
      * Render the template for the block
      *
      * @param AbstractBlock $block

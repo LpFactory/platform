@@ -112,6 +112,17 @@ class BlockManager implements BlockManagerInterface
     /**
      * {@inheritdoc}
      */
+    public function remove(AbstractBlock $block, $flush = true)
+    {
+        $this->manager->remove($block);
+        if ($flush) {
+            $this->manager->flush();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function renderView(AbstractBlock $block, $edit = false)
     {
         return $this->templating->render('OpSiteBuilderWebBundle:Block/view:default.html.twig', array(

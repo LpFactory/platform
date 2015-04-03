@@ -19,3 +19,5 @@ OpSiteBuilder\Bundle\CoreBundle\Entity\Page:
         blocks:
             targetEntity: OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock
             mappedBy: page
+            orderBy:
+                sort: ASC

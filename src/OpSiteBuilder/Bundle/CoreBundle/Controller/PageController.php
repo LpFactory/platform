@@ -85,9 +85,7 @@ class PageController extends Controller
         $page->insertBlock($block);
 
         // Persist new block and page
-        $this->get('doctrine.orm.entity_manager')->persist($block);
-        $this->get('doctrine.orm.entity_manager')->persist($page);
-        $this->get('doctrine.orm.entity_manager')->flush();
+        $this->get('opsite_builder.page.manager')->save($page, true, true);
 
         return new JsonResponse($this->get('serializer')->normalize($block));
     }

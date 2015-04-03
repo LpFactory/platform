@@ -239,15 +239,15 @@ abstract class AbstractPage
     /**
      * Insert a block
      *
-     * @param AbstractBlock $block
+     * @param AbstractBlock $newBlock
      *
      * @return AbstractPage
      *
      * @throws OpSiteBuilderException
      */
-    public function insertBlock(AbstractBlock $block)
+    public function insertBlock(AbstractBlock $newBlock)
     {
-        $position = $block->getSort();
+        $position = $newBlock->getSort();
         if ($position === null) {
             throw new OpSiteBuilderException('Block should have a sort value');
         }
@@ -258,7 +258,7 @@ abstract class AbstractPage
             }
         });
 
-        $this->addBlock($block);
+        $this->addBlock($newBlock);
 
         return $this;
     }

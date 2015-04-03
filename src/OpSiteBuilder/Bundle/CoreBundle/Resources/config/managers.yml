@@ -44,3 +44,4 @@ services:
         class: %opsite_builder.page.manager.class%
         arguments:
             - @doctrine.orm.entity_manager
+            - @opsite_builder.block.manager

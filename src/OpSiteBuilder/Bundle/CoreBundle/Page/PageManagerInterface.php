@@ -24,8 +24,9 @@ interface PageManagerInterface
      *
      * @param AbstractPage $page
      * @param bool         $flush
+     * @param bool         $cascade
      *
      * @return null
      */
-    public function save(AbstractPage $page, $flush = true);
+    public function save(AbstractPage $page, $flush = true, $cascade = false);
 }

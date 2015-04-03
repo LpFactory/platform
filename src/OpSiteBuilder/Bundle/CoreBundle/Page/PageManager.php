@@ -9,6 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Page;
 
+use OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -23,26 +24,43 @@ class PageManager implements PageManagerInterface
     /**
      * @var ObjectManager
      */
-    protected $manager;
+    protected $pageManager;
+
+    /**
+     * @var BlockManagerInterface
+     */
+    protected $blockManager;
 
     /**
      * Constructor
      *
-     * @param ObjectManager $manager
+     * @param ObjectManager         $pageManager
+     * @param BlockManagerInterface $blockManager
      */
-    public function __construct(ObjectManager $manager)
+    public function __construct(ObjectManager $pageManager, BlockManagerInterface $blockManager)
     {
-        $this->manager = $manager;
+        $this->pageManager = $pageManager;
+        $this->blockManager = $blockManager;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(AbstractPage $page, $flush = true)
+    public function save(AbstractPage $page, $flush = true, $cascade = false)
     {
-        $this->manager->persist($page);
+        // Persist page
+        $this->pageManager->persist($page);
+
+        // Persist blocks too
+        if ($cascade) {
+            foreach ($page->getBlocks() as $block) {
+                $this->blockManager->save($block, false);
+            }
+        }
+
+        // Flush
         if ($flush) {
-            $this->manager->flush();
+            $this->pageManager->flush();
         }
     }
 }

@@ -10,6 +10,8 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Page;
 
 use OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Block\Strategy\BlockPositionStrategyInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -32,15 +34,53 @@ class PageManager implements PageManagerInterface
     protected $blockManager;
 
     /**
+     * @var BlockPositionStrategyInterface
+     */
+    protected $positionStrategy;
+
+    /**
      * Constructor
      *
-     * @param ObjectManager         $pageManager
-     * @param BlockManagerInterface $blockManager
+     * @param ObjectManager                  $pageManager
+     * @param BlockManagerInterface          $blockManager
+     * @param BlockPositionStrategyInterface $positionStrategy
      */
-    public function __construct(ObjectManager $pageManager, BlockManagerInterface $blockManager)
-    {
+    public function __construct(
+        ObjectManager $pageManager,
+        BlockManagerInterface $blockManager,
+        BlockPositionStrategyInterface $positionStrategy
+    ) {
         $this->pageManager = $pageManager;
         $this->blockManager = $blockManager;
+        $this->positionStrategy = $positionStrategy;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addBlock(AbstractPage $page, AbstractBlock $block)
+    {
+        // Insert a block at its sort position
+        $position = $this->positionStrategy->getPosition($block, $page);
+        $block->setSort($position);
+
+        // Shift sort in existing block
+        $page->shiftBlock($position);
+
+        // Add new block
+        $page->addBlock($block);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function moveBlock(AbstractPage $page, AbstractBlock $block, $position)
+    {
+        // Set new position for block
+        $block->setSort($position);
+
+        // Shift sort in existing block
+        $page->shiftBlock($position);
     }
 
     /**

@@ -2,6 +2,15 @@ opsite_builder_api_add_block_to_page:
     path: /page/{id}/block/{type}.json
     defaults:
         _controller: OpSiteBuilderCoreBundle:Page:addBlock
+    methods:
+        - POST
+
+opsite_builder_api_move_block:
+    path: /page/{id}/block/{blockId}/move
+    defaults:
+        _controller: OpSiteBuilderCoreBundle:Page:moveBlock
+    methods:
+        - PUT
 
 opsite_builder_api_remove_block:
     path: /block/{id}

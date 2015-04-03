@@ -239,26 +239,18 @@ abstract class AbstractPage
     /**
      * Insert a block
      *
-     * @param AbstractBlock $newBlock
+     * @param $position
      *
      * @return AbstractPage
      *
-     * @throws OpSiteBuilderException
      */
-    public function insertBlock(AbstractBlock $newBlock)
+    public function shiftBlock($position)
     {
-        $position = $newBlock->getSort();
-        if ($position === null) {
-            throw new OpSiteBuilderException('Block should have a sort value');
-        }
-
         $this->getBlocks()->map(function (AbstractBlock $block) use ($position) {
             if ($block->getSort() >= $position) {
                 $block->incSort();
             }
         });
-
-        $this->addBlock($newBlock);
 
         return $this;
     }

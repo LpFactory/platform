@@ -45,3 +45,4 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @opsite_builder.block.manager
+            - @opsite_builder.block.strategy.position

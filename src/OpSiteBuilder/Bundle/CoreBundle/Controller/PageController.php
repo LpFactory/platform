@@ -11,8 +11,10 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Controller;
 
 use OpSiteBuilder\Bundle\CoreBundle\Block\Exception\UnknownBlockTypeException;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
+use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -61,8 +63,9 @@ class PageController extends Controller
      * @param int    $id
      * @param string $type
      *
-     * @return \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return JsonResponse
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \OpSiteBuilder\Bundle\CoreBundle\Exception\OpSiteBuilderException
      */
     public function addBlockAction($id, $type)
@@ -79,14 +82,40 @@ class PageController extends Controller
             throw $this->createNotFoundException('Unknown block type ' . $type, $e);
         }
 
-        // Insert a block at its sort position
-        $position = $this->get('opsite_builder.block.strategy.position')->getPosition($block, $page);
-        $block->setSort($position);
-        $page->insertBlock($block);
-
-        // Persist new block and page
-        $this->get('opsite_builder.page.manager')->save($page, true, true);
+        // Add and persist new block and page
+        $pageManager = $this->get('opsite_builder.page.manager');
+        $pageManager->addBlock($page, $block);
+        $pageManager->save($page, true, true);
 
         return new JsonResponse($this->get('serializer')->normalize($block));
+    }
+
+    /**
+     * Move a block to a new position in the page
+     *
+     * @param Request $request
+     * @param int     $id
+     * @param int     $blockId
+     */
+    public function moveBlockAction(Request $request, $id, $blockId)
+    {
+        $position = (int) $request->query->get('position', 1);
+
+        /** @var AbstractPage $page */
+        $page = $this->get('opsite_builder.repository.page')->find($id);
+        if (!$page) {
+            throw $this->createNotFoundException('Unknown page id ' . $id);
+        }
+
+        /** @var AbstractBlock $block */
+        $block = $this->get('opsite_builder.repository.block')->find($blockId);
+        if (!$block) {
+            throw $this->createNotFoundException('Unknown block id ' . $blockId);
+        }
+
+        // Add and persist new block and page
+        $pageManager = $this->get('opsite_builder.page.manager');
+        $pageManager->moveBlock($page, $block, $position);
+        $pageManager->save($page, true, true);
     }
 }

@@ -28,7 +28,7 @@ abstract class AbstractPageRouteConfiguration
      */
     public function isMatching($url)
     {
-        if (!$this->getRegex()) {
+        if ($this->getRegex() === null) {
             return true;
         }
 
@@ -49,7 +49,7 @@ abstract class AbstractPageRouteConfiguration
      */
     public function extractPathInfo($pathInfo)
     {
-        if (!$this->getRegex()) {
+        if ($this->getRegex() === null) {
             return $pathInfo;
         }
 

@@ -104,7 +104,7 @@ class PageDynamicRouter implements ChainedRouterInterface, RequestMatcherInterfa
     public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
     {
         return $this->generator->generate(
-            $this->provider->getRouteByName($name),
+            $name,
             $parameters,
             $referenceType ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH
         );

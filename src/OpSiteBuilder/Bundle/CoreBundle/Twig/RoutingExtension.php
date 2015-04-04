@@ -23,26 +23,28 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 class RoutingExtension extends BaseRoutingExtension
 {
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @var UrlGeneratorInterface
      */
-    private $generator;
+    protected $opGenerator;
 
     /**
-     * @var \OpSiteBuilder\Bundle\CoreBundle\Routing\PageRouteConfigurationChainInterface
+     * @var PageRouteConfigurationChainInterface
      */
     protected $routeConfiguration;
 
     /**
      * Constructor
      *
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
-     * @param PageRouteConfigurationChainInterface                       $routeConfiguration
+     * @param UrlGeneratorInterface                $generator
+     * @param PageRouteConfigurationChainInterface $routeConfiguration
      */
     public function __construct(
         UrlGeneratorInterface $generator,
         PageRouteConfigurationChainInterface $routeConfiguration
     ) {
-        $this->generator = $generator;
+        parent::__construct($generator);
+
+        $this->opGenerator = $generator;
         $this->routeConfiguration = $routeConfiguration;
     }
 
@@ -76,7 +78,7 @@ class RoutingExtension extends BaseRoutingExtension
     {
         $configuration = $this->routeConfiguration->get($action);
 
-        return $this->generator->generate(
+        return $this->opGenerator->generate(
             $configuration->getPageRouteName($page),
             $parameters,
             $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH

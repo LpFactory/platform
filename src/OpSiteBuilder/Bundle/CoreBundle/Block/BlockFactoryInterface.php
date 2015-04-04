@@ -18,7 +18,7 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
  * @package OpSiteBuilder\Bundle\CoreBundle\Block
  * @author jobou
  */
-interface BlockFactoryInterface 
+interface BlockFactoryInterface
 {
     /**
      * Get a new instance of a specific bloc

@@ -18,7 +18,7 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
  * @package OpSiteBuilder\Bundle\CoreBundle\Block\Strategy
  * @author jobou
  */
-interface BlockPositionStrategyInterface 
+interface BlockPositionStrategyInterface
 {
     /**
      * Get the position of the new block in the page

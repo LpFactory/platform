@@ -30,7 +30,7 @@ interface PageRouteConfigurationChainInterface
      *
      * @param string $alias
      *
-     * @return PageRouteConfigurationInterface
+     * @return AbstractPageRouteConfiguration
      */
     public function get($alias);
 
@@ -49,4 +49,22 @@ interface PageRouteConfigurationChainInterface
      * @return bool
      */
     public function supports($name);
+
+    /**
+     * Find a supported configuration for route name
+     *
+     * @param string $name
+     *
+     * @return AbstractPageRouteConfiguration|null
+     */
+    public function getConfigurationByRouteName($name);
+
+    /**
+     * Find a supported configuration for a path info
+     *
+     * @param string $pathInfo
+     *
+     * @return AbstractPageRouteConfiguration|null
+     */
+    public function getConfigurationByPathInfo($pathInfo);
 }

@@ -10,12 +10,11 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Provider;
 
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
-use OpSiteBuilder\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationChainInterface;
-use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Factory\PageRouteFactoryInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer\UrlSatinizerChainInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Routing\Strategy\AbstractTreeStrategy;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -45,9 +44,9 @@ class PageRouteProvider implements RouteProviderInterface
     protected $urlSatinizerChain;
 
     /**
-     * @var PageRepositoryInterface
+     * @var AbstractTreeStrategy
      */
-    protected $pageRepository;
+    protected $treeStrategy;
 
     /**
      * Constructor
@@ -55,18 +54,18 @@ class PageRouteProvider implements RouteProviderInterface
      * @param PageRouteFactoryInterface            $routeFactory
      * @param UrlSatinizerChainInterface           $urlSatinizerChain
      * @param PageRouteConfigurationChainInterface $routeConfigurationChain
-     * @param PageRepositoryInterface              $pageRepository
+     * @param AbstractTreeStrategy                 $treeStrategy
      */
     public function __construct(
         PageRouteFactoryInterface $routeFactory,
         UrlSatinizerChainInterface $urlSatinizerChain,
         PageRouteConfigurationChainInterface $routeConfigurationChain,
-        PageRepositoryInterface $pageRepository
+        AbstractTreeStrategy $treeStrategy
     ) {
         $this->routeFactory = $routeFactory;
         $this->urlSatinizerChain = $urlSatinizerChain;
         $this->routeConfigurationChain = $routeConfigurationChain;
-        $this->pageRepository = $pageRepository;
+        $this->treeStrategy = $treeStrategy;
     }
 
     /**
@@ -80,9 +79,25 @@ class PageRouteProvider implements RouteProviderInterface
         $hostName = $request->getHost();
 
         /** @var AbstractPageRouteConfiguration $configuration */
-        foreach ($this->routeConfigurationChain as $configuration) {
-            if (null !== $extractedPathInfo = $configuration->isMatching($pathInfo)) {
-                $this->appendRouteToCollection($collection, $configuration, $extractedPathInfo, $hostName);
+        $configuration = $this->routeConfigurationChain->getConfigurationByPathInfo($pathInfo);
+        if ($configuration === null) {
+            return $collection;
+        }
+
+        // Get deepest slug
+        $pagesPathInfo = $configuration->extractPathInfo($pathInfo);
+        $deepestSlug = $this->treeStrategy->getDeepestPageSlug($pagesPathInfo);
+
+        /** @var AbstractPage $page */
+        foreach ($this->treeStrategy->getPage($deepestSlug, $hostName) as $page) {
+            $route = $this->routeFactory->create($configuration, $page);
+
+            // If page path matches requested uri, add route
+            if ($pathInfo === $route->getPath()) {
+                $collection->add(
+                    $route->getName(),
+                    $route
+                );
                 break;
             }
         }
@@ -90,81 +105,35 @@ class PageRouteProvider implements RouteProviderInterface
         return $collection;
     }
 
-    protected function appendRouteToCollection(
-        RouteCollection $collection,
-        PageRouteConfigurationInterface $configuration,
-        $pathInfo,
-        $hostName
-    ) {
-        $explodedPathInfo = explode('/', $pathInfo);
-        $deepestCandidate = array_pop($explodedPathInfo);
-
-        $rootPage = $this->pageRepository->getRootPageForHostname($hostName);
-        $pages = $this->pageRepository->getPageInTree($deepestCandidate, $rootPage);
-
-        /** @var AbstractPage $page */
-        foreach ($pages as $page) {
-            $path = $this->pageRepository->getPath($page);
-
-            // If page path matches requested uri, add route
-            if ($pathInfo === $this->buildUrlFromPath($path)) {
-                $route = $this->routeFactory->create($configuration, $page, $pathInfo, $path);
-
-                $collection->add(
-                    $route->getName(),
-                    $route
-                );
-            }
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getRouteByName($name)
     {
-        /** @var PageRouteConfigurationInterface $configuration */
-        foreach ($this->routeConfigurationChain as $configuration) {
-            if (null !== $pageId = $configuration->extractId($name)) {
-                $page = $this->pageRepository->find($pageId);
-                $path = $this->pageRepository->getPath($page);
-
-                return $this->routeFactory->create(
-                    $configuration,
-                    $page,
-                    $this->buildUrlFromPath($path),
-                    $path
-                );
-            }
+        /** @var AbstractPageRouteConfiguration $configuration */
+        $configuration = $this->routeConfigurationChain->getConfigurationByRouteName($name);
+        if ($configuration === null) {
+            throw new RouteNotFoundException($name);
         }
 
-        throw new RouteNotFoundException($name);
+        $pageId = $configuration->extractId($name);
+        if ($pageId === null) {
+            throw new RouteNotFoundException($name);
+        }
+
+        return $this->routeFactory->createFromId(
+            $configuration,
+            $pageId
+        );
     }
 
     /**
+     * Return empty array because routes are all dynamically loaded when needed
+     *
      * {@inheritdoc}
      */
     public function getRoutesByNames($names)
     {
         return array();
-    }
-
-    /**
-     * Build an url from a path
-     *
-     * @param array $path
-     *
-     * @return string
-     */
-    protected function buildUrlFromPath(array $path)
-    {
-        // Remove root level (no multi tree support for now)
-        // TODO : multi tree support
-        array_shift($path);
-
-        // Build uri from tree path
-        return array_reduce($path, function ($carry, AbstractPage $item) {
-            return $carry .= '/' . $item->getSlug();
-        });
     }
 }

@@ -24,14 +24,6 @@ class PageRepository extends NestedTreeRepository implements PageRepositoryInter
     /**
      * {@inheritdoc}
      */
-    public function getRootPageForHostname($hostName)
-    {
-        return $this->getRootNodesQuery()->getSingleResult();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getPageInTree($slug, AbstractPage $root = null)
     {
         $qb = $this
@@ -46,5 +38,23 @@ class PageRepository extends NestedTreeRepository implements PageRepositoryInter
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @var array
+     */
+    protected $cachedPaths = array();
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCachedPath(AbstractPage $page)
+    {
+        $pageId = $page->getId();
+        if (isset($this->cachedPaths[$pageId])) {
+            return $this->cachedPaths[$pageId];
+        }
+
+        return $this->cachedPaths[$pageId] = $this->getPath($page);
     }
 }

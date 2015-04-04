@@ -8,6 +8,7 @@ parameters:
     opsite_builder.routing.satinizer.chain.class: OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer\UrlSatinizerChain
     opsite_builder.routing.satinizer_format.class: OpSiteBuilder\Bundle\CoreBundle\Routing\Satinizer\UrlFormatSatinizer
     opsite_builder.routing.final_matcher.class: Symfony\Cmf\Component\Routing\NestedMatcher\UrlMatcher
+    opsite_builder.route_strategy.single_tree.class: OpSiteBuilder\Bundle\CoreBundle\Routing\Strategy\SingleTreeStrategy
 
 services:
     opsite_builder.page_dynamic_router:
@@ -31,10 +32,13 @@ services:
             - @opsite_builder.route_factory
             - @opsite_builder.routing.satinizer.chain
             - @opsite_builder.route_configuration.chain
-            - @opsite_builder.repository.page
+            - @opsite_builder.route_strategy.single_tree
 
     opsite_builder.route_factory:
         class: %opsite_builder.route_factory.class%
+        arguments:
+            - @opsite_builder.repository.page
+            - @opsite_builder.route_strategy.single_tree
 
     opsite_builder.route_configuration.chain:
         class: %opsite_builder.route_configuration.chain.class%
@@ -62,3 +66,13 @@ services:
         arguments:
             - @opsite_builder.routing.matcher.dummy_collection
             - @opsite_builder.routing.matcher.dummy_context
+
+    opsite_builder.route_strategy.abstract:
+        abstract: true
+        arguments:
+            - @opsite_builder.repository.page
+
+    opsite_builder.route_strategy.single_tree:
+        parent: opsite_builder.route_strategy.abstract
+        class: %opsite_builder.route_strategy.single_tree.class%
+

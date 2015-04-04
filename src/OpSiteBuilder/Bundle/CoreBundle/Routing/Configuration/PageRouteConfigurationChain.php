@@ -75,7 +75,7 @@ class PageRouteConfigurationChain implements PageRouteConfigurationChainInterfac
      */
     public function supports($name)
     {
-        /** @var PageRouteConfigurationInterface $configuration */
+        /** @var AbstractPageRouteConfiguration $configuration */
         foreach ($this->all() as $configuration) {
             if ($configuration->supports($name)) {
                 return true;
@@ -83,6 +83,36 @@ class PageRouteConfigurationChain implements PageRouteConfigurationChainInterfac
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigurationByRouteName($name)
+    {
+        /** @var AbstractPageRouteConfiguration $configuration */
+        foreach ($this->all() as $configuration) {
+            if ($configuration->supports($name)) {
+                return $configuration;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigurationByPathInfo($name)
+    {
+        /** @var AbstractPageRouteConfiguration $configuration */
+        foreach ($this->all() as $configuration) {
+            if ($configuration->isMatching($name)) {
+                return $configuration;
+            }
+        }
+
+        return null;
     }
 
     /**

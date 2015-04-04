@@ -17,7 +17,7 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration
  * @author jobou
  */
-abstract class AbstractPageRouteConfiguration implements PageRouteConfigurationInterface
+abstract class AbstractPageRouteConfiguration
 {
     /**
      * Check if route configuration matches url
@@ -29,14 +29,32 @@ abstract class AbstractPageRouteConfiguration implements PageRouteConfigurationI
     public function isMatching($url)
     {
         if (!$this->getRegex()) {
-            return $url;
+            return true;
         }
 
-        if (preg_match($this->getRegex(), $url, $matches)) {
-            return $matches[1];
+        if (preg_match($this->getRegex(), $url)) {
+            return true;
         }
 
-        return null;
+        return false;
+    }
+
+    /**
+     * Extract page pathinfo
+     * Call isMatching before to be sure regex matches
+     *
+     * @param $pathInfo
+     *
+     * @return string
+     */
+    public function extractPathInfo($pathInfo)
+    {
+        if (!$this->getRegex()) {
+            return $pathInfo;
+        }
+
+        preg_match($this->getRegex(), $pathInfo, $matches);
+        return $matches[1];
     }
 
     /**
@@ -92,22 +110,30 @@ abstract class AbstractPageRouteConfiguration implements PageRouteConfigurationI
     }
 
     /**
-     * {@inheritdoc}
+     * Get the route name prefix
+     *
+     * @return string
      */
     abstract public function getPrefix();
 
     /**
-     * {@inheritdoc}
+     * Get the regex to match a pathinfo
+     *
+     * @return string
      */
     abstract public function getRegex();
 
     /**
-     * {@inheritdoc}
+     * Get the controller to execute
+     *
+     * @return string
      */
     abstract public function getController();
 
     /**
-     * {@inheritdoc}
+     * Get the path sprintf to generate pathinfo
+     *
+     * @return string
      */
     abstract public function getPath();
 }

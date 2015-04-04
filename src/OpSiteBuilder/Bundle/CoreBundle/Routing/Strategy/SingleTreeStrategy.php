@@ -9,7 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Strategy;
 
-use OpSiteBuilder\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * Class SingleTreeStrategy
@@ -17,31 +17,18 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
  * @package OpSiteBuilder\Bundle\CoreBundle\Routing\Strategy
  * @author jobou
  */
-class SingleTreeStrategy implements PageTreeStrategyInterface
+class SingleTreeStrategy extends AbstractTreeStrategy
 {
-    /**
-     * @var PageRepositoryInterface
-     */
-    protected $repository;
-
-    /**
-     * Constructor
-     *
-     * @param PageRepositoryInterface $repository
-     */
-    public function __construct(PageRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     /**
      * Single tree strategy
      * Be sure you only have one root node for one website
+     *
+     * @throws NonUniqueResultException
      *
      * {@inheritdoc}
      */
     public function getRootNode($hostName)
     {
-        return $this->repository->getRootNodeForHostname($hostName);
+        return $this->repository->getRootNodesQuery()->getSingleResult();
     }
 }

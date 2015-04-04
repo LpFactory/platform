@@ -22,19 +22,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 interface PageRepositoryInterface extends RepositoryInterface, ObjectRepository
 {
     /**
-     * Get a root page for a specific hostname
-     *
-     * @param string $hostName
-     *
-     * @return AbstractPage
-     *
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getRootPageForHostname($hostName);
-
-    /**
-     * Find a page in a specific tree
+     * Find a page per slug in a specific tree
      *
      * @param string       $slug
      * @param AbstractPage $root
@@ -42,4 +30,13 @@ interface PageRepositoryInterface extends RepositoryInterface, ObjectRepository
      * @return array
      */
     public function getPageInTree($slug, AbstractPage $root = null);
+
+    /**
+     * Get a path from memory if available
+     *
+     * @param AbstractPage $page
+     *
+     * @return array
+     */
+    public function getCachedPath(AbstractPage $page);
 }

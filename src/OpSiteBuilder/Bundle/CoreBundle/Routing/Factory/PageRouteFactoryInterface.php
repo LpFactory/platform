@@ -10,7 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Routing\Factory;
 
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
-use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
 
 /**
  * Class PageRouteFactoryInterface
@@ -23,11 +23,20 @@ interface PageRouteFactoryInterface
     /**
      * Create a new route instance
      *
-     * @param PageRouteConfigurationInterface $routeConfiguration
-     * @param AbstractPage                    $page
-     * @param string                          $path
+     * @param AbstractPageRouteConfiguration $routeConfiguration
+     * @param AbstractPage                   $page
      *
      * @return \Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route
      */
-    public function create(PageRouteConfigurationInterface $routeConfiguration, AbstractPage $page, $path);
+    public function create(AbstractPageRouteConfiguration $routeConfiguration, AbstractPage $page);
+
+    /**
+     * Create a new route instance from a page id
+     *
+     * @param AbstractPageRouteConfiguration $routeConfiguration
+     * @param int                            $pageId
+     *
+     * @return \Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route
+     */
+    public function createFromId(AbstractPageRouteConfiguration $routeConfiguration, $pageId);
 }

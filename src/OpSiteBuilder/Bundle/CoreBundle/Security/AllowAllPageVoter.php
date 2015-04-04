@@ -21,10 +21,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class AllowAllPageVoter implements VoterInterface
 {
-    const VIEW = 'OPSITE_BUILDER_PAGE_VIEW';
-    const EDIT = 'OPSITE_BUILDER_PAGE_EDIT';
-    const DELETE = 'OPSITE_BUILDER_PAGE_DELETE';
-
     /**
      * Get supported attributes
      *
@@ -33,9 +29,9 @@ class AllowAllPageVoter implements VoterInterface
     protected function getSupportedAttributes()
     {
         return array(
-            self::VIEW,
-            self::EDIT,
-            self::DELETE,
+            SecurityAttributes::PAGE_VIEW,
+            SecurityAttributes::PAGE_EDIT,
+            SecurityAttributes::PAGE_DELETE
         );
     }
 

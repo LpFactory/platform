@@ -11,6 +11,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Controller;
 
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
+use OpSiteBuilder\Bundle\CoreBundle\Security\SecurityAttributes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -52,6 +53,11 @@ class BlockController extends Controller
         $block = $this->get('opsite_builder.repository.block')->find($id);
         if (!$block) {
             throw $this->createNotFoundException('Unknown block #' . $id);
+        }
+
+        $page = $block->getPage();
+        if (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $page)) {
+            throw $this->createAccessDeniedException('Remove block denied for page ' . $page->getId());
         }
 
         $this->get('opsite_builder.block.manager')->remove($block);

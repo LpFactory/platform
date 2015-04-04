@@ -12,10 +12,12 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Controller;
 use OpSiteBuilder\Bundle\CoreBundle\Block\Exception\UnknownBlockTypeException;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
+use OpSiteBuilder\Bundle\CoreBundle\Security\SecurityAttributes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class PageController
@@ -48,9 +50,15 @@ class PageController extends Controller
      * @param array        $path
      *
      * @return Response
+     *
+     * @throws AccessDeniedException
      */
     public function editAction(AbstractPage $page, $path)
     {
+        if (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $page)) {
+            throw $this->createAccessDeniedException('Edit denied for page ' . $page->getId());
+        }
+
         return $this->render('OpSiteBuilderWebBundle:Page:edit.html.twig', array(
             'page' => $page,
             'breadcrumbs' => $path
@@ -74,6 +82,8 @@ class PageController extends Controller
         $page = $this->get('opsite_builder.repository.page')->find($id);
         if (!$page) {
             throw $this->createNotFoundException('Unknown page id ' . $id);
+        } elseif (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $page)) {
+            throw $this->createAccessDeniedException('Add block denied for page ' . $page->getId());
         }
 
         try {
@@ -101,16 +111,15 @@ class PageController extends Controller
     {
         $position = (int) $request->query->get('position', 1);
 
-        /** @var AbstractPage $page */
-        $page = $this->get('opsite_builder.repository.page')->find($id);
-        if (!$page) {
-            throw $this->createNotFoundException('Unknown page id ' . $id);
+        /** @var AbstractBlock $block */
+        $block = $this->get('opsite_builder.repository.block')->findBlockInPageById($blockId, $id);
+        if (!$block) {
+            throw $this->createNotFoundException('Unknown block id ' . $blockId . ' in page ' . $id);
         }
 
-        /** @var AbstractBlock $block */
-        $block = $this->get('opsite_builder.repository.block')->find($blockId);
-        if (!$block) {
-            throw $this->createNotFoundException('Unknown block id ' . $blockId);
+        $page = $block->getPage();
+        if (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $page)) {
+            throw $this->createAccessDeniedException('Move block denied for page ' . $id);
         }
 
         // Add and persist new block and page

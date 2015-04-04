@@ -10,6 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Model\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 
 /**
  * Interface BlockRepositoryInterface
@@ -19,4 +20,13 @@ use Doctrine\Common\Persistence\ObjectRepository;
  */
 interface BlockRepositoryInterface extends ObjectRepository
 {
+    /**
+     * Find a block with his page by ids
+     *
+     * @param int $blockId
+     * @param int $pageId
+     *
+     * @return AbstractBlock
+     */
+    public function findBlockInPageById($blockId, $pageId);
 }

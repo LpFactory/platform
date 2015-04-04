@@ -7,6 +7,7 @@ parameters:
     opsite_builder.block.factory.class: OpSiteBuilder\Bundle\CoreBundle\Block\BlockFactory
     opsite_builder.block.strategy.position.class: OpSiteBuilder\Bundle\CoreBundle\Block\Strategy\BlockPositionStrategy
     opsite_builder.page.manager.class: OpSiteBuilder\Bundle\CoreBundle\Page\PageManager
+    opsite_builder.block.renderer.class: OpSiteBuilder\Bundle\CoreBundle\Block\Rendered\BlockRenderer
 
 services:
     opsite_builder.block.data_provider.chain:
@@ -17,6 +18,11 @@ services:
         arguments:
             - @opsite_builder.block.data_provider.chain
             - @doctrine.orm.entity_manager
+
+    opsite_builder.block.renderer:
+        class: %opsite_builder.block.renderer.class%
+        arguments:
+            - @opsite_builder.block.manager
             - @templating
 
     opsite_builder.block.data_provider.default:

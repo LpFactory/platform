@@ -9,6 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Twig;
 
+use OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 
@@ -26,13 +27,22 @@ class BlockExtension extends \Twig_Extension
     protected $configurationChain;
 
     /**
+     * @var BlockManagerInterface
+     */
+    protected $blockManager;
+
+    /**
      * Constructor
      *
      * @param BlockConfigurationChainInterface $configurationChain
+     * @param BlockManagerInterface            $blockManager
      */
-    public function __construct(BlockConfigurationChainInterface $configurationChain)
-    {
+    public function __construct(
+        BlockConfigurationChainInterface $configurationChain,
+        BlockManagerInterface $blockManager
+    ) {
         $this->configurationChain = $configurationChain;
+        $this->blockManager = $blockManager;
     }
 
     /**
@@ -42,6 +52,8 @@ class BlockExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('get_block_view_controller', array($this, 'getBlockViewController')),
+            new \Twig_SimpleFunction('get_block_edit_route', array($this, 'getBlockEditRoute')),
+            new \Twig_SimpleFunction('block_is_empty', array($this, 'isBlockEmpty')),
         );
     }
 
@@ -55,6 +67,30 @@ class BlockExtension extends \Twig_Extension
     public function getBlockViewController(AbstractBlock $block)
     {
         return $this->configurationChain->getConfiguration($block->getAlias())->getViewController();
+    }
+
+    /**
+     * Get the edit route for a block
+     *
+     * @param AbstractBlock $block
+     *
+     * @return string
+     */
+    public function getBlockEditRoute(AbstractBlock $block)
+    {
+        return $this->configurationChain->getConfiguration($block->getAlias())->getEditRoute();
+    }
+
+    /**
+     * Check if a block is empty
+     *
+     * @param AbstractBlock $block
+     *
+     * @return bool
+     */
+    public function isBlockEmpty(AbstractBlock $block)
+    {
+        return $this->blockManager->isEmpty($block);
     }
 
     /**

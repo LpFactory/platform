@@ -5,6 +5,6 @@ services:
     opsite_builder.block.normalizer:
         class: %opsite_builder.block.normalizer.class%
         arguments:
-            - @opsite_builder.block.manager
+            - @opsite_builder.block.renderer
         tags:
              - { name: serializer.normalizer }

@@ -21,18 +21,41 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\Repository\BlockRepositoryInterface;
 class BlockRepository extends EntityRepository implements BlockRepositoryInterface
 {
     /**
+     * Create a query builder to get block with page
+     *
+     * @param int $blockId
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createBlockWithPageQb($blockId)
+    {
+        return $this
+            ->createQueryBuilder('block')
+            ->select('block, page')
+            ->leftJoin('block.page', 'page')
+            ->where('block.id = :blockId')
+            ->setParameter('blockId', $blockId);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function findBlockInPageById($blockId, $pageId)
     {
         $qb = $this
-            ->createQueryBuilder('block')
-            ->select('block, page')
-            ->leftJoin('block.page', 'page')
-            ->where('block.id = :blockId')
+            ->createBlockWithPageQb($blockId)
             ->andWhere('page.id = :pageId')
-            ->setParameter('blockId', $blockId)
             ->setParameter('pageId', $pageId);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findWithPage($blockId)
+    {
+        $qb = $this->createBlockWithPageQb($blockId);
 
         return $qb->getQuery()->getSingleResult();
     }

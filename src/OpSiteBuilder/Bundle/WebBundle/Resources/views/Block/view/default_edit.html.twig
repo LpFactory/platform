@@ -1,0 +1,14 @@
+{% extends app.request.isXmlHttpRequest ? 'OpSiteBuilderWebBundle:Block:layout_ajax.html.twig' : 'OpSiteBuilderWebBundle:Block:layout.html.twig' %}
+
+{% block content %}
+    <h2>{{ 'default_edit'|trans({}, block.alias) }}</h2>
+
+    <p>
+        {{ 'default_message.default_edit_template'|trans }}<br />
+        {{ 'default_message.missing_dev'|trans }}<br />
+        <strong>{{ 'default_message.block_id'|trans }}</strong> {{ block.id }}<br />
+        <strong>{{ 'default_message.block_type'|trans }}</strong> {{ block.alias }}
+    </p>
+
+    <a href="{{ op_path_page(block.page, 'edit') }}">Return to page edit</a>
+{% endblock %}

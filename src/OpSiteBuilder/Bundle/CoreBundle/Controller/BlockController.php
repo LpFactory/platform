@@ -13,6 +13,7 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use OpSiteBuilder\Bundle\CoreBundle\Security\SecurityAttributes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -27,17 +28,41 @@ class BlockController extends Controller
      * Display a block view
      *
      * @param AbstractBlock $block
-     * @param AbstractPage  $page
+     * @param bool          $edit
      *
      * @return Response
      */
-    public function viewAction(AbstractBlock $block, AbstractPage $page)
+    public function viewAction(AbstractBlock $block, $edit = false)
     {
         $response = new Response();
-
         return $response->setContent(
-            $this->get('opsite_builder.block.manager')->renderView($block)
+            $this->get('opsite_builder.block.renderer')->renderView($block, $edit)
         );
+    }
+
+    /**
+     * Edit a block
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function editAction($id)
+    {
+        /** @var AbstractBlock $block */
+        $block = $this->get('opsite_builder.repository.block')->findWithPage((int) $id);
+        if (!$block) {
+            throw $this->createNotFoundException('Unknown block #' . $id);
+        }
+
+        $page = $block->getPage();
+        if (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $page)) {
+            throw $this->createAccessDeniedException('Edit block denied in page ' . $page->getId());
+        }
+
+        return $this->render('OpSiteBuilderWebBundle:Block/view:default_edit.html.twig', array(
+            'block' => $block
+        ));
     }
 
     /**

@@ -1,6 +1,7 @@
 OpSiteBuilder\Bundle\CoreBundle\Entity\Block:
     type: entity
     table: blocks
+    repositoryClass: OpSiteBuilder\Bundle\CoreBundle\Entity\Repository\BlockRepository
     inheritanceType: JOINED
     discriminatorColumn:
         name: type

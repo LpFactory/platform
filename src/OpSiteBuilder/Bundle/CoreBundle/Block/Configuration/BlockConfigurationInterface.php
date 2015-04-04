@@ -23,4 +23,11 @@ interface BlockConfigurationInterface
      * @return string
      */
     public function getViewController();
+
+    /**
+     * Get the route for this block edition
+     *
+     * @return string
+     */
+    public function getEditRoute();
 }

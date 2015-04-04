@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    Editing<br />
+    {% for block in page.blocks %}
+        {% render(controller(get_block_view_controller(block), {
+            'block': block,
+            'edit': true
+        })) %}
+    {% endfor %}
+
     <a href="{{ op_path_page(page, 'view') }}">Return to view page</a>
 {% endblock %}

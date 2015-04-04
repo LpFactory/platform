@@ -56,14 +56,4 @@ interface BlockManagerInterface
      * @return null
      */
     public function remove(AbstractBlock $block, $flush = true);
-
-    /**
-     * Render the template for the block
-     *
-     * @param AbstractBlock $block
-     * @param bool          $edit
-     *
-     * @return string
-     */
-    public function renderView(AbstractBlock $block, $edit = false);
 }

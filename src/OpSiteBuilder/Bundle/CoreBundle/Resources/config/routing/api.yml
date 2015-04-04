@@ -18,3 +18,10 @@ opsite_builder_api_remove_block:
         _controller: OpSiteBuilderCoreBundle:Block:remove
     methods:
         - DELETE
+
+opsite_builder_api_edit_block:
+    path: /block/{id}/edit
+    defaults:
+        _controller: OpSiteBuilderCoreBundle:Block:edit
+    methods:
+        - GET

@@ -61,4 +61,12 @@ class TextBlock extends Block
     {
         return empty($this->content);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEditable()
+    {
+        return true;
+    }
 }

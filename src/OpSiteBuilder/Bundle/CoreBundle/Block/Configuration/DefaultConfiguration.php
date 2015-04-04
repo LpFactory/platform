@@ -24,4 +24,12 @@ class DefaultConfiguration implements BlockConfigurationInterface
     {
         return 'OpSiteBuilderCoreBundle:Block:view';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEditRoute()
+    {
+        return 'opsite_builder_api_edit_block';
+    }
 }

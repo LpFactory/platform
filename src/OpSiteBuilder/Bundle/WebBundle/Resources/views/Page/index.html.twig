@@ -6,11 +6,10 @@
     {% endif %}
 
     {% for block in page.blocks %}
-        <div id="zone-{{ block.alias }}-{{ block.id }}" class="zone-block zone-{{ block.alias }}">
+        {% if not block_is_empty(block) %}
             {% render(controller(get_block_view_controller(block), {
-                'block': block,
-                'page': page
+                'block': block
             })) %}
-        </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}

@@ -9,7 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Block\Normalizer;
 
-use OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Block\Rendered\BlockRendererInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 
@@ -22,18 +22,18 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 class BlockNormalizer implements NormalizerInterface
 {
     /**
-     * @var BlockManagerInterface
+     * @var BlockRendererInterface
      */
-    protected $manager;
+    protected $renderer;
 
     /**
      * Constructor
      *
-     * @param BlockManagerInterface $manager
+     * @param BlockRendererInterface $renderer
      */
-    public function __construct(BlockManagerInterface $manager)
+    public function __construct(BlockRendererInterface $renderer)
     {
-        $this->manager = $manager;
+        $this->renderer = $renderer;
     }
 
     /**
@@ -49,7 +49,7 @@ class BlockNormalizer implements NormalizerInterface
     {
         return array(
             'id' => $object->getId(),
-            'template' => $this->manager->renderView($object)
+            'template' => $this->renderer->renderView($object)
         );
     }
 

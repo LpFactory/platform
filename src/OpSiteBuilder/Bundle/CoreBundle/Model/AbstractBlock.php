@@ -123,6 +123,16 @@ abstract class AbstractBlock
     }
 
     /**
+     * Define if this block type is editable
+     *
+     * @return bool
+     */
+    public function isEditable()
+    {
+        return false;
+    }
+
+    /**
      * Get page
      *
      * @return AbstractPage

@@ -29,4 +29,13 @@ interface BlockRepositoryInterface extends ObjectRepository
      * @return AbstractBlock
      */
     public function findBlockInPageById($blockId, $pageId);
+
+    /**
+     * Find a block and load the page
+     *
+     * @param int $blockId
+     *
+     * @return mixed
+     */
+    public function findWithPage($blockId);
 }

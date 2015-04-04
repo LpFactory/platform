@@ -10,7 +10,6 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use OpSiteBuilder\Bundle\CoreBundle\Exception\OpSiteBuilderException;
 
 /**
  * Class AbstractPage

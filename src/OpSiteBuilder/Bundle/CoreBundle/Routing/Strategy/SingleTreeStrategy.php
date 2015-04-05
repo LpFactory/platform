@@ -29,6 +29,6 @@ class SingleTreeStrategy extends AbstractTreeStrategy
      */
     public function getRootNode($hostName)
     {
-        return $this->repository->getRootNodesQuery()->getSingleResult();
+        return $this->repository->getSingleRootNode();
     }
 }

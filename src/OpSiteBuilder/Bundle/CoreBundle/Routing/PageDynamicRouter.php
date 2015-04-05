@@ -91,8 +91,7 @@ class PageDynamicRouter implements ChainedRouterInterface, RequestMatcherInterfa
     public function getRouteCollection()
     {
         if (!$this->routeCollection instanceof RouteCollection) {
-            $this->routeCollection = $this->provider
-                ? new LazyRouteCollection($this->provider) : new RouteCollection();
+            $this->routeCollection = new LazyRouteCollection($this->provider);
         }
 
         return $this->routeCollection;

@@ -76,11 +76,17 @@ class PageManager implements PageManagerInterface
      */
     public function moveBlock(AbstractPage $page, AbstractBlock $block, $position)
     {
-        // Set new position for block
-        $block->setSort($position);
+        if ($page->getBlockIndex($block) === 0) {
+            $page->removeBlock($block);
+            $page->resetBlockSort();
+            $page->addBlock($block);
+        }
 
         // Shift sort in existing block
         $page->shiftBlock($position);
+
+        // Set new position for block
+        $block->setSort($position);
     }
 
     /**

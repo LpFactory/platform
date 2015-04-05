@@ -9,6 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Entity\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use OpSiteBuilder\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
@@ -56,5 +57,13 @@ class PageRepository extends NestedTreeRepository implements PageRepositoryInter
         }
 
         return $this->cachedPaths[$pageId] = $this->getPath($page);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSingleRootNode()
+    {
+        return $this->getRootNodesQuery()->getSingleResult();
     }
 }

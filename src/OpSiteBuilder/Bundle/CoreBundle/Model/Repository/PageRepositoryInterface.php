@@ -9,6 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Model\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use Gedmo\Tree\RepositoryInterface;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -39,4 +40,13 @@ interface PageRepositoryInterface extends RepositoryInterface, ObjectRepository
      * @return array
      */
     public function getCachedPath(AbstractPage $page);
+
+    /**
+     * Get the root node of tree in single tree strategy
+     *
+     * @throws NonUniqueResultException
+     *
+     * @return AbstractPage
+     */
+    public function getSingleRootNode();
 }

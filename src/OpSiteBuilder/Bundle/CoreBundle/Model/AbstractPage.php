@@ -255,6 +255,29 @@ abstract class AbstractPage
     }
 
     /**
+     * Reset block sort
+     */
+    public function resetBlockSort()
+    {
+        $position = 1;
+        $this->getBlocks()->map(function (AbstractBlock $block) use (&$position) {
+            $block->setSort($position);
+            $position++;
+        });
+    }
+
+    /**
+     * Get the index of a block in the collection
+     *
+     * @param AbstractBlock $block
+     *
+     * @return mixed
+     */
+    public function getBlockIndex(AbstractBlock $block) {
+        return array_search($block, $this->getBlocks()->toArray());
+    }
+
+    /**
      * Add children
      *
      * @param AbstractPage $child

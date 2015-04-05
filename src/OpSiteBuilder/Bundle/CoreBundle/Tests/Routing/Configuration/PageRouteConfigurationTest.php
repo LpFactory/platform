@@ -11,6 +11,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Tests\Routing\Configuration;
 
 use OpSiteBuilder\Bundle\CoreBundle\Entity\Page;
 use OpSiteBuilder\Bundle\CoreBundle\Routing\Configuration\PageRouteConfiguration;
+use OpSiteBuilder\Bundle\CoreBundle\Tests\Routing\RoutingHelper;
 
 /**
  * Class PageRouteConfigurationTest
@@ -188,14 +189,7 @@ class PageRouteConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetter()
     {
-        $routeConfiguration = new PageRouteConfiguration(
-            array(
-                'prefix' => 'opsite_page_tree_edit_',
-                'regex' => '/(.+)\/edit$/',
-                'controller' => 'OpSiteBuilderCoreBundle:Page:edit',
-                'path' => '%s/edit'
-            )
-        );
+        $routeConfiguration = RoutingHelper::createEditConfiguration();
 
         $this->assertEquals('opsite_page_tree_edit_', $routeConfiguration->getPrefix());
         $this->assertEquals('/(.+)\/edit$/', $routeConfiguration->getRegex());

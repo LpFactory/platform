@@ -98,7 +98,7 @@ abstract class AbstractPageRouteConfiguration
             return $pathInfo;
         }
 
-        return sprintf($this->getPath(), $pathInfo);
+        return sprintf($this->getPath(), rtrim($pathInfo, '/'));
     }
 
     /**

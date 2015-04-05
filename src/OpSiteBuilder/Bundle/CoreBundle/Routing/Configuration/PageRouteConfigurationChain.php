@@ -55,7 +55,7 @@ class PageRouteConfigurationChain implements PageRouteConfigurationChainInterfac
      */
     public function get($alias)
     {
-        if (!$this->configurations[$alias]) {
+        if (!isset($this->configurations[$alias])) {
             throw new \LogicException('No route configuration for alias : '.$alias);
         }
 
@@ -90,14 +90,9 @@ class PageRouteConfigurationChain implements PageRouteConfigurationChainInterfac
      */
     public function getConfigurationByRouteName($name)
     {
-        /** @var AbstractPageRouteConfiguration $configuration */
-        foreach ($this->all() as $configuration) {
-            if ($configuration->supports($name)) {
-                return $configuration;
-            }
-        }
-
-        return null;
+        return $this->findConfiguration($name, function (AbstractPageRouteConfiguration $configuration, $name) {
+            return $configuration->supports($name);
+        });
     }
 
     /**
@@ -105,9 +100,24 @@ class PageRouteConfigurationChain implements PageRouteConfigurationChainInterfac
      */
     public function getConfigurationByPathInfo($name)
     {
+        return $this->findConfiguration($name, function (AbstractPageRouteConfiguration $configuration, $name) {
+            return $configuration->isMatching($name);
+        });
+    }
+
+    /**
+     * Find a configuration matching custom criteria
+     *
+     * @param string    $value
+     * @param callable $func
+     *
+     * @return null|AbstractPageRouteConfiguration
+     */
+    protected function findConfiguration($value, \Closure $func)
+    {
         /** @var AbstractPageRouteConfiguration $configuration */
         foreach ($this->all() as $configuration) {
-            if ($configuration->isMatching($name)) {
+            if ($func($configuration, $value)) {
                 return $configuration;
             }
         }

@@ -273,7 +273,8 @@ abstract class AbstractPage
      *
      * @return mixed
      */
-    public function getBlockIndex(AbstractBlock $block) {
+    public function getBlockIndex(AbstractBlock $block)
+    {
         return array_search($block, $this->getBlocks()->toArray());
     }
 

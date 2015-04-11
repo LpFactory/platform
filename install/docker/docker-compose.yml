@@ -1,0 +1,15 @@
+opsitebuilderdb:
+    image: mysql
+    ports:
+        - 3306:3306
+    environment:
+        - MYSQL_ROOT_PASSWORD=opsitebuilder
+
+opsitebuilderweb:
+    build: .
+    links:
+        - opsitebuilderdb
+    ports:
+        - 80:80
+    volumes:
+        - ../../:/var/www/html

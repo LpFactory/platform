@@ -1,6 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+    <div id="test"></div>
     {% for block in page.blocks %}
         {% render(controller(get_block_view_controller(block), {
             'block': block,
@@ -9,4 +10,38 @@
     {% endfor %}
 
     <a href="{{ op_path_page(page, 'view') }}">Return to view page</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        var opsiteconf = {
+            blocks: [
+                {
+                    id: 56,
+                    type: "text",
+                    state: "view",
+                    template: '<a class="opsitebuilder-block-remove">Remove</a><a class="opsitebuilder-block-edit" href="#edit-56">Edit</a><strong>Content for block 56</strong>'
+                },
+                {
+                    id: 57,
+                    type: "text",
+                    state: "view",
+                    template: '<a class="opsitebuilder-block-edit" href="#edit-57">Edit</a><strong>Content for block 57</strong>'
+                },
+                {
+                    id: 58,
+                    type: "text",
+                    state: "view",
+                    template: '<a class="opsitebuilder-block-edit" href="#edit-58">Edit</a><strong>Content for block 58</strong>'
+                }
+            ]
+        };
+    </script>
+
+    <script src="{{ asset('components/jquery/dist/jquery.js') }}"></script>
+    <script src="{{ asset('components/underscore/underscore.js') }}"></script>
+    <script src="{{ asset('components/backbone/backbone.js') }}"></script>
+    <script src="{{ asset('bundles/opsitebuilderweb/js/app.js') }}"></script>
 {% endblock %}

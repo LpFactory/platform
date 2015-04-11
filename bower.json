@@ -1,0 +1,22 @@
+{
+  "name": "OpSiteBuilder",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jbouzekri/OpSiteBuilder",
+  "authors": [
+    "Jonathan Bouzekri <jonathan.bouzekri@gmail.com>"
+  ],
+  "description": "A factory for one page website",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "backbone": "~1.1.2"
+  }
+}

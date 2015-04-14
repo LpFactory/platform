@@ -1,7 +1,19 @@
-{% extends '::base.html.twig' %}
+{% extends 'OpSiteBuilderWebBundle::base.html.twig' %}
 
+{% block ng_app %} ng-app="OpSiteBuilderApp"{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/opsitebuilderweb/css/edit.css') }}">
+{% endblock %}
 {% block body %}
-    <div id="test"></div>
+    <div id="test" ng-controller="PageEditController" ng-cloak>
+        {{ '{{page.name}}' }}
+        {%  set testblocks = [{id: 123,type: "simple-block",name: "block1"},{id: 456,type: "simple-block",name: "block2"}] %}
+            <div id="block-{{ '{{ block.id }}'  }}" ng-repeat="block in page.blocks">
+                <opsite-simple-block block="block" />
+            </div>
+    </div>
     {% for block in page.blocks %}
         {% render(controller(get_block_view_controller(block), {
             'block': block,
@@ -41,7 +53,6 @@
     </script>
 
     <script src="{{ asset('components/jquery/dist/jquery.js') }}"></script>
-    <script src="{{ asset('components/underscore/underscore.js') }}"></script>
-    <script src="{{ asset('components/backbone/backbone.js') }}"></script>
+    <script src="{{ asset('components/angular/angular.js') }}"></script>
     <script src="{{ asset('bundles/opsitebuilderweb/js/app.js') }}"></script>
 {% endblock %}

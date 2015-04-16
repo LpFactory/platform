@@ -1,10 +1,16 @@
 parameters:
+    opsite_builder.page.normalizer.class: OpSiteBuilder\Bundle\CoreBundle\Page\Normalizer\PageNormalizer
     opsite_builder.block.normalizer.class: OpSiteBuilder\Bundle\CoreBundle\Block\Normalizer\BlockNormalizer
 
 services:
+    opsite_builder.page.normalizer:
+        class: %opsite_builder.page.normalizer.class%
+        arguments:
+            - @opsite_builder.block.normalizer
+        tags:
+             - { name: serializer.normalizer }
+
     opsite_builder.block.normalizer:
         class: %opsite_builder.block.normalizer.class%
-        arguments:
-            - @opsite_builder.block.renderer
         tags:
              - { name: serializer.normalizer }

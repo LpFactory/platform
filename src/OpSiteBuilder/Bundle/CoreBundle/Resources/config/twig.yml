@@ -1,6 +1,7 @@
 parameters:
     opsite_builder.twig_extension.block.class: OpSiteBuilder\Bundle\CoreBundle\Twig\BlockExtension
     opsite_builder.twig_extension.routing.class: OpSiteBuilder\Bundle\CoreBundle\Twig\RoutingExtension
+    opsite_builder.twig_extension.serializer.class: OpSiteBuilder\Bundle\CoreBundle\Twig\SerializerExtension
 
 services:
     opsite_builder.twig_extension.block:
@@ -8,15 +9,24 @@ services:
         arguments:
             - @opsite_builder.block.configuration.chain
             - @opsite_builder.block.manager
+            - %opsite_builder.block.class_map%
         public: false
         tags:
             - { name: twig.extension }
 
     opsite_builder.twig_extension.routing:
-            class: %opsite_builder.twig_extension.routing.class%
-            arguments:
-                - @opsite_builder.routing.generator
-                - @opsite_builder.route_configuration.chain
-            public: false
-            tags:
-                - { name: twig.extension }
+        class: %opsite_builder.twig_extension.routing.class%
+        arguments:
+            - @opsite_builder.routing.generator
+            - @opsite_builder.route_configuration.chain
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    opsite_builder.twig_extension.serializer:
+        class: %opsite_builder.twig_extension.serializer.class%
+        arguments:
+            - @serializer
+        public: false
+        tags:
+            - { name: twig.extension }

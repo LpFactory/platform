@@ -32,17 +32,25 @@ class BlockExtension extends \Twig_Extension
     protected $blockManager;
 
     /**
+     * @var array
+     */
+    protected $blockTypes;
+
+    /**
      * Constructor
      *
      * @param BlockConfigurationChainInterface $configurationChain
      * @param BlockManagerInterface            $blockManager
+     * @param array                            $blockTypes
      */
     public function __construct(
         BlockConfigurationChainInterface $configurationChain,
-        BlockManagerInterface $blockManager
+        BlockManagerInterface $blockManager,
+        array $blockTypes = array()
     ) {
         $this->configurationChain = $configurationChain;
         $this->blockManager = $blockManager;
+        $this->blockTypes = $blockTypes;
     }
 
     /**
@@ -54,6 +62,7 @@ class BlockExtension extends \Twig_Extension
             new \Twig_SimpleFunction('get_block_view_controller', array($this, 'getBlockViewController')),
             new \Twig_SimpleFunction('get_block_edit_route', array($this, 'getBlockEditRoute')),
             new \Twig_SimpleFunction('block_is_empty', array($this, 'isBlockEmpty')),
+            new \Twig_SimpleFunction('get_block_types', array($this, 'getBlockTypes')),
         );
     }
 
@@ -91,6 +100,16 @@ class BlockExtension extends \Twig_Extension
     public function isBlockEmpty(AbstractBlock $block)
     {
         return $this->blockManager->isEmpty($block);
+    }
+
+    /**
+     * Get available block types
+     *
+     * @return array
+     */
+    public function getBlockTypes()
+    {
+        return array_keys($this->blockTypes);
     }
 
     /**

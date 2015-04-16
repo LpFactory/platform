@@ -22,21 +22,6 @@ use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 class BlockNormalizer implements NormalizerInterface
 {
     /**
-     * @var BlockRendererInterface
-     */
-    protected $renderer;
-
-    /**
-     * Constructor
-     *
-     * @param BlockRendererInterface $renderer
-     */
-    public function __construct(BlockRendererInterface $renderer)
-    {
-        $this->renderer = $renderer;
-    }
-
-    /**
      * Normalize a block
      *
      * @param AbstractBlock $object
@@ -49,7 +34,11 @@ class BlockNormalizer implements NormalizerInterface
     {
         return array(
             'id' => $object->getId(),
-            'template' => $this->renderer->renderView($object)
+            'title' => $object->getTitle(),
+            'sort' => $object->getSort(),
+            'type' => $object->getAlias(),
+            'created' => $object->getCreated(),
+            'updated' => $object->getUpdated()
         );
     }
 

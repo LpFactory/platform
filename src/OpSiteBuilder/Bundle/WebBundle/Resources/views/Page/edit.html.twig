@@ -1,11 +1,9 @@
 {% extends 'OpSiteBuilderWebBundle::base.html.twig' %}
 
-{% block ng_app %} ng-app="OpSiteBuilderApp"{% endblock %}
-
-
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('bundles/opsitebuilderweb/css/edit.css') }}">
 {% endblock %}
+
 {% block body %}
     <div id="test" ng-controller="PageEditControllerImp" ng-cloak>
         {{ '{{page.name}}' }}
@@ -13,17 +11,24 @@
         <a ng-click="addBlock()">Add a block</a><br />
         <a ng-click="customCtrlMethod()">Custom method</a>
 
-        {%  set testblocks = [{id: 123,type: "simple-block",name: "block1"},{id: 456,type: "simple-block",name: "block2"}] %}
-            <div ng-repeat="block in page.blocks" id="block-{{ '{{ block.id }}'  }}" ng-drop="true" ng-drop-success="onDropComplete($index,$data,$event)">
-                <div opsite-simple-block simple-block block="block" ng-drag="true" ng-drag-data="block" ng-drag-success="onDragSuccess($data,$event)"></div>
-            </div>
+        <div ng-repeat="block in page.blocks"
+             id="block-{{ '{{ block.id }}'  }}"
+             ng-drop="true"
+             ng-drop-success="onDropComplete($index,$data,$event)">
+            {% for type in get_block_types() %}
+                <div ng-if="block.type === 'text'"
+                     opsite-block
+                     {{ type }}-block
+                     block="block"
+                     ng-drag="true"
+                     ng-drag-data="block"
+                     ng-drag-success="onDragSuccess($data,$event)">
+                </div>
+            {% else %}
+                No block type enabled in project
+            {% endfor %}
+        </div>
     </div>
-    {% for block in page.blocks %}
-        {% render(controller(get_block_view_controller(block), {
-            'block': block,
-            'edit': true
-        })) %}
-    {% endfor %}
 
     <a href="{{ op_path_page(page, 'view') }}">Return to view page</a>
 {% endblock %}
@@ -32,28 +37,8 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        var opsiteconf = {
-            blocks: [
-                {
-                    id: 56,
-                    type: "text",
-                    state: "view",
-                    template: '<a class="opsitebuilder-block-remove">Remove</a><a class="opsitebuilder-block-edit" href="#edit-56">Edit</a><strong>Content for block 56</strong>'
-                },
-                {
-                    id: 57,
-                    type: "text",
-                    state: "view",
-                    template: '<a class="opsitebuilder-block-edit" href="#edit-57">Edit</a><strong>Content for block 57</strong>'
-                },
-                {
-                    id: 58,
-                    type: "text",
-                    state: "view",
-                    template: '<a class="opsitebuilder-block-edit" href="#edit-58">Edit</a><strong>Content for block 58</strong>'
-                }
-            ]
-        };
+        var opsiteconf = {};
+        opsiteconf.page = {{ page|opsite_serialize }};
     </script>
 
     <script src="{{ asset('components/jquery/dist/jquery.js') }}"></script>

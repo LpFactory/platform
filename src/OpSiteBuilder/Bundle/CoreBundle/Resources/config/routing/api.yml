@@ -12,6 +12,13 @@ opsite_builder_api_move_block:
     methods:
         - PUT
 
+opsite_builder_api_view_block:
+    path: /block/{id}
+    defaults:
+        _controller: OpSiteBuilderCoreBundle:Block:view
+    methods:
+        - GET
+
 opsite_builder_api_remove_block:
     path: /block/{id}
     defaults:
@@ -25,3 +32,4 @@ opsite_builder_api_edit_block:
         _controller: OpSiteBuilderCoreBundle:Block:edit
     methods:
         - GET
+        - POST

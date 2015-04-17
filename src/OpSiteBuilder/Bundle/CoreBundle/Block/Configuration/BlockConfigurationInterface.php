@@ -25,6 +25,13 @@ interface BlockConfigurationInterface
     public function getViewController();
 
     /**
+     * Get the view route for a block
+     *
+     * @return string
+     */
+    public function getViewRoute();
+
+    /**
      * Get the route for this block edition
      *
      * @return string

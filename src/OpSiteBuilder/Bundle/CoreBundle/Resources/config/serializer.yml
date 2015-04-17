@@ -7,10 +7,14 @@ services:
         class: %opsite_builder.page.normalizer.class%
         arguments:
             - @opsite_builder.block.normalizer
+            - @router.default
         tags:
              - { name: serializer.normalizer }
 
     opsite_builder.block.normalizer:
         class: %opsite_builder.block.normalizer.class%
+        arguments:
+            - @router.default
+            - @opsite_builder.block.configuration.chain
         tags:
              - { name: serializer.normalizer }

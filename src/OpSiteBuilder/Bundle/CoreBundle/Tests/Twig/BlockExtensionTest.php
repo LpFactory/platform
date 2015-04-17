@@ -86,6 +86,23 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test getBlockTypes
+     */
+    public function testGetBlockTypes()
+    {
+        $manager = $this->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface');
+        $configuration = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface');
+        $blockTypes = array(
+            'text' => 'class',
+            'gallery' => 'class'
+        );
+        $extension = new BlockExtension($configuration, $manager, $blockTypes);
+
+        $this->assertEquals(array('text', 'gallery'), $extension->getBlockTypes());
+    }
+
+    /**
      * Test getFunctions
      */
     public function testGetFunction()
@@ -96,9 +113,14 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new BlockExtension($configuration, $manager);
 
         $functions = $extension->getFunctions();
-        $this->assertEquals(3, count($functions));
+        $this->assertEquals(4, count($functions));
 
-        $functionNames = array('get_block_view_controller', 'get_block_edit_route', 'block_is_empty');
+        $functionNames = array(
+            'get_block_view_controller',
+            'get_block_edit_route',
+            'block_is_empty',
+            'get_block_types'
+        );
         foreach ($functions as $key => $function) {
             $this->assertEquals($functionNames[$key], $function->getName());
             $callable = $functions[0]->getCallable();

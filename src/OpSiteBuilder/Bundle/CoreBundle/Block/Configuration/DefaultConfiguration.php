@@ -28,6 +28,14 @@ class DefaultConfiguration implements BlockConfigurationInterface
     /**
      * {@inheritdoc}
      */
+    public function getViewRoute()
+    {
+        return 'opsite_builder_api_view_block';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getEditRoute()
     {
         return 'opsite_builder_api_edit_block';

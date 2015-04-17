@@ -25,14 +25,31 @@ use Symfony\Component\HttpFoundation\Response;
 class BlockController extends Controller
 {
     /**
-     * Display a block view
+     * View block (from url)
+     *
+     * @param Request $request
+     * @param int     $id
+     */
+    public function viewAction(Request $request, $id)
+    {
+        /** @var AbstractBlock $block */
+        $block = $this->get('opsite_builder.repository.block')->findWithPage((int) $id);
+        if (!$block) {
+            throw $this->createNotFoundException('Unknown block #' . $id);
+        }
+
+        return $this->defaultAction($block);
+    }
+
+    /**
+     * Display a block view when we have the object
      *
      * @param AbstractBlock $block
      * @param bool          $edit
      *
      * @return Response
      */
-    public function viewAction(AbstractBlock $block, $edit = false)
+    public function defaultAction(AbstractBlock $block, $edit = false)
     {
         $response = new Response();
         return $response->setContent(

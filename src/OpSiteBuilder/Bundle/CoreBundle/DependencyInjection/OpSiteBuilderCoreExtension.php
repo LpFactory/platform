@@ -12,6 +12,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
@@ -20,7 +21,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * @package OpSiteBuilder\Bundle\CoreBundle\DependencyInjection
  * @author jobou
  */
-class OpSiteBuilderCoreExtension extends Extension
+class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -63,5 +64,14 @@ class OpSiteBuilderCoreExtension extends Extension
         $container->setParameter('opsite_builder.block.class_map', $config['block_map']);
         $blockDiscriminatorListener = $container->findDefinition('doctrine.event_listener.block.discriminator_map');
         $blockDiscriminatorListener->replaceArgument(1, $config['block_map']);
+    }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        // Bundle use serializer
+        $container->prependExtensionConfig('framework', array('serializer' => array('enabled' => true)));
+
+        // Bundle needs assetic
+        $container->prependExtensionConfig('assetic', array('bundles' => array('OpSiteBuilderWebBundle')));
     }
 }

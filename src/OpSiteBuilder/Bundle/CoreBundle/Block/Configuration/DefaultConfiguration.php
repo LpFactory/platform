@@ -22,7 +22,7 @@ class DefaultConfiguration implements BlockConfigurationInterface
      */
     public function getViewController()
     {
-        return 'OpSiteBuilderCoreBundle:Block:view';
+        return 'OpSiteBuilderCoreBundle:Block:default';
     }
 
     /**

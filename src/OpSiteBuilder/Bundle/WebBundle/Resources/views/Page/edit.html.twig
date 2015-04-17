@@ -5,11 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <div id="test" ng-controller="PageEditControllerImp" ng-cloak>
-        {{ '{{page.name}}' }}
+    <div id="test" ng-controller="PageControllerImpl" ng-cloak>
+        {{ '{{page.title}}' }}
 
         <a ng-click="addBlock()">Add a block</a><br />
-        <a ng-click="customCtrlMethod()">Custom method</a>
 
         <div ng-repeat="block in page.blocks"
              id="block-{{ '{{ block.id }}'  }}"
@@ -41,8 +40,22 @@
         opsiteconf.page = {{ page|opsite_serialize }};
     </script>
 
-    <script src="{{ asset('components/jquery/dist/jquery.js') }}"></script>
-    <script src="{{ asset('components/angular/angular.js') }}"></script>
-    <script src="{{ asset('components/ngDraggable/ngDraggable.js') }}"></script>
-    <script src="{{ asset('bundles/opsitebuilderweb/js/app.js') }}"></script>
+    {% javascripts
+        'components/jquery/dist/jquery.js'
+        'components/angular/angular.js'
+        'components/ngDraggable/ngDraggable.js'
+        'bundles/opsitebuilderweb/js/app.js'
+        'bundles/opsitebuilderweb/js/controllers/page-controller.js'
+        'bundles/opsitebuilderweb/js/controllers/page-controller-impl.js'
+        'bundles/opsitebuilderweb/js/directives/opsite-block.js'
+        'bundles/opsitebuildertextblock/js/directives/text-block-directive.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        angular.element(document).ready(function() {
+            angular.bootstrap(document, ['OpSiteBuilderApp']);
+        });
+    </script>
 {% endblock %}

@@ -6,3 +6,8 @@ default_message:
     missing_dev: If you see this, it means you are missing some files like the view or edit template for this block
     block_id: "Block ID :"
     block_type: "Block Type :"
+
+tools:
+    edit: Edit
+    move: Move
+    cancel: Cancel

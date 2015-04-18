@@ -1,0 +1,20 @@
+{% extends app.request.isXmlHttpRequest ? 'OpSiteBuilderWebBundle:Block:layout_ajax.html.twig' : 'OpSiteBuilderWebBundle:Block:layout.html.twig' %}
+
+{% block content %}
+    {% include 'OpSiteBuilderWebBundle:Block/Tools:_basic_view_tools.html.twig' with {
+        block: block,
+        edit: edit
+    } %}
+
+    <div {% if edit %}ng-cancel-drag{% endif %} class="block-content">
+        <h2>{{ block.title|default( 'default_title'|trans({}, block.alias) ) }}</h2>
+
+        <div>
+            {% if block_is_empty(block) %}
+                {{ 'default_text'|trans({}, block.alias) }}
+            {% else %}
+                {{ block.content }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

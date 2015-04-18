@@ -1,20 +1,40 @@
+/**
+ * Copyright 2015 Jonathan Bouzekri. All rights reserved.
+ *
+ * @copyright Copyright 2015 Jonathan Bouzekri <jonathan.bouzekri@gmail.com>
+ * @license https://github.com/jbouzekri/OpSiteBundle/blob/master/LICENSE
+ * @link https://github.com/jbouzekri/OpSiteBundle
+ */
+
 (function(angular, jQuery){
     'use strict';
 
-    angular.module('OpSiteBuilderApp').directive('opsiteBlock', function($compile, $http) {
+    /**
+     * Directive opsite-block
+     *
+     * Provides all basic block handling action on events
+     */
+    angular.module('OpSiteBuilderApp').directive('opsiteBlock', function($compile, blockService) {
         return {
             controller: function ($scope, $element) {
                 $scope.loading = false;
 
+                /**
+                 * Remove a block from the page
+                 * Launch when clicking on bin link in block
+                 */
                 $scope.removeAction = function () {
                     $scope.page.blocks.splice(0,1);
                 };
 
+                /**
+                 * Display the edit form for the block
+                 * Launch when clicking on the edit link in the block
+                 */
                 $scope.editAction = function() {
                     $scope.loading = true;
-                    console.log('click on edit in block'+$scope.block.id);
-                    $http
-                        .get('/block-'+$scope.block.type+'-edit.html')
+                    blockService
+                        .editBlock($scope.block)
                         .success(function(html) {
                             $scope.loading = false;
                             $element.html($compile(html)($scope));
@@ -22,35 +42,39 @@
                         });
                 };
 
-                $scope.simpleSubmit = function(e) {
+                /**
+                 * Submit the edit form and display results
+                 * @param Element e
+                 */
+                $scope.simpleSubmit = function(element) {
                     $scope.loading = true;
-                    var formData = jQuery(e.target).serialize();
-                    $http
-                        .post('/block-'+$scope.block.type+'-edit.html', formData, {headers: {"Content-type": "application/x-www-form-urlencoded; charset=utf-8"}})
+                    var formData = jQuery(element.target).serialize();
+                    blockService
+                        .submitEditBlock($scope.block, formData)
                         .success(function(html) {
                             $scope.loading = false;
                             $element.html($compile(html)($scope));
                         });
                 };
 
+                /**
+                 * Quit the edit view and go back to editable view
+                 * Launch when clicking on the cancel link in the edit view of the block
+                 */
                 $scope.cancelAction = function() {
-                    console.log('Cancel editing');
-                    $http
-                        .get('/block-'+$scope.block.type+'.html')
+                    blockService
+                        .viewEditableBlock($scope.block)
                         .success(function(html) {
                             $element.html($compile(html)($scope));
                         });
-                };
-
-                $scope.overrideAction = function() {
-                    console.log('parent scope');
                 };
             },
             compile: function(tElement, tAttrs) {
                 // Use return function to access scope and have block object
                 return function (scope, element, attrs) {
-                    $http
-                        .get(scope.block.actions.view_block)
+                    // Load the view with actions/edit button for the block
+                    blockService
+                        .viewEditableBlock(scope.block)
                         .success(function(html) {
                             element.html($compile(html)(scope));
                         });

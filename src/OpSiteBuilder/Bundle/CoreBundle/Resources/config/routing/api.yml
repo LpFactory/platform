@@ -26,10 +26,17 @@ opsite_builder_api_remove_block:
     methods:
         - DELETE
 
-opsite_builder_api_edit_block:
-    path: /block/{id}/edit
+opsite_builder_api_edit_no_form_block:
+    path: /block/{id}/no-form-edit
     defaults:
         _controller: OpSiteBuilderCoreBundle:Block:edit
+    methods:
+        - GET
+
+opsite_builder_api_edit_form_block:
+    path: /block/{id}/edit
+    defaults:
+        _controller: OpSiteBuilderCoreBundle:Block:editForm
     methods:
         - GET
         - POST

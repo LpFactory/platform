@@ -36,8 +36,40 @@ class DefaultConfiguration implements BlockConfigurationInterface
     /**
      * {@inheritdoc}
      */
+    public function getViewTemplate()
+    {
+        return 'OpSiteBuilderWebBundle:Block:View/default_view.html.twig';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEditController()
+    {
+        return 'OpSiteBuilderCoreBundle:Block:defaultEdit';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getEditRoute()
     {
-        return 'opsite_builder_api_edit_block';
+        return 'opsite_builder_api_edit_no_form_block';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEditTemplate()
+    {
+        return 'OpSiteBuilderWebBundle:Block:View/default_edit.html.twig';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEditFormType()
+    {
+        return null;
     }
 }

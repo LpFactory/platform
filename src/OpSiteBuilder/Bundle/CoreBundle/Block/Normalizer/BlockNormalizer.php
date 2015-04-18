@@ -65,19 +65,26 @@ class BlockNormalizer implements NormalizerInterface
             'created' => $object->getCreated(),
             'updated' => $object->getUpdated(),
             'actions' => array(
-                'view_block' => $this->urlGenerator->generate(
+                'view' => $this->urlGenerator->generate(
                     $blockConfiguration->getViewRoute(),
                     array(
                         'id' => $object->getId()
                     )
                 ),
-                'edit_block' => $this->urlGenerator->generate(
+                'view_editable' => $this->urlGenerator->generate(
+                    $blockConfiguration->getViewRoute(),
+                    array(
+                        'id' => $object->getId(),
+                        'edit' => true
+                    )
+                ),
+                'edit' => $this->urlGenerator->generate(
                     $blockConfiguration->getEditRoute(),
                     array(
                         'id' => $object->getId()
                     )
                 ),
-                'remove_block' => $this->urlGenerator->generate(
+                'remove' => $this->urlGenerator->generate(
                     'opsite_builder_api_remove_block',
                     array(
                         'id' => $object->getId()

@@ -15,6 +15,8 @@ use OpSiteBuilder\Bundle\CoreBundle\Security\SecurityAttributes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class BlockController
@@ -29,16 +31,14 @@ class BlockController extends Controller
      *
      * @param Request $request
      * @param int     $id
+     *
+     * @return Response
      */
     public function viewAction(Request $request, $id)
     {
-        /** @var AbstractBlock $block */
-        $block = $this->get('opsite_builder.repository.block')->findWithPage((int) $id);
-        if (!$block) {
-            throw $this->createNotFoundException('Unknown block #' . $id);
-        }
+        $edit = (bool) $request->query->get('edit', false);
 
-        return $this->defaultAction($block);
+        return $this->defaultAction($this->loadBlock($id), $edit);
     }
 
     /**
@@ -66,18 +66,54 @@ class BlockController extends Controller
      */
     public function editAction($id)
     {
-        /** @var AbstractBlock $block */
-        $block = $this->get('opsite_builder.repository.block')->findWithPage((int) $id);
-        if (!$block) {
-            throw $this->createNotFoundException('Unknown block #' . $id);
+        return $this->defaultEditAction($this->loadBlock($id));
+    }
+
+    /**
+     * Display the default template when no edit form has been configurated
+     * when we have the object
+     *
+     * @param AbstractBlock $block
+     *
+     * @return Response
+     */
+    public function defaultEditAction(AbstractBlock $block)
+    {
+        $this->isGrantedPageEdit($block);
+
+        return $this->render('OpSiteBuilderWebBundle:Block/View:default_edit.html.twig', array(
+            'block' => $block
+        ));
+    }
+
+    /**
+     * Edit a block with a form
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
+    public function editFormAction(Request $request, $id)
+    {
+        $block = $this->loadBlock($id);
+        $this->isGrantedPageEdit($block);
+
+        $configuration = $this->get('opsite_builder.block.configuration.chain')->getConfiguration($block->getAlias());
+        if (null === $editFormType = $configuration->getEditFormType()) {
+            return $this->defaultEditAction($block);
         }
 
-        $page = $block->getPage();
-        if (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $page)) {
-            throw $this->createAccessDeniedException('Edit block denied in page ' . $page->getId());
+        $form = $this->createForm($editFormType, $block);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->get('opsite_builder.block.manager')->save($block);
+
+            return $this->defaultAction($block, true);
         }
 
-        return $this->render('OpSiteBuilderWebBundle:Block/view:default_edit.html.twig', array(
+        return $this->render($configuration->getEditTemplate(), array(
+            'form' => $form->createView(),
             'block' => $block
         ));
     }
@@ -91,19 +127,46 @@ class BlockController extends Controller
      */
     public function removeAction($id)
     {
-        /** @var AbstractBlock $block */
-        $block = $this->get('opsite_builder.repository.block')->find($id);
-        if (!$block) {
-            throw $this->createNotFoundException('Unknown block #' . $id);
-        }
-
-        $page = $block->getPage();
-        if (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $page)) {
-            throw $this->createAccessDeniedException('Remove block denied for page ' . $page->getId());
-        }
+        $block = $this->loadBlock($id);
+        $this->isGrantedPageEdit($block);
 
         $this->get('opsite_builder.block.manager')->remove($block);
 
         return new Response('', 204);
+    }
+
+    /**
+     * Load a block with its page
+     *
+     * @param int $id
+     *
+     * @return AbstractBlock
+     *
+     * @throws NotFoundHttpException
+     */
+    protected function loadBlock($id)
+    {
+        /** @var AbstractBlock $block */
+        $block = $this->get('opsite_builder.repository.block')->findWithPage((int) $id);
+        if (!$block) {
+            throw $this->createNotFoundException('Unknown block #' . $id);
+        }
+
+        return $block;
+    }
+
+    /**
+     * Check if user can edit page (and so the block too)
+     *
+     * @param AbstractBlock $block
+     *
+     * @throws AccessDeniedException
+     */
+    protected function isGrantedPageEdit(AbstractBlock $block)
+    {
+        $page = $block->getPage();
+        if (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $page)) {
+            throw $this->createAccessDeniedException('Remove block denied for page ' . $page->getId());
+        }
     }
 }

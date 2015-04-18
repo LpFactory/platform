@@ -1,0 +1,18 @@
+{% extends app.request.isXmlHttpRequest ? 'OpSiteBuilderWebBundle:Block:layout_ajax.html.twig' : 'OpSiteBuilderWebBundle:Block:layout.html.twig' %}
+
+{% block content %}
+    {%  include 'OpSiteBuilderWebBundle:Block/Tools:_basic_edit_tools.html.twig' with {
+        block: block
+    } %}
+
+    <h2>{{ 'default_edit'|trans({}, block.alias) }}</h2>
+
+    <div ng-cancel-drag class="block-content">
+        <p>
+            {{ 'default_message.default_edit_template'|trans }}<br />
+            {{ 'default_message.missing_dev'|trans }}<br />
+            <strong>{{ 'default_message.block_id'|trans }}</strong> {{ block.id }}<br />
+            <strong>{{ 'default_message.block_type'|trans }}</strong> {{ block.alias }}
+        </p>
+    </div>
+{% endblock %}

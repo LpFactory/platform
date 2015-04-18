@@ -23,6 +23,7 @@ services:
         class: %opsite_builder.block.renderer.class%
         arguments:
             - @opsite_builder.block.manager
+            - @opsite_builder.block.configuration.chain
             - @templating
 
     opsite_builder.block.data_provider.default:

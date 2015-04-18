@@ -10,6 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Block\Rendered;
 
 use OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -27,6 +28,11 @@ class BlockRenderer implements BlockRendererInterface
     protected $blockManager;
 
     /**
+     * @var BlockConfigurationChainInterface
+     */
+    protected $configurationChain;
+
+    /**
      * @var EngineInterface
      */
     protected $templating;
@@ -34,12 +40,17 @@ class BlockRenderer implements BlockRendererInterface
     /**
      * Constructor
      *
-     * @param BlockManagerInterface $blockManager
-     * @param EngineInterface       $templating
+     * @param BlockManagerInterface            $blockManager
+     * @param BlockConfigurationChainInterface $configurationChain
+     * @param EngineInterface                  $templating
      */
-    public function __construct(BlockManagerInterface $blockManager, EngineInterface $templating)
-    {
+    public function __construct(
+        BlockManagerInterface $blockManager,
+        BlockConfigurationChainInterface $configurationChain,
+        EngineInterface $templating
+    ) {
         $this->blockManager = $blockManager;
+        $this->configurationChain = $configurationChain;
         $this->templating = $templating;
     }
 
@@ -48,10 +59,13 @@ class BlockRenderer implements BlockRendererInterface
      */
     public function renderView(AbstractBlock $block, $edit = false)
     {
-        return $this->templating->render('OpSiteBuilderWebBundle:Block/view:default_view.html.twig', array(
-            'block' => $block,
-            'data' => $this->blockManager->getData($block),
-            'edit' => $edit
-        ));
+        return $this->templating->render(
+            $this->configurationChain->getConfiguration($block->getAlias())->getViewTemplate(),
+            array(
+                'block' => $block,
+                'data' => $this->blockManager->getData($block),
+                'edit' => $edit
+            )
+        );
     }
 }

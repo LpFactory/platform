@@ -36,8 +36,9 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        var opsiteconf = {};
-        opsiteconf.page = {{ page|opsite_serialize }};
+        var opsiteconf = {
+            page: {{ page|opsite_serialize }}
+        };
     </script>
 
     {% javascripts
@@ -47,8 +48,8 @@
         'bundles/opsitebuilderweb/js/app.js'
         'bundles/opsitebuilderweb/js/controllers/page-controller.js'
         'bundles/opsitebuilderweb/js/controllers/page-controller-impl.js'
+        'bundles/opsitebuilderweb/js/services/blockservice.js'
         'bundles/opsitebuilderweb/js/directives/opsite-block.js'
-        'bundles/opsitebuildertextblock/js/directives/text-block-directive.js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

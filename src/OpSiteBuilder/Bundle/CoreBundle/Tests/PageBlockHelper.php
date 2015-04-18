@@ -40,10 +40,26 @@ class PageBlockHelper
         $block3->setTitle('block 3');
 
         $page = new Page();
+        $page->setTitle('Title');
+        $page->setSlug('slug-title');
         $page->addBlock($block1);
         $page->addBlock($block2);
         $page->addBlock($block3);
 
         return $page;
+    }
+
+    /**
+     * Create a block
+     *
+     * @return TestUnitBlock
+     */
+    public static function createBlock()
+    {
+        $block = new TestUnitBlock();
+        $block->setSort(1);
+        $block->setTitle('Test block');
+
+        return $block;
     }
 }

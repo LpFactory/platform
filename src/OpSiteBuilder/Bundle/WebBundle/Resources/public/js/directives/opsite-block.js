@@ -23,8 +23,14 @@
                  * Remove a block from the page
                  * Launch when clicking on bin link in block
                  */
-                $scope.removeAction = function () {
-                    $scope.page.blocks.splice(0,1);
+                $scope.removeAction = function($index) {
+                    $scope.loading = true;
+                    blockService
+                        .removeBlock($scope.block)
+                        .success(function(){
+                            $scope.loading = false;
+                            $scope.page.blocks.splice($index,1);
+                        });
                 };
 
                 /**

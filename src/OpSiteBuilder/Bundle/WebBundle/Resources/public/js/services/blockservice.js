@@ -87,12 +87,25 @@
                 );
         }
 
+        /**
+         * Remove a block
+         *
+         * @param block
+         *
+         * @returns Promise
+         */
+        function removeBlock(block) {
+            return $http
+                .delete(block.actions.remove);
+        }
+
         // block api access
         return {
             viewBlock: viewBlock,
             viewEditableBlock: viewEditableBlock,
             editBlock: editBlock,
-            submitEditBlock: submitEditBlock
+            submitEditBlock: submitEditBlock,
+            removeBlock: removeBlock
         };
     });
 })(angular);

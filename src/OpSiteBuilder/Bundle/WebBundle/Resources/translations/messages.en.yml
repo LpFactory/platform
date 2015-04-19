@@ -11,3 +11,7 @@ tools:
     edit: Edit
     move: Move
     cancel: Cancel
+    remove: Remove
+
+confirm:
+    remove_block: Are you sure you want to remove this block ?

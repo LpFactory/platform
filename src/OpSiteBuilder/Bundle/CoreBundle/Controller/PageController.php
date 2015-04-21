@@ -106,6 +106,10 @@ class PageController extends Controller
      * @param Request $request
      * @param int     $id
      * @param int     $blockId
+     *
+     * @return Response
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function moveBlockAction(Request $request, $id, $blockId)
     {
@@ -126,5 +130,7 @@ class PageController extends Controller
         $pageManager = $this->get('opsite_builder.page.manager');
         $pageManager->moveBlock($page, $block, $position);
         $pageManager->save($page, true, true);
+
+        return new Response('', 204);
     }
 }

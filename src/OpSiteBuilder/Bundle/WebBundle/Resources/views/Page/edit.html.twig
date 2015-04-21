@@ -20,8 +20,7 @@
                      {{ type }}-block
                      block="block"
                      ng-drag="true"
-                     ng-drag-data="block"
-                     ng-drag-success="onDragSuccess($data,$event)">
+                     ng-drag-data="block">
                 </div>
             {% else %}
                 No block type enabled in project
@@ -48,6 +47,7 @@
         'bundles/opsitebuilderweb/js/app.js'
         'bundles/opsitebuilderweb/js/controllers/page-controller.js'
         'bundles/opsitebuilderweb/js/controllers/page-controller-impl.js'
+        'bundles/opsitebuilderweb/js/services/pageservice.js'
         'bundles/opsitebuilderweb/js/services/blockservice.js'
         'bundles/opsitebuilderweb/js/directives/opsite-block.js'
         'bundles/opsitebuilderweb/js/directives/ng-really-click.js'

@@ -116,15 +116,13 @@ class LoadPageData extends AbstractFixture implements OrderedFixtureInterface, C
      */
     protected function createBlocks(AbstractPage $page, ObjectManager $manager)
     {
-        $textBlock = new TextBlock();
-        $textBlock->setContent('text '.uniqid());
-        $page->addBlock($textBlock);
+        for ($i = 1; $i < 5; $i++) {
+            $textBlock = new TextBlock();
+            $textBlock->setTitle('title '.$i);
+            $textBlock->setContent('text '.uniqid());
+            $page->addBlock($textBlock);
 
-        $textBlock2 = new TextBlock();
-        $textBlock2->setContent('text '.uniqid());
-        $page->addBlock($textBlock2);
-
-        $manager->persist($textBlock);
-        $manager->persist($textBlock2);
+            $manager->persist($textBlock);
+        }
     }
 }

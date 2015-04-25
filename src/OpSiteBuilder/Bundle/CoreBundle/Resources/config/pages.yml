@@ -1,0 +1,10 @@
+parameters:
+    opsite_builder.page.manager.class: OpSiteBuilder\Bundle\CoreBundle\Page\PageManager
+
+services:
+    opsite_builder.page.manager:
+        class: %opsite_builder.page.manager.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @opsite_builder.block.manager
+            - @opsite_builder.block.strategy.position

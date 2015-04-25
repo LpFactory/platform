@@ -10,8 +10,8 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Block\Configuration;
 
 use OpSiteBuilder\Bundle\CoreBundle\Block\Exception\UnknownBlockOptionException;
+use OpSiteBuilder\Bundle\CoreBundle\Configuration\AbstractConfigurableItem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class DefaultConfiguration
@@ -19,26 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @package OpSiteBuilder\Bundle\CoreBundle\Block\Configuration
  * @author jobou
  */
-class BlockConfiguration implements BlockConfigurationInterface
+class BlockConfiguration extends AbstractConfigurableItem implements BlockConfigurationInterface
 {
-    /**
-     * @var array
-     */
-    protected $configuration;
-
-    /**
-     * Constructor
-     *
-     * @param array $configuration
-     */
-    public function __construct(array $configuration)
-    {
-        $resolver = new OptionsResolver();
-        $this->configureResolver($resolver);
-
-        $this->configuration = $resolver->resolve($configuration);
-    }
-
     /**
      * Configure resolver
      *
@@ -121,18 +103,6 @@ class BlockConfiguration implements BlockConfigurationInterface
     public function getEditFormType()
     {
         return $this->get('edit_form_type');
-    }
-
-    /**
-     * Get value from key
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function get($key)
-    {
-        return $this->configuration[$key];
     }
 
     /**

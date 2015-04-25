@@ -25,6 +25,9 @@ class AppKernel extends Kernel
             new OpSiteBuilder\Bundle\CoreBundle\OpSiteBuilderCoreBundle(),
             new OpSiteBuilder\Bundle\WebBundle\OpSiteBuilderWebBundle(),
 
+            // Tools bundles
+            new OpSiteBuilder\Tool\AddBlockTool\OpSiteBuilderAddBlockToolBundle(),
+
             // Block bundles
             new OpSiteBuilder\Block\BlogBlockBundle\OpSiteBuilderBlogBlockBundle(),
             new OpSiteBuilder\Block\TextBlockBundle\OpSiteBuilderTextBlockBundle(),

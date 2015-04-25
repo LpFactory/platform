@@ -115,4 +115,12 @@ class Page extends AbstractPage
     {
         return $this->blocks;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAlias()
+    {
+        return 'default';
+    }
 }

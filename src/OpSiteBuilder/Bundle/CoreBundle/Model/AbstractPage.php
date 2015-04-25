@@ -339,4 +339,11 @@ abstract class AbstractPage
      * @return \Doctrine\Common\Collections\Collection
      */
     abstract public function getBlocks();
+
+    /**
+     * Get Alias
+     *
+     * @return string
+     */
+    abstract public function getAlias();
 }

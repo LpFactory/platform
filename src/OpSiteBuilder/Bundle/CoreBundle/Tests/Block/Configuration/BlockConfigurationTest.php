@@ -9,7 +9,6 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Tests\Block\Configuration;
 
-use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfiguration;
 use OpSiteBuilder\Bundle\CoreBundle\Tests\Block\ConfigurationHelper;
 
 /**

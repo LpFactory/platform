@@ -34,14 +34,16 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
-        $loader->load('entities.yml');
-        $loader->load('doctrine.yml');
-        $loader->load('repositories.yml');
+        $loader->load('blocks.yml');
         $loader->load('cmf_routing.yml');
-        $loader->load('managers.yml');
+        $loader->load('doctrine.yml');
+        $loader->load('entities.yml');
+        $loader->load('pages.yml');
+        $loader->load('repositories.yml');
         $loader->load('security.yml');
-        $loader->load('twig.yml');
         $loader->load('serializer.yml');
+        $loader->load('tools.yml');
+        $loader->load('twig.yml');
 
         $config = $this->processConfiguration(new Configuration(), $configs);
         $this->loadConfiguration($config, $container);
@@ -55,18 +57,36 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
      */
     protected function loadConfiguration(array $config, ContainerBuilder $container)
     {
+        // Load page nested routes
         $routeConfigurationChain = $container->findDefinition('opsite_builder.route_configuration.chain');
         foreach ($config['routing']['routes'] as $alias => $routeConfiguration) {
             $routeConfigurationChain->addMethodCall('add', array($alias, $routeConfiguration));
         }
 
+        // Update doctrine discriminator map for page entity
         $pageDiscriminatorListener = $container->findDefinition('doctrine.event_listener.page.discriminator_map');
         $pageDiscriminatorListener->replaceArgument(1, $config['page_map']);
 
+        // Update doctrine discriminator map for block entity
         $container->setParameter('opsite_builder.block.class_map', $config['block_map']);
         $blockDiscriminatorListener = $container->findDefinition('doctrine.event_listener.block.discriminator_map');
         $blockDiscriminatorListener->replaceArgument(1, $config['block_map']);
-var_dump($config['block_configuration']);
+
+        // Load block configuration and addConfiguration to block configuration chain
+        $this->loadBlockConfiguration($config, $container);
+
+        // Load tools and addTool to tools chain
+        $this->loadTools($config, $container);
+    }
+
+    /**
+     * Load block configuration and addConfiguration to block configuration chain
+     *
+     * @param array            $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadBlockConfiguration(array $config, ContainerBuilder $container)
+    {
         $definitionBlockConfigurationChain = $container->getDefinition('opsite_builder.block.configuration.chain');
         foreach ($config['block_configuration'] as $blockAlias => $blockConfig) {
             $blockConfigurationItem = new Definition(
@@ -83,6 +103,29 @@ var_dump($config['block_configuration']);
     }
 
     /**
+     * Load tools and addTool to tools chain
+     *
+     * @param array            $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadTools(array $config, ContainerBuilder $container)
+    {
+        $definitionToolsChain = $container->getDefinition('opsite_builder.tools.chain');
+        foreach ($config['tools'] as $toolAlias => $toolConfig) {
+            $toolItem = new Definition(
+                $container->getParameter('opsite_builder.tool.default.class'),
+                array($toolConfig)
+            );
+
+            $definitionKey = 'opsite_builder.tool.'.$toolAlias;
+            $container->setDefinition($definitionKey, $toolItem);
+
+            $definitionToolsChain
+                ->addMethodCall('addTool', array($toolItem, $toolAlias));
+        }
+    }
+
+    /**
      * Prepend some configuration to container
      *
      * @param ContainerBuilder $container
@@ -95,7 +138,7 @@ var_dump($config['block_configuration']);
         // Bundle needs assetic
         $container->prependExtensionConfig('assetic', array('bundles' => array('OpSiteBuilderWebBundle')));
 
-        // Bundle prepend default configuration
+        // Block prepend default configuration
         $container->prependExtensionConfig(
             'op_site_builder_core',
             array(

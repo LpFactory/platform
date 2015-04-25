@@ -156,5 +156,17 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
                 )
             )
         );
+
+        // Tool add block configuration
+        $container->prependExtensionConfig(
+            'op_site_builder_core',
+            array(
+                'tools' => array(
+                    'add_block' => array(
+                        'priority' => 10
+                    )
+                )
+            )
+        );
     }
 }

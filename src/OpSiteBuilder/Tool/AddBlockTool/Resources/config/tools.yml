@@ -1,8 +1,0 @@
-parameters:
-    opsite_builder.tools.add_block.class:
-
-services:
-#    opsite_builder.tools.add_block:
-#        class: %opsite_builder.tools.add_block.class%
-#        tags:
-#            - { name: opsite_builder.page.tools, alias: add_block }

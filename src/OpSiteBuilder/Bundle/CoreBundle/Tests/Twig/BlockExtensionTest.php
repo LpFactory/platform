@@ -9,7 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Tests\Twig;
 
-use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\DefaultConfiguration;
+use OpSiteBuilder\Bundle\CoreBundle\Tests\Block\ConfigurationHelper;
 use OpSiteBuilder\Bundle\CoreBundle\Tests\Entity\TestUnitBlock;
 use OpSiteBuilder\Bundle\CoreBundle\Twig\BlockExtension;
 
@@ -28,7 +28,7 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $manager = $this->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface');
 
-        $defaultConfiguration = new DefaultConfiguration();
+        $defaultConfiguration = ConfigurationHelper::getConfiguration();
 
         $configuration = $this
             ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface');
@@ -52,7 +52,7 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $manager = $this->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface');
 
-        $defaultConfiguration = new DefaultConfiguration();
+        $defaultConfiguration = ConfigurationHelper::getConfiguration();
 
         $configuration = $this
             ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface');

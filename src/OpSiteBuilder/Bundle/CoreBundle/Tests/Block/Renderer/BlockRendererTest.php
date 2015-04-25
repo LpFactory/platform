@@ -9,8 +9,9 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Tests\Block\Renderer;
 
-use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\DefaultConfiguration;
+use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfiguration;
 use OpSiteBuilder\Bundle\CoreBundle\Block\Rendered\BlockRenderer;
+use OpSiteBuilder\Bundle\CoreBundle\Tests\Block\ConfigurationHelper;
 use OpSiteBuilder\Bundle\CoreBundle\Tests\PageBlockHelper;
 
 /**
@@ -32,7 +33,7 @@ class BlockRendererTest extends \PHPUnit_Framework_TestCase
             ->method('getData')
             ->willReturn(null);
 
-        $defaultConfiguration = new DefaultConfiguration();
+        $defaultConfiguration = ConfigurationHelper::getConfiguration();
         $blockConfiguration = $this
             ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface');
         $blockConfiguration

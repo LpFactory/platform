@@ -7,16 +7,16 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-namespace OpSiteBuilder\Bundle\CoreBundle\Tests\Block\Configuration;
+namespace OpSiteBuilder\Bundle\CoreBundle\Block\Exception;
 
-use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfiguration;
+use OpSiteBuilder\Bundle\CoreBundle\Exception\OpSiteBuilderException;
 
 /**
- * Class TestConfiguration
+ * Class UnknownBlockOptionException
  *
- * @package OpSiteBuilder\Bundle\CoreBundle\Tests\Block\Configuration
+ * @package OpSiteBuilder\Bundle\CoreBundle\Block\Exception
  * @author jobou
  */
-class TestConfiguration extends BlockConfiguration
+class UnknownBlockOptionException extends OpSiteBuilderException
 {
 }

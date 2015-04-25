@@ -9,7 +9,8 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Tests\Block\Configuration;
 
-use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\DefaultConfiguration;
+use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfiguration;
+use OpSiteBuilder\Bundle\CoreBundle\Tests\Block\ConfigurationHelper;
 
 /**
  * Class DefaultConfigurationTest
@@ -17,14 +18,14 @@ use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\DefaultConfiguration;
  * @package OpSiteBuilder\Bundle\CoreBundle\Tests\Block\Configuration
  * @author jobou
  */
-class DefaultConfigurationTest extends \PHPUnit_Framework_TestCase
+class BlockConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test all getter
      */
     public function testGetter()
     {
-        $configuration = new DefaultConfiguration();
+        $configuration = ConfigurationHelper::getConfiguration();
         $this->assertEquals(
             'OpSiteBuilderWebBundle:Block:View/default_edit.html.twig',
             $configuration->getEditTemplate()

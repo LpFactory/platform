@@ -10,7 +10,7 @@
 namespace OpSiteBuilder\Bundle\CoreBundle\Tests\Block\Configuration;
 
 use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChain;
-use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\DefaultConfiguration;
+use OpSiteBuilder\Bundle\CoreBundle\Tests\Block\ConfigurationHelper;
 
 /**
  * Class BlockConfigurationChainTest
@@ -30,7 +30,7 @@ class BlockConfigurationChainTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $defaultConfiguration = new DefaultConfiguration();
+        $defaultConfiguration = ConfigurationHelper::getConfiguration();
 
         $this->configurationChain = new BlockConfigurationChain();
         $this->configurationChain->addConfiguration($defaultConfiguration, 'default');
@@ -41,7 +41,17 @@ class BlockConfigurationChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddConfiguration()
     {
-        $testConfiguration = new TestConfiguration();
+        $testConfiguration = new TestConfiguration(array(
+            'view_template'   => 'OpSiteBuilderWebBundle:Block:View/default_view.html.twig',
+            'view_controller' => 'OpSiteBuilderCoreBundle:Block:default',
+            'view_route'      => 'opsite_builder_api_view_block',
+            'edit_controller' => 'OpSiteBuilderCoreBundle:Block:defaultEdit',
+            'edit_route'      => 'opsite_builder_api_edit_no_form_block',
+            'edit_template'   => 'OpSiteBuilderWebBundle:Block:View/default_edit.html.twig',
+            'edit_form_type'  => null,
+            'options'         => array()
+        ));
+
         $this->configurationChain->addConfiguration($testConfiguration, 'test');
 
         $this->assertInstanceOf(
@@ -56,7 +66,7 @@ class BlockConfigurationChainTest extends \PHPUnit_Framework_TestCase
     public function testDefaultConfiguration()
     {
         $this->assertInstanceOf(
-            'OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\DefaultConfiguration',
+            'OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfiguration',
             $this->configurationChain->getConfiguration('unknown_type')
         );
     }

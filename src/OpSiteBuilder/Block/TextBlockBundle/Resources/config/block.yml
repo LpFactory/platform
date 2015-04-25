@@ -1,8 +1,0 @@
-parameters:
-    opsite_builder.block.configuration.text.class: OpSiteBuilder\Block\TextBlockBundle\Block\Configuration
-
-services:
-    opsite_builder.block.configuration.text:
-        class: %opsite_builder.block.configuration.text.class%
-        tags:
-            - { name: opsite_builder.block.configuration, alias: text }

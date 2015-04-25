@@ -9,8 +9,8 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Tests\Block\Normalizer;
 
-use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\DefaultConfiguration;
 use OpSiteBuilder\Bundle\CoreBundle\Block\Normalizer\BlockNormalizer;
+use OpSiteBuilder\Bundle\CoreBundle\Tests\Block\ConfigurationHelper;
 use OpSiteBuilder\Bundle\CoreBundle\Tests\PageBlockHelper;
 
 /**
@@ -32,7 +32,7 @@ class BlockNormalizerTest extends \PHPUnit_Framework_TestCase
         $generator->expects($this->at(2))->method('generate')->willReturn('edit_block_url');
         $generator->expects($this->at(3))->method('generate')->willReturn('remove_block_url');
 
-        $defaultConfiguration = new DefaultConfiguration();
+        $defaultConfiguration = ConfigurationHelper::getConfiguration();
         $configuration = $this->getMock(
             'OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface'
         );

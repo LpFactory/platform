@@ -20,8 +20,8 @@ interface BlockConfigurationChainInterface
     /**
      * Add a configuration to the chain
      *
-     * @param BlockConfigurationInterface $configuration
-     * @param string                     $alias
+     * @param array|BlockConfigurationInterface $configuration
+     * @param string                            $alias
      *
      * @return $this
      */

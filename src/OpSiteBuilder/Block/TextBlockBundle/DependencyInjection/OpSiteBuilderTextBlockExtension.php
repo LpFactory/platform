@@ -12,6 +12,7 @@ namespace OpSiteBuilder\Block\TextBlockBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
@@ -20,7 +21,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * @package OpSiteBuilder\Bundle\CoreBundle\DependencyInjection
  * @author jobou
  */
-class OpSiteBuilderTextBlockExtension extends Extension
+class OpSiteBuilderTextBlockExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +32,29 @@ class OpSiteBuilderTextBlockExtension extends Extension
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
-        $loader->load('block.yml');
         $loader->load('form_type.yml');
+    }
+
+    /**
+     * Prepend some configuration to container
+     *
+     * @param ContainerBuilder $container
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        // Bundle prepend default configuration
+        $container->prependExtensionConfig(
+            'op_site_builder_core',
+            array(
+                'block_configuration' => array(
+                    'text' => array(
+                        'view_template'   => 'OpSiteBuilderTextBlockBundle::view.html.twig',
+                        'edit_route'      => 'opsite_builder_api_edit_form_block',
+                        'edit_template'   => 'OpSiteBuilderTextBlockBundle::edit.html.twig',
+                        'edit_form_type'  => 'block_text'
+                    )
+                )
+            )
+        );
     }
 }

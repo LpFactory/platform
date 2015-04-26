@@ -40,7 +40,7 @@ class AngularExtension extends \Twig_Extension
      */
     public function toHtmlAttributes(array $attributes)
     {
-        return join(' ', array_map(function($key) use ($attributes) {
+        return join(' ', array_map(function ($key) use ($attributes) {
             return $key.'="'.$attributes[$key].'"';
         }, array_keys($attributes)));
     }

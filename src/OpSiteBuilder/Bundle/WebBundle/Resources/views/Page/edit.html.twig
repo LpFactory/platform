@@ -6,6 +6,10 @@
 
 {% block body %}
     <div id="test" ng-controller="PageControllerImpl" ng-cloak>
+        {% include 'OpSiteBuilderWebBundle:Page:_tools.html.twig' with {
+            tools: tools,
+            page: page
+        } %}
 
         {{ '{{page.title}}' }}
 
@@ -52,6 +56,7 @@
         'bundles/opsitebuilderweb/js/services/blockservice.js'
         'bundles/opsitebuilderweb/js/directives/opsite-block.js'
         'bundles/opsitebuilderweb/js/directives/ng-really-click.js'
+        'bundles/opsitebuilderweb/js/directives/opsite-tool-add-block.js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

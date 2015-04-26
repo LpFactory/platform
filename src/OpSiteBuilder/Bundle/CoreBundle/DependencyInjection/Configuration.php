@@ -165,6 +165,30 @@ class Configuration implements ConfigurationInterface
             ->defaultValue(array())
             ->prototype('array')
                 ->children()
+                    ->scalarNode('directive')
+                        ->isRequired()
+                    ->end()
+                    ->arrayNode('directive_attributes')
+                        ->validate()
+                            ->ifTrue(function ($v) {
+                                if (!is_array($v)) {
+                                    return true;
+                                }
+
+                                foreach ($v as $key => $item) {
+                                    if (!is_scalar($item)) {
+                                        return true;
+                                    }
+                                }
+
+                                return false;
+                            })
+                            ->thenInvalid('Directive attributs should be array and contains only scalar value.')
+                        ->end()
+                        ->defaultValue(array())
+                        ->prototype('variable')
+                        ->end()
+                    ->end()
                     ->booleanNode('enabled')
                         ->defaultTrue()
                     ->end()

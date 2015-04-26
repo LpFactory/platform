@@ -163,6 +163,10 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
             array(
                 'tools' => array(
                     'add_block' => array(
+                        'directive' => 'opsite-tool-add-block',
+                        'directive_attributes' => array(
+                            'template' => '/bundles/opsitebuilderweb/html/tool_add_block.html'
+                        ),
                         'priority' => 10
                     )
                 )

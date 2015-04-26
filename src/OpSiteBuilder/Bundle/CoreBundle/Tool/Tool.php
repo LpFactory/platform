@@ -29,12 +29,16 @@ class Tool extends AbstractConfigurableItem implements ToolInterface
     protected function configureResolver(OptionsResolver $resolver)
     {
         $resolver->setRequired(array(
+            'directive',
+            'directive_attributes',
             'enabled',
             'pages',
             'priority'
         ));
 
-        $resolver->setAllowedTypes('enabled', 'boolean');
+        $resolver->setAllowedTypes('directive', 'string');
+        $resolver->setAllowedTypes('directive_attributes', 'array');
+        $resolver->setAllowedTypes('enabled', 'bool');
         $resolver->setAllowedTypes('pages', 'array');
         $resolver->setAllowedTypes('priority', 'int');
     }
@@ -69,12 +73,26 @@ class Tool extends AbstractConfigurableItem implements ToolInterface
     }
 
     /**
-     * Get the priority of the tool
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getPriority()
     {
         return (int) $this->get('priority');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDirective()
+    {
+        return $this->get('directive');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDirectiveAttributes()
+    {
+        return $this->get('directive_attributes');
     }
 }

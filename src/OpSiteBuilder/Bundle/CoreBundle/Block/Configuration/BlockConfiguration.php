@@ -114,7 +114,8 @@ class BlockConfiguration extends AbstractConfigurableItem implements BlockConfig
      */
     public function hasOption($key)
     {
-        return isset($this->get('options')[$key]);
+        $options = $this->get('options');
+        return isset($options[$key]);
     }
 
     /**
@@ -130,6 +131,7 @@ class BlockConfiguration extends AbstractConfigurableItem implements BlockConfig
             throw new UnknownBlockOptionException('Option '.$key.' not configured');
         }
 
-        return $this->get('options')[$key];
+        $options = $this->get('options');
+        return $options[$key];
     }
 }

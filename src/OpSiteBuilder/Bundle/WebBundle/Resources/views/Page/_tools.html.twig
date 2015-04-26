@@ -1,0 +1,5 @@
+<div id="toolbar" class="opsite-tool">
+    {% for tool in tools %}
+        <div {{ tool.directive }} {{ tool.directiveAttributes|to_html_attributes }}></div>
+    {% endfor %}
+</div>

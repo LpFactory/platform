@@ -39,4 +39,18 @@ interface ToolInterface
      * @return int
      */
     public function getPriority();
+
+    /**
+     * Get the directive for angular
+     *
+     * @return string
+     */
+    public function getDirective();
+
+    /**
+     * Get the directive attributes for angular
+     *
+     * @return array
+     */
+    public function getDirectiveAttributes();
 }

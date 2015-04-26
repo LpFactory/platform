@@ -61,7 +61,8 @@ class PageController extends Controller
 
         return $this->render('OpSiteBuilderWebBundle:Page:edit.html.twig', array(
             'page' => $page,
-            'breadcrumbs' => $path
+            'breadcrumbs' => $path,
+            'tools' => $this->get('opsite_builder.tools.chain')->allInPage($page)
         ));
     }
 

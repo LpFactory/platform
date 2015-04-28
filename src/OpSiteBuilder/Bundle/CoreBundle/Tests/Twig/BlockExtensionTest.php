@@ -37,7 +37,10 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
             ->method('getConfiguration')
             ->willReturn($defaultConfiguration);
 
-        $extension = new BlockExtension($configuration, $manager);
+        $blockChainMock = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChainInterface');
+
+        $extension = new BlockExtension($configuration, $manager, $blockChainMock);
 
         $this->assertEquals(
             $defaultConfiguration->getViewController(),
@@ -61,7 +64,10 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
             ->method('getConfiguration')
             ->willReturn($defaultConfiguration);
 
-        $extension = new BlockExtension($configuration, $manager);
+        $blockChainMock = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChainInterface');
+
+        $extension = new BlockExtension($configuration, $manager, $blockChainMock);
 
         $this->assertEquals($defaultConfiguration->getEditRoute(), $extension->getBlockEditRoute(new TestUnitBlock()));
     }
@@ -80,7 +86,10 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
         $configuration = $this
             ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface');
 
-        $extension = new BlockExtension($configuration, $manager);
+        $blockChainMock = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChainInterface');
+
+        $extension = new BlockExtension($configuration, $manager, $blockChainMock);
 
         $this->assertTrue($extension->isBlockEmpty(new TestUnitBlock()));
     }
@@ -90,14 +99,18 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBlockTypes()
     {
+        $blockChainMock = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChainInterface');
+        $blockChainMock
+            ->expects($this->once())
+            ->method('keys')
+            ->willReturn(array('text', 'gallery'));
+
         $manager = $this->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface');
         $configuration = $this
             ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface');
-        $blockTypes = array(
-            'text' => 'class',
-            'gallery' => 'class'
-        );
-        $extension = new BlockExtension($configuration, $manager, $blockTypes);
+
+        $extension = new BlockExtension($configuration, $manager, $blockChainMock);
 
         $this->assertEquals(array('text', 'gallery'), $extension->getBlockTypes());
     }
@@ -110,7 +123,9 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
         $manager = $this->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface');
         $configuration = $this
             ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface');
-        $extension = new BlockExtension($configuration, $manager);
+        $blockChainMock = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChainInterface');
+        $extension = new BlockExtension($configuration, $manager, $blockChainMock);
 
         $functions = $extension->getFunctions();
         $this->assertEquals(4, count($functions));
@@ -136,7 +151,9 @@ class BlockExtensionTest extends \PHPUnit_Framework_TestCase
         $manager = $this->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface');
         $configuration = $this
             ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface');
-        $extension = new BlockExtension($configuration, $manager);
+        $blockChainMock = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChainInterface');
+        $extension = new BlockExtension($configuration, $manager, $blockChainMock);
 
         $this->assertEquals('opsite_builder_block_extension', $extension->getName());
     }

@@ -41,14 +41,22 @@ class MapDiscriminatorListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadClassMetadata()
     {
+        $blockChainMock = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Doctrine\EventListener\DoctrineDiscriminatorProviderInterface');
+        $blockChainMock
+            ->expects($this->once())
+            ->method('getDiscriminatorMap')
+            ->willReturn(array(
+                'test_block' => 'OpSiteBuilder\Bundle\CoreBundle\Tests\Entity\BlockTest',
+                'test_page' => 'OpSiteBuilder\Bundle\CoreBundle\Tests\Entity\PageTest'
+            ));
+
         $this->assertEquals(0, count($this->event->getClassMetadata()->discriminatorMap));
         $listener = new MapDiscriminatorListener(
             'OpSiteBuilder\Bundle\CoreBundle\Entity\Page',
-            array(
-                'test_block' => 'OpSiteBuilder\Bundle\CoreBundle\Tests\Entity\BlockTest',
-                'test_page' => 'OpSiteBuilder\Bundle\CoreBundle\Tests\Entity\PageTest'
-            )
+            $blockChainMock
         );
+
         $listener->loadClassMetadata($this->event);
         $this->assertEquals(2, count($this->event->getClassMetadata()->discriminatorMap));
     }
@@ -60,9 +68,16 @@ class MapDiscriminatorListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnknownClassLoadClassMetadata()
     {
+        $blockChainMock = $this
+            ->getMock('OpSiteBuilder\Bundle\CoreBundle\Doctrine\EventListener\DoctrineDiscriminatorProviderInterface');
+        $blockChainMock
+            ->expects($this->once())
+            ->method('getDiscriminatorMap')
+            ->willReturn(array('test' => 'test'));
+
         $listener = new MapDiscriminatorListener(
             'OpSiteBuilder\Bundle\CoreBundle\Entity\Page',
-            array('test' => 'test')
+            $blockChainMock
         );
         $listener->loadClassMetadata($this->event);
     }

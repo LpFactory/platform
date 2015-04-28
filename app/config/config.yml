@@ -100,4 +100,5 @@ cmf_routing:
 
 op_site_builder_core:
     block_map:
-        text: OpSiteBuilder\Block\TextBlockBundle\Entity\TextBlock
+        text:
+          class: OpSiteBuilder\Block\TextBlockBundle\Entity\TextBlock

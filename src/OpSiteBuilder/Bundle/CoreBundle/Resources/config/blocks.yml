@@ -7,6 +7,8 @@ parameters:
     opsite_builder.block.factory.class: OpSiteBuilder\Bundle\CoreBundle\Block\BlockFactory
     opsite_builder.block.strategy.position.class: OpSiteBuilder\Bundle\CoreBundle\Block\Strategy\BlockPositionStrategy
     opsite_builder.block.renderer.class: OpSiteBuilder\Bundle\CoreBundle\Block\Rendered\BlockRenderer
+    opsite_builder.block.map.chain.class: OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChain
+    opsite_builder.block.map.default.class: OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMap
 
 services:
     opsite_builder.block.data_provider.chain:
@@ -36,7 +38,10 @@ services:
     opsite_builder.block.factory:
         class: %opsite_builder.block.factory.class%
         arguments:
-            - %opsite_builder.block.class_map%
+            - @opsite_builder.block.map.chain
 
     opsite_builder.block.strategy.position:
         class: %opsite_builder.block.strategy.position.class%
+
+    opsite_builder.block.map.chain:
+        class: %opsite_builder.block.map.chain.class%

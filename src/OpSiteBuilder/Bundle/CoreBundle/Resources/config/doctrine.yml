@@ -12,7 +12,7 @@ services:
         class: %doctrine.event_listener.page.discriminator_map.class%
         arguments:
             - %opsite.entity.page.class%
-            - []
+            - @opsite_builder.page.map
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
@@ -20,6 +20,6 @@ services:
         class: %doctrine.event_listener.block.discriminator_map.class%
         arguments:
             - %opsite.entity.block.class%
-            - []
+            - @opsite_builder.block.map.chain
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }

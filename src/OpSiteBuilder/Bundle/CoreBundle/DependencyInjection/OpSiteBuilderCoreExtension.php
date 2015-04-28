@@ -63,17 +63,15 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
             $routeConfigurationChain->addMethodCall('add', array($alias, $routeConfiguration));
         }
 
-        // Update doctrine discriminator map for page entity
-        $pageDiscriminatorListener = $container->findDefinition('doctrine.event_listener.page.discriminator_map');
-        $pageDiscriminatorListener->replaceArgument(1, $config['page_map']);
-
-        // Update doctrine discriminator map for block entity
-        $container->setParameter('opsite_builder.block.class_map', $config['block_map']);
-        $blockDiscriminatorListener = $container->findDefinition('doctrine.event_listener.block.discriminator_map');
-        $blockDiscriminatorListener->replaceArgument(1, $config['block_map']);
+        // Save page map in service used by the doctrine event
+        $pageDiscriminatorMap = $container->findDefinition('opsite_builder.page.map');
+        $pageDiscriminatorMap->replaceArgument(0, $config['page_map']);
 
         // Load block configuration and addConfiguration to block configuration chain
         $this->loadBlockConfiguration($config, $container);
+
+        // Load block map and addMap to block map chain
+        $this->loadBlockMap($config, $container);
 
         // Load tools and addTool to tools chain
         $this->loadTools($config, $container);
@@ -87,19 +85,34 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
      */
     protected function loadBlockConfiguration(array $config, ContainerBuilder $container)
     {
-        $definitionBlockConfigurationChain = $container->getDefinition('opsite_builder.block.configuration.chain');
-        foreach ($config['block_configuration'] as $blockAlias => $blockConfig) {
-            $blockConfigurationItem = new Definition(
-                $container->getParameter('opsite_builder.block.configuration.default.class'),
-                array($blockConfig)
+        $this
+            ->loadChainedServices(
+                $container,
+                'opsite_builder.block.configuration.chain',
+                $config['block_configuration'],
+                'opsite_builder.block.configuration.default.class',
+                'opsite_builder.block.configuration.',
+                'addConfiguration'
             );
+    }
 
-            $definitionKey = 'opsite_builder.block.configuration.'.$blockAlias;
-            $container->setDefinition($definitionKey, $blockConfigurationItem);
-
-            $definitionBlockConfigurationChain
-                ->addMethodCall('addConfiguration', array($blockConfigurationItem, $blockAlias));
-        }
+    /**
+     * Load block map and addMap to block map chain
+     *
+     * @param array            $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadBlockMap(array $config, ContainerBuilder $container)
+    {
+        $this
+            ->loadChainedServices(
+                $container,
+                'opsite_builder.block.map.chain',
+                $config['block_map'],
+                'opsite_builder.block.map.default.class',
+                'opsite_builder.block.map.',
+                'addMap'
+            );
     }
 
     /**
@@ -110,18 +123,49 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
      */
     protected function loadTools(array $config, ContainerBuilder $container)
     {
-        $definitionToolsChain = $container->getDefinition('opsite_builder.tools.chain');
-        foreach ($config['tools'] as $toolAlias => $toolConfig) {
-            $toolItem = new Definition(
-                $container->getParameter('opsite_builder.tool.default.class'),
-                array($toolConfig)
+        $this
+            ->loadChainedServices(
+                $container,
+                'opsite_builder.tools.chain',
+                $config['tools'],
+                'opsite_builder.tool.default.class',
+                'opsite_builder.tool.',
+                'addTool'
+            );
+    }
+
+    /**
+     * Generic method to manage loading services in chain service
+     *
+     * @param ContainerBuilder $container
+     * @param string           $chainDefinition
+     * @param array            $items
+     * @param string           $itemClassParameter
+     * @param string           $itemDefinitionPrefix
+     * @param string           $addMethodCall
+     */
+    protected function loadChainedServices(
+        ContainerBuilder $container,
+        $chainDefinition,
+        $items,
+        $itemClassParameter,
+        $itemDefinitionPrefix,
+        $addMethodCall
+    ) {
+        $definitionChain = $container->getDefinition($chainDefinition);
+        foreach ($items as $alias => $item) {
+            $itemDefinition = new Definition(
+                $container->getParameter($itemClassParameter),
+                array($item)
             );
 
-            $definitionKey = 'opsite_builder.tool.'.$toolAlias;
-            $container->setDefinition($definitionKey, $toolItem);
+            // Add a service definition for each item
+            $definitionKey = $itemDefinitionPrefix.$alias;
+            $container->setDefinition($definitionKey, $itemDefinition);
 
-            $definitionToolsChain
-                ->addMethodCall('addTool', array($toolItem, $toolAlias));
+            // Load the service in the chain
+            $definitionChain
+                ->addMethodCall($addMethodCall, array($itemDefinition, $alias));
         }
     }
 

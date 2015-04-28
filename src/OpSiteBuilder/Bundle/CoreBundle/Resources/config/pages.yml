@@ -1,5 +1,6 @@
 parameters:
     opsite_builder.page.manager.class: OpSiteBuilder\Bundle\CoreBundle\Page\PageManager
+    opsite_builder.page.map.class: OpSiteBuilder\Bundle\CoreBundle\Page\Configuration\PageMap
 
 services:
     opsite_builder.page.manager:
@@ -8,3 +9,8 @@ services:
             - @doctrine.orm.entity_manager
             - @opsite_builder.block.manager
             - @opsite_builder.block.strategy.position
+
+    opsite_builder.page.map:
+        class: %opsite_builder.page.map.class%
+        arguments:
+            -

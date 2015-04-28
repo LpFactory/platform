@@ -39,18 +39,36 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')
                     ->end()
                 ->end()
-                ->arrayNode('block_map')
-                    ->useAttributeAsKey('name')
-                    ->defaultValue(array())
-                    ->prototype('scalar')
-                    ->end()
-                ->end()
+                ->append($this->addBlockMapNode())
                 ->append($this->addRoutingNode())
                 ->append($this->addBlockConfigurationNode())
                 ->append($this->addToolsNode())
             ->end();
 
         return $treeBuilder;
+    }
+
+    /**
+     * Configure block_map node
+     *
+     * @return ArrayNodeDefinition|NodeDefinition
+     */
+    protected function addBlockMapNode()
+    {
+        $builder = new TreeBuilder();
+        $node = $builder->root('block_map');
+
+        $node
+            ->defaultValue(array())
+            ->useAttributeAsKey('name')
+            ->prototype('array')
+                ->children()
+                    ->scalarNode('class')->isRequired()->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
     }
 
     /**

@@ -11,6 +11,8 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Twig;
 
 use OpSiteBuilder\Bundle\CoreBundle\Block\BlockManagerInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChainInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMap;
+use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChainInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractBlock;
 
 /**
@@ -32,25 +34,25 @@ class BlockExtension extends \Twig_Extension
     protected $blockManager;
 
     /**
-     * @var array
+     * @var BlockMapChainInterface
      */
-    protected $blockTypes;
+    protected $blockMap;
 
     /**
      * Constructor
      *
      * @param BlockConfigurationChainInterface $configurationChain
      * @param BlockManagerInterface            $blockManager
-     * @param array                            $blockTypes
+     * @param BlockMapChainInterface           $blockMap
      */
     public function __construct(
         BlockConfigurationChainInterface $configurationChain,
         BlockManagerInterface $blockManager,
-        array $blockTypes = array()
+        BlockMapChainInterface $blockMap
     ) {
         $this->configurationChain = $configurationChain;
         $this->blockManager = $blockManager;
-        $this->blockTypes = $blockTypes;
+        $this->blockMap = $blockMap;
     }
 
     /**
@@ -109,7 +111,7 @@ class BlockExtension extends \Twig_Extension
      */
     public function getBlockTypes()
     {
-        return array_keys($this->blockTypes);
+        return $this->blockMap->keys();
     }
 
     /**

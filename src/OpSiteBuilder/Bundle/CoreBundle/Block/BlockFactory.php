@@ -9,6 +9,7 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Block;
 
+use OpSiteBuilder\Bundle\CoreBundle\Block\Configuration\BlockMapChainInterface;
 use OpSiteBuilder\Bundle\CoreBundle\Block\Exception\UnknownBlockTypeException;
 
 /**
@@ -20,18 +21,18 @@ use OpSiteBuilder\Bundle\CoreBundle\Block\Exception\UnknownBlockTypeException;
 class BlockFactory implements BlockFactoryInterface
 {
     /**
-     * @var array
+     * @var BlockMapChainInterface
      */
-    protected $blockClassMap;
+    protected $blockMap;
 
     /**
      * Constructor
      *
-     * @param array $blockClassMap
+     * @param BlockMapChainInterface $blockMap
      */
-    public function __construct(array $blockClassMap = array())
+    public function __construct(BlockMapChainInterface $blockMap)
     {
-        $this->blockClassMap = $blockClassMap;
+        $this->blockMap = $blockMap;
     }
 
     /**
@@ -39,10 +40,11 @@ class BlockFactory implements BlockFactoryInterface
      */
     public function create($type)
     {
-        if (!isset($this->blockClassMap[$type])) {
+        if (!$this->blockMap->has($type)) {
             throw new UnknownBlockTypeException('Block type '.$type.' does not exists.');
         }
 
-        return new $this->blockClassMap[$type]();
+        $blockClass = $this->blockMap->getMap($type)->getClass();
+        return new $blockClass();
     }
 }

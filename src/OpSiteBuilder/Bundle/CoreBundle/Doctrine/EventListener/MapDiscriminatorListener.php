@@ -20,9 +20,9 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 class MapDiscriminatorListener
 {
     /**
-     * @var array
+     * @var DoctrineDiscriminatorProviderInterface
      */
-    protected $map;
+    protected $discriminatorProvider;
 
     /**
      * @var string
@@ -32,13 +32,13 @@ class MapDiscriminatorListener
     /**
      * Constructor
      *
-     * @param string $class
-     * @param array  $map
+     * @param string                                 $class
+     * @param DoctrineDiscriminatorProviderInterface $discriminatorProvider
      */
-    public function __construct($class, array $map = array())
+    public function __construct($class, DoctrineDiscriminatorProviderInterface $discriminatorProvider)
     {
         $this->class = $class;
-        $this->map = $map;
+        $this->discriminatorProvider = $discriminatorProvider;
     }
 
     /**
@@ -52,7 +52,7 @@ class MapDiscriminatorListener
         $metadata = $event->getClassMetadata();
 
         if ($metadata->getName() === $this->class) {
-            $metadata->setDiscriminatorMap($this->map);
+            $metadata->setDiscriminatorMap($this->discriminatorProvider->getDiscriminatorMap());
         }
     }
 }

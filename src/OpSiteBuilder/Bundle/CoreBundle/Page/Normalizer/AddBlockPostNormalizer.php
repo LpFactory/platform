@@ -44,7 +44,8 @@ class AddBlockPostNormalizer implements ToolPostNormalizerInterface
     public function postNormalize(array &$normalizedData, AbstractPage $page)
     {
         $normalizedData['actions']['add_block'] = $this->urlGenerator->generate(
-            'opsite_builder_api_add_block_to_page', array(
+            'opsite_builder_api_add_block_to_page',
+            array(
                 'id' => $page->getId(),
                 'type' => PageNormalizer::BLOCK_TYPE_PLACEHOLDER
             )

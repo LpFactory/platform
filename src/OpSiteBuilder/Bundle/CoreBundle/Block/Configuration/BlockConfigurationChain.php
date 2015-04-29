@@ -9,40 +9,22 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Block\Configuration;
 
+use OpSiteBuilder\Bundle\CoreBundle\Configuration\AbstractChain;
+
 /**
  * Class BlockConfigurationChain
  *
  * @package OpSiteBuilder\Bundle\CoreBundle\Block\Configuration
  * @author jobou
  */
-class BlockConfigurationChain implements BlockConfigurationChainInterface
+class BlockConfigurationChain extends AbstractChain implements BlockConfigurationChainInterface
 {
-    /**
-     * @var string
-     */
-    protected $defaultAlias;
-
-    /**
-     * @var array
-     */
-    protected $configurations = array();
-
-    /**
-     * Constructor
-     *
-     * @param string $defaultAlias
-     */
-    public function __construct($defaultAlias = 'default')
-    {
-        $this->defaultAlias = $defaultAlias;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function addConfiguration(BlockConfigurationInterface $configuration, $alias)
     {
-        $this->configurations[$alias] = $configuration;
+        return $this->addItem($configuration, $alias);
     }
 
     /**
@@ -50,14 +32,6 @@ class BlockConfigurationChain implements BlockConfigurationChainInterface
      */
     public function getConfiguration($alias)
     {
-        if (isset($this->configurations[$alias])) {
-            return $this->configurations[$alias];
-        }
-
-        if (!isset($this->configurations[$this->defaultAlias])) {
-            throw new \LogicException('No default configuration configured');
-        }
-
-        return $this->configurations[$this->defaultAlias];
+        return $this->getItem($alias);
     }
 }

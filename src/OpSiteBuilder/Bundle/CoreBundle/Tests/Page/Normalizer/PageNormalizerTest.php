@@ -26,8 +26,7 @@ class PageNormalizerTest extends \PHPUnit_Framework_TestCase
     public function testNormalize()
     {
         $generator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
-        $generator->expects($this->at(0))->method('generate')->willReturn('add_block_url');
-        $generator->expects($this->at(1))->method('generate')->willReturn('move_block_url');
+        $generator->expects($this->at(0))->method('generate')->willReturn('move_block_url');
 
         $normalizer = $this->getMock('Symfony\Component\Serializer\Normalizer\NormalizerInterface');
 
@@ -40,7 +39,6 @@ class PageNormalizerTest extends \PHPUnit_Framework_TestCase
             'created' => null,
             'updated' => null,
             'actions' => array(
-                'add_block' => 'add_block_url',
                 'move_block' => 'move_block_url'
             ),
             'blocks' => array(null, null, null)

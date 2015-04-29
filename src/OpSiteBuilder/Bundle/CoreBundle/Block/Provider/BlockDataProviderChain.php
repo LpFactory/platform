@@ -9,40 +9,22 @@
 
 namespace OpSiteBuilder\Bundle\CoreBundle\Block\Provider;
 
+use OpSiteBuilder\Bundle\CoreBundle\Configuration\AbstractChain;
+
 /**
  * Class BlockDataProviderChain
  *
  * @package OpSiteBuilder\Bundle\CoreBundle\Block
  * @author jobou
  */
-class BlockDataProviderChain implements BlockDataProviderChainInterface
+class BlockDataProviderChain extends AbstractChain implements BlockDataProviderChainInterface
 {
-    /**
-     * @var string
-     */
-    protected $defaultAlias;
-
-    /**
-     * @var array
-     */
-    protected $providers = array();
-
-    /**
-     * Constructor
-     *
-     * @param string $defaultAlias
-     */
-    public function __construct($defaultAlias = 'default')
-    {
-        $this->defaultAlias = $defaultAlias;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function addProvider(BlockDataProviderInterface $provider, $alias)
     {
-        $this->providers[$alias] = $provider;
+        return $this->addItem($provider, $alias);
     }
 
     /**
@@ -50,14 +32,6 @@ class BlockDataProviderChain implements BlockDataProviderChainInterface
      */
     public function getProvider($alias)
     {
-        if (isset($this->providers[$alias])) {
-            return $this->providers[$alias];
-        }
-
-        if (!isset($this->providers[$this->defaultAlias])) {
-            throw new \LogicException('No default provider configured');
-        }
-
-        return $this->providers[$this->defaultAlias];
+        return $this->getItem($alias);
     }
 }

@@ -12,6 +12,7 @@ namespace OpSiteBuilder\Bundle\CoreBundle\Page\Normalizer;
 use OpSiteBuilder\Bundle\CoreBundle\Model\AbstractPage;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use OpSiteBuilder\Bundle\CoreBundle\Page\Normalizer\ToolPostNormalizerInterface;
 
 /**
  * Class PageNormalizer
@@ -40,6 +41,11 @@ class PageNormalizer implements NormalizerInterface
      * @var UrlGeneratorInterface
      */
     protected $urlGenerator;
+
+    /**
+     * @var array
+     */
+    protected $toolNormalizers = array();
 
     /**
      * Constructor
@@ -72,10 +78,6 @@ class PageNormalizer implements NormalizerInterface
             'created' => $object->getCreated(),
             'updated' => $object->getUpdated(),
             'actions' => array(
-                'add_block' => $this->urlGenerator->generate('opsite_builder_api_add_block_to_page', array(
-                    'id' => $object->getId(),
-                    'type' => static::BLOCK_TYPE_PLACEHOLDER
-                )),
                 'move_block' => $this->urlGenerator->generate('opsite_builder_api_move_block', array(
                     'id' => $object->getId(),
                     'blockId' => static::BLOCK_ID_PLACEHOLDER
@@ -89,6 +91,9 @@ class PageNormalizer implements NormalizerInterface
             $page['blocks'][] = $this->blockNormalize->normalize($block, $format, $context);
         }
 
+        // Post normalize using tool normalizers
+        $this->postNormalize($page, $object);
+
         return $page;
     }
 
@@ -98,5 +103,35 @@ class PageNormalizer implements NormalizerInterface
     public function supportsNormalization($data, $format = null)
     {
         return $data instanceof AbstractPage;
+    }
+
+    /**
+     * Add Tool normalizer
+     *
+     * @param ToolPostNormalizerInterface $toolNormalizer
+     *
+     * @return $this
+     */
+    public function addToolNormalizer(ToolPostNormalizerInterface $toolNormalizer)
+    {
+        $this->toolNormalizers[] = $toolNormalizer;
+
+        return $this;
+    }
+
+    /**
+     * Post normalize the page by appending data from tools
+     *
+     * @param array        $normalizedData
+     * @param AbstractPage $page
+     *
+     * @return array
+     */
+    protected function postNormalize(array &$normalizedData, AbstractPage $page)
+    {
+        /** @var ToolPostNormalizerInterface $normalizer */
+        foreach ($this->toolNormalizers as $normalizer) {
+            $normalizer->postNormalize($normalizedData, $page);
+        }
     }
 }

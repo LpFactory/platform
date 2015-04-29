@@ -218,6 +218,11 @@ class Configuration implements ConfigurationInterface
                     ->integerNode('priority')
                         ->defaultValue(100)
                     ->end()
+                    ->arrayNode('post_normalizers')
+                        ->defaultValue(array())
+                        ->prototype('scalar')
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;

@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Validator\Tests\Fixtures\Reference;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class OpSiteBuilderCoreExtension
@@ -73,7 +73,7 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
         // Load block map and addMap to block map chain
         $this->loadBlockMap($config, $container);
 
-        // Load tools and addTool to tools chain
+        // Load tools, post normalizer for page  and addTool to tools chain
         $this->loadTools($config, $container);
     }
 
@@ -123,6 +123,14 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
      */
     protected function loadTools(array $config, ContainerBuilder $container)
     {
+        $pageNormalizerDefinition = $container->findDefinition('opsite_builder.page.normalizer');
+        foreach ($config['tools'] as $alias => $tool) {
+            foreach ($tool['post_normalizers'] as $normalizer) {
+                $pageNormalizerDefinition->addMethodCall('addToolNormalizer', array(new Reference($normalizer)));
+            }
+            unset($config['tools'][$alias]['post_normalizers']);
+        }
+
         $this
             ->loadChainedServices(
                 $container,
@@ -211,7 +219,10 @@ class OpSiteBuilderCoreExtension extends Extension implements PrependExtensionIn
                         'directive_attributes' => array(
                             'template' => '/bundles/opsitebuilderweb/html/tool_add_block.html'
                         ),
-                        'priority' => 10
+                        'priority' => 10,
+                        'post_normalizers' => array(
+                            'opsite_builder.page.post_normalizer.add_block'
+                        )
                     )
                 )
             )

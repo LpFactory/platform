@@ -1,6 +1,7 @@
 parameters:
     opsite_builder.page.normalizer.class: OpSiteBuilder\Bundle\CoreBundle\Page\Normalizer\PageNormalizer
     opsite_builder.block.normalizer.class: OpSiteBuilder\Bundle\CoreBundle\Block\Normalizer\BlockNormalizer
+    opsite_builder.page.post_normalizer.add_block.class: OpSiteBuilder\Bundle\CoreBundle\Page\Normalizer\AddBlockPostNormalizer
 
 services:
     opsite_builder.page.normalizer:
@@ -18,3 +19,8 @@ services:
             - @opsite_builder.block.configuration.chain
         tags:
              - { name: serializer.normalizer }
+
+    opsite_builder.page.post_normalizer.add_block:
+        class: %opsite_builder.page.post_normalizer.add_block.class%
+        arguments:
+            - @cmf_routing.router

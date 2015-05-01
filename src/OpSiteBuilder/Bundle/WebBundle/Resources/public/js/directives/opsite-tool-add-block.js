@@ -6,7 +6,7 @@
  * @link https://github.com/jbouzekri/OpSiteBundle
  */
 
-(function(angular){
+(function(angular, opsiteconf){
     'use strict';
 
     /**
@@ -18,8 +18,11 @@
         return {
             templateUrl: function (tElement, tAttrs) {
                 return tAttrs.template;
+            },
+            link: function (scope, element, attrs) {
+                scope.blocks = window.opsiteconf.configuration.blocks;
             }
         };
     });
 
-})(angular);
+})(angular, window.opsiteconf);

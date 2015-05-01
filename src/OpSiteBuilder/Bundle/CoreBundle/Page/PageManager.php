@@ -58,10 +58,14 @@ class PageManager implements PageManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function addBlock(AbstractPage $page, AbstractBlock $block)
+    public function addBlock(AbstractPage $page, AbstractBlock $block, $position = false)
     {
+        // No position, use custom strategy to get a position
+        if ($position === false) {
+            $position = $this->positionStrategy->getPosition($block, $page);
+        }
+
         // Insert a block at its sort position
-        $position = $this->positionStrategy->getPosition($block, $page);
         $block->setSort($position);
 
         // Shift sort in existing block

@@ -70,16 +70,19 @@ class PageController extends Controller
     /**
      * Add a block to a page
      *
-     * @param int    $id
-     * @param string $type
+     * @param Request $request
+     * @param int     $id
+     * @param string  $type
      *
      * @return JsonResponse
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \OpSiteBuilder\Bundle\CoreBundle\Exception\OpSiteBuilderException
      */
-    public function addBlockAction($id, $type)
+    public function addBlockAction(Request $request, $id, $type)
     {
+        $position = $request->query->get('position', false);
+
         /** @var AbstractPage $page */
         $page = $this->get('opsite_builder.repository.page')->find($id);
         if (!$page) {
@@ -96,7 +99,8 @@ class PageController extends Controller
 
         // Add and persist new block and page
         $pageManager = $this->get('opsite_builder.page.manager');
-        $pageManager->addBlock($page, $block);
+        $page->resetBlockSort();
+        $pageManager->addBlock($page, $block, $position);
         $pageManager->save($page, true, true);
 
         return new JsonResponse($this->get('serializer')->normalize($block));

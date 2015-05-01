@@ -25,7 +25,7 @@
      *  }
      * }
      */
-    angular.module('OpSiteBuilderApp').factory('pageService', function ($http) {
+    angular.module('OpSiteBuilderApp').factory('pageService', ['$http', '$q', function ($http, $q) {
 
         var BLOCK_ID_PLACEHOLDER = '__BLOCK_ID__';
 
@@ -54,6 +54,10 @@
          * @returns Promise
          */
         function moveBlock(page, block, index) {
+            if (!block) {
+                return $q.when({});
+            }
+
             // TODO : send position in put query (with block id)
             var url = page.actions.move_block.replace(BLOCK_ID_PLACEHOLDER, block.id)+'?position='+(index+1);
             return $http
@@ -65,5 +69,5 @@
             addBlock: addBlock,
             moveBlock: moveBlock
         };
-    });
+    }]);
 })(angular);

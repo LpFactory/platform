@@ -43,4 +43,11 @@ interface BlockMapChainInterface
      * @return array
      */
     public function keys();
+
+    /**
+     * Return block maps
+     *
+     * @return array
+     */
+    public function all();
 }

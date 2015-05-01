@@ -41,7 +41,10 @@
 
     <script type="text/javascript">
         var opsiteconf = {
-            page: {{ page|opsite_serialize }}
+            page: {{ page|opsite_serialize }},
+            configuration: {
+                blocks: {{ block_map_chain|opsite_serialize }}
+            }
         };
     </script>
 

@@ -81,4 +81,14 @@ class BlockMapChain implements BlockMapChainInterface, DoctrineDiscriminatorProv
     {
         return array_keys($this->blockMap);
     }
+
+    /**
+     * Return block maps
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->blockMap;
+    }
 }

@@ -1,0 +1,16 @@
+services:
+    lp_factory.repository.page:
+        class: LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface
+        factory:
+            - @doctrine
+            - "getRepository"
+        arguments:
+            - %lpfactory.entity.page.class%
+
+    lp_factory.repository.block:
+        class: LpFactory\Bundle\CoreBundle\Model\Repository\BlockRepositoryInterface
+        factory:
+            - @doctrine
+            - "getRepository"
+        arguments:
+            - %lpfactory.entity.block.class%

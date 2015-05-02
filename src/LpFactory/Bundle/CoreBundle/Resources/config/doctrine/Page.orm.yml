@@ -1,0 +1,23 @@
+LpFactory\Bundle\CoreBundle\Entity\Page:
+    type: entity
+    table: pages
+    repositoryClass: LpFactory\Bundle\CoreBundle\Entity\Repository\PageRepository
+    manyToOne:
+        parent:
+            targetEntity: LpFactory\Bundle\CoreBundle\Entity\Page
+            inversedBy: children
+            joinColumn:
+                name: parent_id
+                referencedColumnName: id
+                onDelete: CASCADE
+            gedmo:
+                - treeParent
+    oneToMany:
+        children:
+            targetEntity: LpFactory\Bundle\CoreBundle\Entity\Page
+            mappedBy: parent
+        blocks:
+            targetEntity: LpFactory\Bundle\CoreBundle\Model\AbstractBlock
+            mappedBy: page
+            orderBy:
+                sort: ASC

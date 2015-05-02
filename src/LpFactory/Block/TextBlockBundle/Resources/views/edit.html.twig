@@ -1,0 +1,17 @@
+{% extends app.request.isXmlHttpRequest ? 'LpFactoryWebBundle:Block:layout_ajax.html.twig' : 'LpFactoryWebBundle:Block:layout.html.twig' %}
+
+{% block content %}
+    {%  include 'LpFactoryWebBundle:Block/Tools:_basic_edit_tools.html.twig' with {
+        block: block
+    } %}
+
+    <div ng-cancel-drag class="block-content">
+        <form ng-submit="simpleSubmit($event)">
+            {{ form_row(form.title) }}
+            {{ form_row(form.content) }}
+            {{ form_rest(form) }}
+
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+{% endblock %}

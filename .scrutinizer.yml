@@ -8,4 +8,4 @@ filter:
         - Tests/*
         - spec/*
         - unit/*
-        - src/OpSiteBuilder/Bundle/CoreBundle/Tests/*
+        - src/LpFactory/Bundle/CoreBundle/Tests/*

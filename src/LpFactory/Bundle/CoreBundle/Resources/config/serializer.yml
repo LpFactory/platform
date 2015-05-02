@@ -1,0 +1,42 @@
+parameters:
+    lp_factory.page.normalizer.class: LpFactory\Bundle\CoreBundle\Page\Normalizer\PageNormalizer
+    lp_factory.block.normalizer.class: LpFactory\Bundle\CoreBundle\Block\Normalizer\BlockNormalizer
+    lp_factory.page.post_normalizer.add_block.class: LpFactory\Bundle\CoreBundle\Page\Normalizer\AddBlockPostNormalizer
+    lp_factory.block_map_chain.normalizer.class: LpFactory\Bundle\CoreBundle\Block\Normalizer\BlockMapChainNormalizer
+    lp_factory.block_map.normalizer.class: LpFactory\Bundle\CoreBundle\Block\Normalizer\BlockMapNormalizer
+    lp_factory.tool_chain.normalizer.class: LpFactory\Bundle\CoreBundle\Tool\Normalizer\ToolChainNormalizer
+    lp_factory.tool.normalizer.class: LpFactory\Bundle\CoreBundle\Tool\Normalizer\ToolNormalizer
+
+services:
+    lp_factory.page.normalizer:
+        class: %lp_factory.page.normalizer.class%
+        arguments:
+            - @lp_factory.block.normalizer
+            - @router.default
+        tags:
+             - { name: serializer.normalizer }
+
+    lp_factory.block.normalizer:
+        class: %lp_factory.block.normalizer.class%
+        arguments:
+            - @router.default
+            - @lp_factory.block.configuration.chain
+        tags:
+             - { name: serializer.normalizer }
+
+    lp_factory.page.post_normalizer.add_block:
+        class: %lp_factory.page.post_normalizer.add_block.class%
+        arguments:
+            - @cmf_routing.router
+
+    lp_factory.block_map_chain.normalizer:
+        class: %lp_factory.block_map_chain.normalizer.class%
+        arguments:
+            - @lp_factory.block_map.normalizer
+        tags:
+             - { name: serializer.normalizer }
+
+    lp_factory.block_map.normalizer:
+        class: %lp_factory.block_map.normalizer.class%
+        tags:
+             - { name: serializer.normalizer }

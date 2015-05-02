@@ -1,0 +1,7 @@
+parameters:
+    lp_factory.tools.chain.class: LpFactory\Bundle\CoreBundle\Tool\ToolChain
+    lp_factory.tool.default.class: LpFactory\Bundle\CoreBundle\Tool\Tool
+
+services:
+    lp_factory.tools.chain:
+        class: %lp_factory.tools.chain.class%

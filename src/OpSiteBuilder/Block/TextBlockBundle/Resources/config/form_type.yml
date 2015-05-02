@@ -1,8 +1,0 @@
-parameters:
-    opsite_builder.block.form.text.class: OpSiteBuilder\Block\TextBlockBundle\Form\Type\BlockTextType
-
-services:
-    opsite_builder.block.form.text:
-        class: %opsite_builder.block.form.text.class%
-        tags:
-            - { name: form.type, alias: block_text }

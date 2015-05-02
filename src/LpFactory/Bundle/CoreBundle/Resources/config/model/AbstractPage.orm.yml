@@ -1,0 +1,51 @@
+LpFactory\Bundle\CoreBundle\Model\AbstractPage:
+    type: mappedSuperclass
+    repositoryClass: Gedmo\Tree\Entity\Repository\NestedTreeRepository
+    gedmo:
+        tree:
+            type: nested
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        title:
+            type: string
+            length: 255
+            nullable: false
+        slug:
+            type: string
+            length: 255
+            gedmo:
+                slug:
+                    separator: -
+                    fields:
+                        - title
+        lft:
+            type: integer
+            gedmo:
+                - treeLeft
+        rgt:
+            type: integer
+            gedmo:
+                - treeRight
+        lvl:
+            type: integer
+            gedmo:
+                - treeLevel
+        root:
+            type: integer
+            nullable: true
+            gedmo:
+                - treeRoot
+        created:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        updated:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update

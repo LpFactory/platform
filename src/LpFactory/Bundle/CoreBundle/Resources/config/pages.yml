@@ -1,0 +1,16 @@
+parameters:
+    lp_factory.page.manager.class: LpFactory\Bundle\CoreBundle\Page\PageManager
+    lp_factory.page.map.class: LpFactory\Bundle\CoreBundle\Page\Configuration\PageMap
+
+services:
+    lp_factory.page.manager:
+        class: %lp_factory.page.manager.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @lp_factory.block.manager
+            - @lp_factory.block.strategy.position
+
+    lp_factory.page.map:
+        class: %lp_factory.page.map.class%
+        arguments:
+            -

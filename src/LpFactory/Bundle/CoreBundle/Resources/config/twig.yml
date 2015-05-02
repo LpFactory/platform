@@ -1,0 +1,39 @@
+parameters:
+    lp_factory.twig_extension.block.class: LpFactory\Bundle\CoreBundle\Twig\BlockExtension
+    lp_factory.twig_extension.routing.class: LpFactory\Bundle\CoreBundle\Twig\RoutingExtension
+    lp_factory.twig_extension.serializer.class: LpFactory\Bundle\CoreBundle\Twig\SerializerExtension
+    lp_factory.twig_extension.angular.class: LpFactory\Bundle\CoreBundle\Twig\AngularExtension
+
+services:
+    lp_factory.twig_extension.block:
+        class: %lp_factory.twig_extension.block.class%
+        arguments:
+            - @lp_factory.block.configuration.chain
+            - @lp_factory.block.manager
+            - @lp_factory.block.map.chain
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    lp_factory.twig_extension.routing:
+        class: %lp_factory.twig_extension.routing.class%
+        arguments:
+            - @lp_factory.routing.generator
+            - @lp_factory.route_configuration.chain
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    lp_factory.twig_extension.serializer:
+        class: %lp_factory.twig_extension.serializer.class%
+        arguments:
+            - @serializer
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    lp_factory.twig_extension.angular:
+        class: %lp_factory.twig_extension.angular.class%
+        public: false
+        tags:
+            - { name: twig.extension }

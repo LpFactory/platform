@@ -1,2 +1,2 @@
-opsite_builder_core:
-    resource: @OpSiteBuilderCoreBundle/Resources/config/routing.yml
+lp_factory_core:
+    resource: @LpFactoryCoreBundle/Resources/config/routing.yml

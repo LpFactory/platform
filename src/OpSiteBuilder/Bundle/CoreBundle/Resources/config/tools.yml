@@ -1,7 +1,0 @@
-parameters:
-    opsite_builder.tools.chain.class: OpSiteBuilder\Bundle\CoreBundle\Tool\ToolChain
-    opsite_builder.tool.default.class: OpSiteBuilder\Bundle\CoreBundle\Tool\Tool
-
-services:
-    opsite_builder.tools.chain:
-        class: %opsite_builder.tools.chain.class%

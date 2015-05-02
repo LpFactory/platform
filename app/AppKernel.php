@@ -21,13 +21,13 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
 
-            // OpSiteBuilder Bundles
-            new OpSiteBuilder\Bundle\CoreBundle\OpSiteBuilderCoreBundle(),
-            new OpSiteBuilder\Bundle\WebBundle\OpSiteBuilderWebBundle(),
+            // LpFactory Bundles
+            new LpFactory\Bundle\CoreBundle\LpFactoryCoreBundle(),
+            new LpFactory\Bundle\WebBundle\LpFactoryWebBundle(),
 
             // Block bundles
-            new OpSiteBuilder\Block\BlogBlockBundle\OpSiteBuilderBlogBlockBundle(),
-            new OpSiteBuilder\Block\TextBlockBundle\OpSiteBuilderTextBlockBundle(),
+            new LpFactory\Block\BlogBlockBundle\LpFactoryBlogBlockBundle(),
+            new LpFactory\Block\TextBlockBundle\LpFactoryTextBlockBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -35,7 +35,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-            $bundles[] = new OpSiteBuilder\Bundle\TestBundle\OpSiteBuilderTestBundle();
+            $bundles[] = new LpFactory\Bundle\TestBundle\LpFactoryTestBundle();
         }
 
         return $bundles;

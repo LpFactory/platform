@@ -1,0 +1,3 @@
+lp_factory_api:
+    resource: @LpFactoryCoreBundle/Resources/config/routing/api.yml
+    prefix: /api

@@ -1,0 +1,8 @@
+parameters:
+    lp_factory.block.form.text.class: LpFactory\Block\TextBlockBundle\Form\Type\BlockTextType
+
+services:
+    lp_factory.block.form.text:
+        class: %lp_factory.block.form.text.class%
+        tags:
+            - { name: form.type, alias: block_text }

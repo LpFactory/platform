@@ -1,0 +1,20 @@
+{% extends app.request.isXmlHttpRequest ? 'LpFactoryWebBundle:Block:layout_ajax.html.twig' : 'LpFactoryWebBundle:Block:layout.html.twig' %}
+
+{% block content %}
+    {% include 'LpFactoryWebBundle:Block/Tools:_basic_view_tools.html.twig' with {
+        block: block,
+        edit: edit
+    } %}
+
+
+    <div {% if edit %}ng-cancel-drag{% endif %} class="block-content">
+        <h2>{{ block.title|default( 'default_title'|trans({}, block.alias) ) }}</h2>
+
+        <p>
+            {{ 'default_message.default_view_template'|trans }}<br />
+            {{ 'default_message.missing_dev'|trans }}<br />
+            <strong>{{ 'default_message.block_id'|trans }}</strong> {{ block.id }}<br />
+            <strong>{{ 'default_message.block_type'|trans }}</strong> {{ block.alias }}
+        </p>
+    </div>
+{% endblock %}

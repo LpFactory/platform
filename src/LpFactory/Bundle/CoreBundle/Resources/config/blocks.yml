@@ -1,0 +1,47 @@
+parameters:
+    lp_factory.block.manager.class: LpFactory\Bundle\CoreBundle\Block\BlockManager
+    lp_factory.block.data_provider.chain.class: LpFactory\Bundle\CoreBundle\Block\Provider\BlockDataProviderChain
+    lp_factory.block.data_provider.default.class: LpFactory\Bundle\CoreBundle\Block\Provider\DefaultDataProvider
+    lp_factory.block.configuration.chain.class: LpFactory\Bundle\CoreBundle\Block\Configuration\BlockConfigurationChain
+    lp_factory.block.configuration.default.class: LpFactory\Bundle\CoreBundle\Block\Configuration\BlockConfiguration
+    lp_factory.block.factory.class: LpFactory\Bundle\CoreBundle\Block\BlockFactory
+    lp_factory.block.strategy.position.class: LpFactory\Bundle\CoreBundle\Block\Strategy\BlockPositionStrategy
+    lp_factory.block.renderer.class: LpFactory\Bundle\CoreBundle\Block\Rendered\BlockRenderer
+    lp_factory.block.map.chain.class: LpFactory\Bundle\CoreBundle\Block\Configuration\BlockMapChain
+    lp_factory.block.map.default.class: LpFactory\Bundle\CoreBundle\Block\Configuration\BlockMap
+
+services:
+    lp_factory.block.data_provider.chain:
+        class: %lp_factory.block.data_provider.chain.class%
+
+    lp_factory.block.manager:
+        class: %lp_factory.block.manager.class%
+        arguments:
+            - @lp_factory.block.data_provider.chain
+            - @doctrine.orm.entity_manager
+
+    lp_factory.block.renderer:
+        class: %lp_factory.block.renderer.class%
+        arguments:
+            - @lp_factory.block.manager
+            - @lp_factory.block.configuration.chain
+            - @templating
+
+    lp_factory.block.data_provider.default:
+        class: %lp_factory.block.data_provider.default.class%
+        tags:
+            - { name: lp_factory.block.data_provider, alias: default }
+
+    lp_factory.block.configuration.chain:
+        class: %lp_factory.block.configuration.chain.class%
+
+    lp_factory.block.factory:
+        class: %lp_factory.block.factory.class%
+        arguments:
+            - @lp_factory.block.map.chain
+
+    lp_factory.block.strategy.position:
+        class: %lp_factory.block.strategy.position.class%
+
+    lp_factory.block.map.chain:
+        class: %lp_factory.block.map.chain.class%

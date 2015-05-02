@@ -1,3 +1,0 @@
-OpSiteBuilder\Block\BlogBlockBundle\Entity\BlogBlock:
-    type: entity
-    table: blocks_blog

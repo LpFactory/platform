@@ -1,0 +1,5 @@
+parameters:
+    lpfactory.entity.page.class: LpFactory\Bundle\CoreBundle\Entity\Page
+    lpfactory.entity.block.class: LpFactory\Bundle\CoreBundle\Entity\Block
+
+    lpfactory.route_configuration.class: LpFactory\Bundle\CoreBundle\Routing\Configuration\PageRouteConfiguration

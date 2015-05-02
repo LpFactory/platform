@@ -12,6 +12,6 @@ RUN \
     sed -i 's/listen.owner = www-data/listen.owner = nginx/g' /etc/php5/fpm/pool.d/www.conf
 
 ADD conf/nginx.conf /etc/nginx/
-ADD conf/opsitebuilder.conf /etc/nginx/sites-enabled/
+ADD conf/lpfactory.conf /etc/nginx/sites-enabled/
 
 CMD service php5-fpm start && nginx

@@ -1,14 +1,14 @@
-opsitebuilderdb:
+lpfactorydb:
     image: mysql
     ports:
         - 3306:3306
     environment:
-        - MYSQL_ROOT_PASSWORD=opsitebuilder
+        - MYSQL_ROOT_PASSWORD=lpfactory
 
-opsitebuilderweb:
+lpfactoryweb:
     build: .
     links:
-        - opsitebuilderdb
+        - lpfactorydb
     ports:
         - 80:80
     volumes:

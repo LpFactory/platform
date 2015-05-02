@@ -1,4 +1,4 @@
-# OpSiteBuilder
+# LpFactory
 
 [![Build Status](https://travis-ci.org/jbouzekri/OpSiteBuilder.svg?branch=develop)](https://travis-ci.org/jbouzekri/OpSiteBuilder)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jbouzekri/OpSiteBuilder/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/jbouzekri/OpSiteBuilder/?branch=develop)

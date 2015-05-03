@@ -10,7 +10,7 @@
 namespace LpFactory\Bundle\CoreBundle\Routing\Strategy;
 
 use LpFactory\Bundle\CoreBundle\Model\AbstractPage;
-use LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
+use LpFactory\Bundle\CoreBundle\Routing\Model\Repository\NestedSetRoutingPageRepositoryInterface;
 
 /**
  * Class AbstractTreeStrategy
@@ -21,7 +21,7 @@ use LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
 abstract class AbstractTreeStrategy
 {
     /**
-     * @var PageRepositoryInterface
+     * @var NestedSetRoutingPageRepositoryInterface
      */
     protected $repository;
 
@@ -33,11 +33,11 @@ abstract class AbstractTreeStrategy
     /**
      * Constructor
      *
-     * @param PageRepositoryInterface $repository
-     * @param bool                    $isHomeTreeRoot
+     * @param NestedSetRoutingPageRepositoryInterface $repository
+     * @param bool                                    $isHomeTreeRoot
      */
     public function __construct(
-        PageRepositoryInterface $repository,
+        NestedSetRoutingPageRepositoryInterface $repository,
         $isHomeTreeRoot = true
     ) {
         $this->repository = $repository;

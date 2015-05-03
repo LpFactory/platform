@@ -9,7 +9,7 @@
 
 namespace LpFactory\Bundle\CoreBundle\Routing\Configuration;
 
-use LpFactory\Bundle\CoreBundle\Model\AbstractPage;
+use LpFactory\Bundle\CoreBundle\Routing\Model\NestedSetRoutingPageInterface;
 
 /**
  * Class AbstractPageRouteConfiguration
@@ -60,11 +60,11 @@ abstract class AbstractPageRouteConfiguration
     /**
      * Get page route name
      *
-     * @param AbstractPage $page
+     * @param NestedSetRoutingPageInterface $page
      *
      * @return string
      */
-    public function getPageRouteName(AbstractPage $page)
+    public function getPageRouteName(NestedSetRoutingPageInterface $page)
     {
         return sprintf('%s%s', $this->getPrefix(), $page->getId());
     }

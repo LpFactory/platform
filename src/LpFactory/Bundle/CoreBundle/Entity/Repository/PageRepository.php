@@ -11,8 +11,8 @@ namespace LpFactory\Bundle\CoreBundle\Entity\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use LpFactory\Bundle\CoreBundle\Model\AbstractPage;
-use LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
+use LpFactory\Bundle\CoreBundle\Routing\Model\NestedSetRoutingPageInterface;
+use LpFactory\Bundle\CoreBundle\Routing\Model\Repository\NestedSetRoutingPageRepositoryInterface;
 
 /**
  * Class PageRepository
@@ -20,12 +20,12 @@ use LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
  * @package LpFactory\Bundle\CoreBundle\Entity\Repository
  * @author jobou
  */
-class PageRepository extends NestedTreeRepository implements PageRepositoryInterface
+class PageRepository extends NestedTreeRepository implements NestedSetRoutingPageRepositoryInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function getPageInTree($slug, AbstractPage $root = null)
+    public function getPageInTree($slug, NestedSetRoutingPageInterface $root = null)
     {
         $qb = $this
             ->createQueryBuilder('page')
@@ -49,7 +49,7 @@ class PageRepository extends NestedTreeRepository implements PageRepositoryInter
     /**
      * {@inheritdoc}
      */
-    public function getCachedPath(AbstractPage $page)
+    public function getCachedPath(NestedSetRoutingPageInterface $page)
     {
         $pageId = $page->getId();
         if (isset($this->cachedPaths[$pageId])) {

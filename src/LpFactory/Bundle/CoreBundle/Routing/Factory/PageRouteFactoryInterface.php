@@ -11,6 +11,7 @@ namespace LpFactory\Bundle\CoreBundle\Routing\Factory;
 
 use LpFactory\Bundle\CoreBundle\Model\AbstractPage;
 use LpFactory\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
+use LpFactory\Bundle\CoreBundle\Routing\Model\NestedSetRoutingPageInterface;
 
 /**
  * Class PageRouteFactoryInterface
@@ -24,11 +25,11 @@ interface PageRouteFactoryInterface
      * Create a new route instance
      *
      * @param AbstractPageRouteConfiguration $routeConfiguration
-     * @param AbstractPage                   $page
+     * @param NestedSetRoutingPageInterface  $page
      *
      * @return \Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route
      */
-    public function create(AbstractPageRouteConfiguration $routeConfiguration, AbstractPage $page);
+    public function create(AbstractPageRouteConfiguration $routeConfiguration, NestedSetRoutingPageInterface $page);
 
     /**
      * Create a new route instance from a page id

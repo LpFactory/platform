@@ -9,10 +9,10 @@
 
 namespace LpFactory\Bundle\CoreBundle\Routing\Provider;
 
-use LpFactory\Bundle\CoreBundle\Model\AbstractPage;
 use LpFactory\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
 use LpFactory\Bundle\CoreBundle\Routing\Configuration\PageRouteConfigurationChainInterface;
 use LpFactory\Bundle\CoreBundle\Routing\Factory\PageRouteFactoryInterface;
+use LpFactory\Bundle\CoreBundle\Routing\Model\NestedSetRoutingPageInterface;
 use LpFactory\Bundle\CoreBundle\Routing\Satinizer\UrlSatinizerChainInterface;
 use LpFactory\Bundle\CoreBundle\Routing\Strategy\AbstractTreeStrategy;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
@@ -88,7 +88,7 @@ class PageRouteProvider implements RouteProviderInterface
         $pagesPathInfo = $configuration->extractPathInfo($pathInfo);
         $deepestSlug = $this->treeStrategy->getDeepestPageSlug($pagesPathInfo);
 
-        /** @var AbstractPage $page */
+        /** @var NestedSetRoutingPageInterface $page */
         foreach ($this->treeStrategy->getPage($deepestSlug, $hostName) as $page) {
             $route = $this->routeFactory->create($configuration, $page);
 

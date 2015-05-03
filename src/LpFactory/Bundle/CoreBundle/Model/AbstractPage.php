@@ -10,6 +10,7 @@
 namespace LpFactory\Bundle\CoreBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use LpFactory\Bundle\CoreBundle\Routing\Model\NestedSetRoutingPageInterface;
 
 /**
  * Class AbstractPage
@@ -17,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @package LpFactory\Bundle\CoreBundle\Model
  * @author  jobou
  */
-abstract class AbstractPage
+abstract class AbstractPage implements NestedSetRoutingPageInterface
 {
     /**
      * @var int

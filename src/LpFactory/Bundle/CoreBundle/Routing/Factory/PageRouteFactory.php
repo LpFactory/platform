@@ -10,8 +10,9 @@
 namespace LpFactory\Bundle\CoreBundle\Routing\Factory;
 
 use LpFactory\Bundle\CoreBundle\Model\AbstractPage;
-use LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface;
+use LpFactory\Bundle\CoreBundle\Routing\Model\Repository\NestedSetRoutingPageRepositoryInterface;
 use LpFactory\Bundle\CoreBundle\Routing\Configuration\AbstractPageRouteConfiguration;
+use LpFactory\Bundle\CoreBundle\Routing\Model\NestedSetRoutingPageInterface;
 use LpFactory\Bundle\CoreBundle\Routing\Strategy\AbstractTreeStrategy;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route;
 
@@ -24,7 +25,7 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route;
 class PageRouteFactory implements PageRouteFactoryInterface
 {
     /**
-     * @var PageRepositoryInterface
+     * @var NestedSetRoutingPageRepositoryInterface
      */
     protected $repository;
 
@@ -36,11 +37,11 @@ class PageRouteFactory implements PageRouteFactoryInterface
     /**
      * Constructor
      *
-     * @param PageRepositoryInterface $repository
-     * @param AbstractTreeStrategy    $treeStrategy
+     * @param NestedSetRoutingPageRepositoryInterface $repository
+     * @param AbstractTreeStrategy                    $treeStrategy
      */
     public function __construct(
-        PageRepositoryInterface $repository,
+        NestedSetRoutingPageRepositoryInterface $repository,
         AbstractTreeStrategy $treeStrategy
     ) {
         $this->repository = $repository;
@@ -52,7 +53,7 @@ class PageRouteFactory implements PageRouteFactoryInterface
      */
     public function create(
         AbstractPageRouteConfiguration $routeConfiguration,
-        AbstractPage $page
+        NestedSetRoutingPageInterface $page
     ) {
         $path = $this->repository->getCachedPath($page);
         $pathInfo = $this->buildUrlFromPath($path);

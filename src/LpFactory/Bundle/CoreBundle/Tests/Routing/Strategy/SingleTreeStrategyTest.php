@@ -25,7 +25,8 @@ class SingleTreeStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsHomeTreeRoot()
     {
-        $repository = $this->getMock('LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface');
+        $repository = $this
+            ->getMock('LpFactory\Bundle\CoreBundle\Routing\Model\Repository\NestedSetRoutingPageRepositoryInterface');
 
         $strategy = new SingleTreeStrategy($repository, true);
         $this->assertTrue($strategy->isHomeTreeRoot());
@@ -49,7 +50,8 @@ class SingleTreeStrategyTest extends \PHPUnit_Framework_TestCase
         $page
             ->setSlug('child-page');
 
-        $repository = $this->getMock('LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface');
+        $repository = $this
+            ->getMock('LpFactory\Bundle\CoreBundle\Routing\Model\Repository\NestedSetRoutingPageRepositoryInterface');
         $repository
             ->expects($this->any())
             ->method('getSingleRootNode')
@@ -78,7 +80,8 @@ class SingleTreeStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDeepestPageSlug()
     {
-        $repository = $this->getMock('LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface');
+        $repository = $this
+            ->getMock('LpFactory\Bundle\CoreBundle\Routing\Model\Repository\NestedSetRoutingPageRepositoryInterface');
         $strategy = new SingleTreeStrategy($repository, true);
 
         $this->assertEquals('deepest-node', $strategy->getDeepestPageSlug('/test/child/deepest-node'));

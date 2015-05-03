@@ -37,7 +37,8 @@ class PageRouteFactoryTest extends \PHPUnit_Framework_TestCase
             ->method('getId')
             ->willReturn(56);
 
-        $repository = $this->getMock('LpFactory\Bundle\CoreBundle\Model\Repository\PageRepositoryInterface');
+        $repository = $this
+            ->getMock('LpFactory\Bundle\CoreBundle\Routing\Model\Repository\NestedSetRoutingPageRepositoryInterface');
         $repository
             ->method('getCachedPath')
             ->willReturn($repositoryResult);

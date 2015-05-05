@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
 
             // LpFactory Bundles
+            new LpFactory\Bundle\NestedSetRoutingBundle\LpFactoryNestedSetRoutingBundle(),
             new LpFactory\Bundle\CoreBundle\LpFactoryCoreBundle(),
             new LpFactory\Bundle\WebBundle\LpFactoryWebBundle(),
 

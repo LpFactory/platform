@@ -10,7 +10,7 @@
 namespace LpFactory\Bundle\CoreBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use LpFactory\Bundle\CoreBundle\Routing\Model\NestedSetRoutingPageInterface;
+use LpFactory\Bundle\NestedSetRoutingBundle\Model\NestedSetRoutingPageInterface;
 
 /**
  * Class AbstractPage

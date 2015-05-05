@@ -35,7 +35,6 @@ class LpFactoryCoreExtension extends Extension implements PrependExtensionInterf
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('blocks.yml');
-        $loader->load('cmf_routing.yml');
         $loader->load('doctrine.yml');
         $loader->load('entities.yml');
         $loader->load('pages.yml');
@@ -57,12 +56,6 @@ class LpFactoryCoreExtension extends Extension implements PrependExtensionInterf
      */
     protected function loadConfiguration(array $config, ContainerBuilder $container)
     {
-        // Load page nested routes
-        $routeConfigurationChain = $container->findDefinition('lp_factory.route_configuration.chain');
-        foreach ($config['routing']['routes'] as $alias => $routeConfiguration) {
-            $routeConfigurationChain->addMethodCall('add', array($alias, $routeConfiguration));
-        }
-
         // Save page map in service used by the doctrine event
         $pageDiscriminatorMap = $container->findDefinition('lp_factory.page.map');
         $pageDiscriminatorMap->replaceArgument(0, $config['page_map']);

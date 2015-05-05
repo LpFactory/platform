@@ -2,7 +2,7 @@
 
 {% block body %}
     {% if is_granted('lp_factory_PAGE_EDIT', page) %}
-        <a href="{{ op_path_page(page, 'edit') }}">{{ 'page_edit_link'|trans }}</a>
+        <a href="{{ lp_path_page(page, 'edit') }}">{{ 'page_edit_link'|trans }}</a>
     {% endif %}
 
     {% for block in page.blocks %}

@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class LpFactoryCoreBundle
+ * Class LpFactoryNestedSetRoutingBundle
  *
  * @package LpFactory\Bundle\NestedSetRoutingBundle
  * @author jobou

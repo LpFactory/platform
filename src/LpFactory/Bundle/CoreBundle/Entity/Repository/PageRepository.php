@@ -11,8 +11,8 @@ namespace LpFactory\Bundle\CoreBundle\Entity\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use LpFactory\Bundle\CoreBundle\Routing\Model\NestedSetRoutingPageInterface;
-use LpFactory\Bundle\CoreBundle\Routing\Model\Repository\NestedSetRoutingPageRepositoryInterface;
+use LpFactory\Bundle\NestedSetRoutingBundle\Model\NestedSetRoutingPageInterface;
+use LpFactory\Bundle\NestedSetRoutingBundle\Model\Repository\NestedSetRoutingPageRepositoryInterface;
 
 /**
  * Class PageRepository

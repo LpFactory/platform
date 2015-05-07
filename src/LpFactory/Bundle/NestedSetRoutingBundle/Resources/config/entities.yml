@@ -1,2 +1,0 @@
-parameters:
-    lpfactory.route_configuration.class: LpFactory\Bundle\NestedSetRoutingBundle\Configuration\PageRouteConfiguration

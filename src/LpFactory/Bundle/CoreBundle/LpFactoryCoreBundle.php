@@ -47,6 +47,5 @@ class LpFactoryCoreBundle extends Bundle
 
         $container->addCompilerPass(new BlockDataProviderPass());
         $container->addCompilerPass(new BlockConfigurationPass());
-        $container->addCompilerPass(new UrlSatinizerPass());
     }
 }

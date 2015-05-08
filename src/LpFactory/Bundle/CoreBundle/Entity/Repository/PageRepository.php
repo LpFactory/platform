@@ -11,6 +11,7 @@ namespace LpFactory\Bundle\CoreBundle\Entity\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use LpFactory\Bundle\CoreBundle\Exception\LpFactoryException;
 use LpFactory\Bundle\NestedSetRoutingBundle\Model\NestedSetRoutingPageInterface;
 use LpFactory\Bundle\NestedSetRoutingBundle\Model\Repository\NestedSetRoutingPageRepositoryInterface;
 
@@ -47,16 +48,26 @@ class PageRepository extends NestedTreeRepository implements NestedSetRoutingPag
     protected $cachedPaths = array();
 
     /**
-     * {@inheritdoc}
+     * Get path and cache result
+     *
+     * @param NestedSetRoutingPageInterface $page
+     *
+     * @return array
+     *
+     * @throws LpFactoryException
      */
-    public function getCachedPath(NestedSetRoutingPageInterface $page)
+    public function getPath($page)
     {
+        if (!$page instanceof NestedSetRoutingPageInterface) {
+            throw new LpFactoryException('Page entity must implement NestedSetRoutingPageInterface');
+        }
+
         $pageId = $page->getId();
         if (isset($this->cachedPaths[$pageId])) {
             return $this->cachedPaths[$pageId];
         }
 
-        return $this->cachedPaths[$pageId] = $this->getPath($page);
+        return $this->cachedPaths[$pageId] = parent::getPath($page);
     }
 
     /**

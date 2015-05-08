@@ -104,6 +104,7 @@ lp_factory_core:
           class: LpFactory\Block\TextBlockBundle\Entity\TextBlock
 
 lp_factory_nested_set_routing:
+    repository: lp_factory.repository.page
     routes:
         edit:
             prefix: 'lpfactory_page_tree_edit_'

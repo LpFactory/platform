@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2f03df651de023a5fbae350c298ebcdd",
+    "hash": "9da4da03c7d384d5e12d10884d066fc5",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1114,17 +1114,17 @@
         },
         {
             "name": "lpfactory/nested-set-routing-bundle",
-            "version": "V0.1.0",
+            "version": "0.3.0",
             "target-dir": "LpFactory/Bundle/NestedSetRoutingBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LpFactory/NestedSetRoutingBundle.git",
-                "reference": "c9ea1e8ce20015a93bb5410cf65f3689f2916189"
+                "reference": "ea4f4863995adcb55ed08549c7011abcbf681593"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LpFactory/NestedSetRoutingBundle/zipball/c9ea1e8ce20015a93bb5410cf65f3689f2916189",
-                "reference": "c9ea1e8ce20015a93bb5410cf65f3689f2916189",
+                "url": "https://api.github.com/repos/LpFactory/NestedSetRoutingBundle/zipball/ea4f4863995adcb55ed08549c7011abcbf681593",
+                "reference": "ea4f4863995adcb55ed08549c7011abcbf681593",
                 "shasum": ""
             },
             "require": {
@@ -1158,7 +1158,7 @@
                 "routing",
                 "symfony"
             ],
-            "time": "2015-05-07 21:37:43"
+            "time": "2015-05-08 17:33:53"
         },
         {
             "name": "monolog/monolog",

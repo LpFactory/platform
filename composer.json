@@ -20,7 +20,7 @@
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
-        "lpfactory/nested-set-routing-bundle": "~0.1"
+        "lpfactory/nested-set-routing-bundle": "~0.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

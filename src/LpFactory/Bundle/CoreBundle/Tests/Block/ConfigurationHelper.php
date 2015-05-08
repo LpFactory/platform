@@ -10,6 +10,8 @@
 namespace LpFactory\Bundle\CoreBundle\Tests\Block;
 
 use LpFactory\Bundle\CoreBundle\Block\Configuration\BlockConfiguration;
+use LpFactory\Bundle\CoreBundle\Block\Configuration\BlockMap;
+use LpFactory\Bundle\CoreBundle\Block\Configuration\BlockMapChain;
 
 /**
  * Class ConfigurationHelper
@@ -34,7 +36,38 @@ class ConfigurationHelper
             'edit_route'      => 'lp_factory_api_edit_no_form_block',
             'edit_template'   => 'LpFactoryWebBundle:Block:View/default_edit.html.twig',
             'edit_form_type'  => null,
-            'options'         => array()
+            'options'         => array(
+                'custom' => 'my_value'
+            )
         ));
+    }
+
+    /**
+     * Create a block map chain
+     *
+     * @param int $number
+     *
+     * @return BlockMapChain
+     */
+    public static function createBlockMapChain($number = 3)
+    {
+        $blockMapChain = new BlockMapChain();
+        for ($i = 1; $i < $number + 1; $i++) {
+            $blockMapChain->addMap(static::createBlockMap($i), 'test'.$i);
+        }
+
+        return $blockMapChain;
+    }
+
+    /**
+     * Create a block map
+     *
+     * @param int $suffix
+     *
+     * @return BlockMap
+     */
+    public static function createBlockMap($suffix = 1)
+    {
+        return new BlockMap(array('class' => 'Test'.$suffix));
     }
 }

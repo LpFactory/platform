@@ -9,6 +9,7 @@
 
 namespace LpFactory\Bundle\CoreBundle\Tests\Page\Normalizer;
 
+use LpFactory\Bundle\CoreBundle\Page\Normalizer\AddBlockPostNormalizer;
 use LpFactory\Bundle\CoreBundle\Page\Normalizer\PageNormalizer;
 use LpFactory\Bundle\CoreBundle\Tests\PageBlockHelper;
 
@@ -26,11 +27,11 @@ class PageNormalizerTest extends \PHPUnit_Framework_TestCase
     public function testNormalize()
     {
         $generator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
-        $generator->expects($this->at(0))->method('generate')->willReturn('move_block_url');
+        $generator->expects($this->any())->method('generate')->willReturn('move_block_url');
 
-        $normalizer = $this->getMock('Symfony\Component\Serializer\Normalizer\NormalizerInterface');
+        $blockNormalizer = $this->getMock('Symfony\Component\Serializer\Normalizer\NormalizerInterface');
 
-        $normalizer = new PageNormalizer($normalizer, $generator);
+        $normalizer = new PageNormalizer($blockNormalizer, $generator);
 
         $result = array(
             'id' => null,
@@ -44,6 +45,14 @@ class PageNormalizerTest extends \PHPUnit_Framework_TestCase
             'blocks' => array(null, null, null)
         );
 
+        $normalizedPage = $normalizer->normalize(PageBlockHelper::createPageWithBlock());
+        $this->assertEquals($result, $normalizedPage);
+
+        // Add post normalizer
+        $generatorMock = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $generatorMock->expects($this->at(0))->method('generate')->willReturn('add_block_url');
+        $normalizer->addToolNormalizer(new AddBlockPostNormalizer($generatorMock));
+        $result['actions']['add_block'] = 'add_block_url';
         $normalizedPage = $normalizer->normalize(PageBlockHelper::createPageWithBlock());
         $this->assertEquals($result, $normalizedPage);
     }

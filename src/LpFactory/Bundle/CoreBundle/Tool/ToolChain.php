@@ -40,8 +40,8 @@ class ToolChain implements ToolChainInterface
      */
     protected function sortTools()
     {
-        usort($this->tools, function (ToolInterface $toolLeft, ToolInterface $toolRight) {
-            if ($toolLeft == $toolRight) {
+        uasort($this->tools, function (ToolInterface $toolLeft, ToolInterface $toolRight) {
+            if ($toolLeft->getPriority() == $toolRight->getPriority()) {
                 return 0;
             }
 

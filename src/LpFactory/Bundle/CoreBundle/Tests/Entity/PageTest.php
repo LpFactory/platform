@@ -41,6 +41,7 @@ class PageTest extends \PHPUnit_Framework_TestCase
     public function testSetterGetter()
     {
         $page = new Page();
+        $this->assertEquals('default', $page->getAlias());
 
         $page->setTitle('title');
         $this->assertEquals('title', $page->getTitle());

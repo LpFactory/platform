@@ -10,7 +10,6 @@
 namespace LpFactory\Bundle\CoreBundle\Controller;
 
 use LpFactory\Bundle\CoreBundle\Model\AbstractBlock;
-use LpFactory\Bundle\CoreBundle\Model\AbstractPage;
 use LpFactory\Bundle\CoreBundle\Security\SecurityAttributes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

@@ -15,37 +15,40 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class BlockDataProviderPass
+ * Load all services with tag : lp_factory.block.data_provider
  *
  * @package LpFactory\Bundle\CoreBundle\DependencyInjection\Compiler
  * @author jobou
  */
-class BlockDataProviderPass implements CompilerPassInterface
+class BlockDataProviderPass extends AbstractAliasCompilerPass
 {
     /**
-     * Load all services with tag : lp_factory.block.data_provider
+     * Get chain id
      *
-     * @param ContainerBuilder $container
+     * @return string
      */
-    public function process(ContainerBuilder $container)
+    protected function getChainId()
     {
-        if (!$container->hasDefinition('lp_factory.block.data_provider.chain')) {
-            return;
-        }
+        return 'lp_factory.block.data_provider.chain';
+    }
 
-        $definition = $container->getDefinition(
-            'lp_factory.block.data_provider.chain'
-        );
+    /**
+     * Get tag
+     *
+     * @return string
+     */
+    protected function getTag()
+    {
+        return 'lp_factory.block.data_provider';
+    }
 
-        $taggedServices = $container->findTaggedServiceIds(
-            'lp_factory.block.data_provider'
-        );
-        foreach ($taggedServices as $id => $tags) {
-            foreach ($tags as $attributes) {
-                $definition->addMethodCall(
-                    'addProvider',
-                    array(new Reference($id), $attributes["alias"])
-                );
-            }
-        }
+    /**
+     * Get method
+     *
+     * @return string
+     */
+    protected function getMethod()
+    {
+        return 'addProvider';
     }
 }

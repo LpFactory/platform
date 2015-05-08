@@ -9,43 +9,42 @@
 
 namespace LpFactory\Bundle\CoreBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\Reference;
-
 /**
  * Class BlockConfigurationPass
+ * Load all services with tag : lp_factory.block.configuration
  *
  * @package LpFactory\Bundle\CoreBundle\DependencyInjection\Compiler
  * @author jobou
  */
-class BlockConfigurationPass implements CompilerPassInterface
+class BlockConfigurationPass extends AbstractAliasCompilerPass
 {
     /**
-     * Load all services with tag : lp_factory.block.configuration
+     * Get chain id
      *
-     * @param ContainerBuilder $container
+     * @return string
      */
-    public function process(ContainerBuilder $container)
+    protected function getChainId()
     {
-        if (!$container->hasDefinition('lp_factory.block.configuration.chain')) {
-            return;
-        }
+        return 'lp_factory.block.configuration.chain';
+    }
 
-        $definition = $container->getDefinition(
-            'lp_factory.block.configuration.chain'
-        );
+    /**
+     * Get tag
+     *
+     * @return string
+     */
+    protected function getTag()
+    {
+        return 'lp_factory.block.configuration';
+    }
 
-        $taggedServices = $container->findTaggedServiceIds(
-            'lp_factory.block.configuration'
-        );
-        foreach ($taggedServices as $id => $tags) {
-            foreach ($tags as $attributes) {
-                $definition->addMethodCall(
-                    'addConfiguration',
-                    array(new Reference($id), $attributes["alias"])
-                );
-            }
-        }
+    /**
+     * Get method
+     *
+     * @return string
+     */
+    protected function getMethod()
+    {
+        return 'addConfiguration';
     }
 }

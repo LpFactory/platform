@@ -9,7 +9,6 @@
 
 namespace LpFactory\Bundle\CoreBundle\Entity\Repository;
 
-use Doctrine\ORM\NonUniqueResultException;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use LpFactory\Bundle\CoreBundle\Exception\LpFactoryException;
 use LpFactory\Bundle\NestedSetRoutingBundle\Model\NestedSetRoutingPageInterface;

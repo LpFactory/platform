@@ -80,7 +80,7 @@ class BlockController extends Controller
     {
         $this->isGrantedPageEdit($block);
 
-        return $this->render('LpFactoryWebBundle:Block/View:default_edit.html.twig', array(
+        return $this->render('LpFactoryCoreBundle:Block/View:default_edit.html.twig', array(
             'block' => $block
         ));
     }

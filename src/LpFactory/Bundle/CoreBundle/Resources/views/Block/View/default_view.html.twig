@@ -1,7 +1,7 @@
-{% extends app.request.isXmlHttpRequest ? 'LpFactoryWebBundle:Block:layout_ajax.html.twig' : 'LpFactoryWebBundle:Block:layout.html.twig' %}
+{% extends app.request.isXmlHttpRequest ? 'LpFactoryCoreBundle:Block:layout_ajax.html.twig' : 'LpFactoryCoreBundle:Block:layout.html.twig' %}
 
 {% block content %}
-    {% include 'LpFactoryWebBundle:Block/Tools:_basic_view_tools.html.twig' with {
+    {% include 'LpFactoryCoreBundle:Block/Tools:_basic_view_tools.html.twig' with {
         block: block,
         edit: edit
     } %}

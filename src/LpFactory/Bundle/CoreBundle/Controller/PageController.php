@@ -37,7 +37,7 @@ class PageController extends Controller
      */
     public function indexAction(AbstractPage $page, $path)
     {
-        return $this->render('LpFactoryWebBundle:Page:index.html.twig', array(
+        return $this->render('LpFactoryCoreBundle:Page:index.html.twig', array(
             'page' => $page,
             'breadcrumbs' => $path
         ));
@@ -59,7 +59,7 @@ class PageController extends Controller
             throw $this->createAccessDeniedException('Edit denied for page ' . $page->getId());
         }
 
-        return $this->render('LpFactoryWebBundle:Page:edit.html.twig', array(
+        return $this->render('LpFactoryCoreBundle:Page:edit.html.twig', array(
             'page' => $page,
             'breadcrumbs' => $path,
             'tools' => $this->get('lp_factory.tools.chain')->allInPage($page),

@@ -26,11 +26,11 @@ class BlockConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $configuration = ConfigurationHelper::getConfiguration();
         $this->assertEquals(
-            'LpFactoryWebBundle:Block:View/default_edit.html.twig',
+            'LpFactoryCoreBundle:Block:View/default_edit.html.twig',
             $configuration->getEditTemplate()
         );
         $this->assertEquals(
-            'LpFactoryWebBundle:Block:View/default_view.html.twig',
+            'LpFactoryCoreBundle:Block:View/default_view.html.twig',
             $configuration->getViewTemplate()
         );
         $this->assertEquals('LpFactoryCoreBundle:Block:defaultEdit', $configuration->getEditController());

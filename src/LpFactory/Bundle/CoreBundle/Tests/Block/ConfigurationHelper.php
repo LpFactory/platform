@@ -29,12 +29,12 @@ class ConfigurationHelper
     public static function getConfiguration()
     {
         return new BlockConfiguration(array(
-            'view_template'   => 'LpFactoryWebBundle:Block:View/default_view.html.twig',
+            'view_template'   => 'LpFactoryCoreBundle:Block:View/default_view.html.twig',
             'view_controller' => 'LpFactoryCoreBundle:Block:default',
             'view_route'      => 'lp_factory_api_view_block',
             'edit_controller' => 'LpFactoryCoreBundle:Block:defaultEdit',
             'edit_route'      => 'lp_factory_api_edit_no_form_block',
-            'edit_template'   => 'LpFactoryWebBundle:Block:View/default_edit.html.twig',
+            'edit_template'   => 'LpFactoryCoreBundle:Block:View/default_edit.html.twig',
             'edit_form_type'  => null,
             'options'         => array(
                 'custom' => 'my_value'

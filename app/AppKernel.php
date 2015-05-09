@@ -24,7 +24,6 @@ class AppKernel extends Kernel
             // LpFactory Bundles
             new LpFactory\Bundle\NestedSetRoutingBundle\LpFactoryNestedSetRoutingBundle(),
             new LpFactory\Bundle\CoreBundle\LpFactoryCoreBundle(),
-            new LpFactory\Bundle\WebBundle\LpFactoryWebBundle(),
 
             // Block bundles
             new LpFactory\Block\BlogBlockBundle\LpFactoryBlogBlockBundle(),

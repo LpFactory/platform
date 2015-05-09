@@ -181,28 +181,48 @@ class LpFactoryCoreExtension extends Extension implements PrependExtensionInterf
         $container->prependExtensionConfig('framework', array('serializer' => array('enabled' => true)));
 
         // Bundle needs assetic
-        $container->prependExtensionConfig('assetic', array('bundles' => array('LpFactoryWebBundle')));
+        $container->prependExtensionConfig('assetic', array('bundles' => array('LpFactoryCoreBundle')));
 
         // Block prepend default configuration
+        $this->prependLpFactoryBlockConfig($container);
+
+        // Tool add block configuration
+        $this->prependLpFactoryToolConfig($container);
+    }
+
+    /**
+     * Block prepend default configuration
+     *
+     * @param ContainerBuilder $container
+     */
+    protected function prependLpFactoryBlockConfig(ContainerBuilder $container)
+    {
         $container->prependExtensionConfig(
             'lp_factory_core',
             array(
                 'block_configuration' => array(
                     'default' => array(
-                        'view_template'   => 'LpFactoryWebBundle:Block:View/default_view.html.twig',
+                        'view_template'   => 'LpFactoryCoreBundle:Block:View/default_view.html.twig',
                         'view_controller' => 'LpFactoryCoreBundle:Block:default',
                         'view_route'      => 'lp_factory_api_view_block',
                         'edit_controller' => 'LpFactoryCoreBundle:Block:defaultEdit',
                         'edit_route'      => 'lp_factory_api_edit_no_form_block',
-                        'edit_template'   => 'LpFactoryWebBundle:Block:View/default_edit.html.twig',
+                        'edit_template'   => 'LpFactoryCoreBundle:Block:View/default_edit.html.twig',
                         'edit_form_type'  => null,
                         'options'         => array()
                     )
                 )
             )
         );
+    }
 
-        // Tool add block configuration
+    /**
+     * Tool add block configuration
+     *
+     * @param ContainerBuilder $container
+     */
+    protected function prependLpFactoryToolConfig(ContainerBuilder $container)
+    {
         $container->prependExtensionConfig(
             'lp_factory_core',
             array(
@@ -210,7 +230,7 @@ class LpFactoryCoreExtension extends Extension implements PrependExtensionInterf
                     'add_block' => array(
                         'directive' => 'lpfactory-tool-add-block',
                         'directive_attributes' => array(
-                            'template' => '/bundles/lpfactoryweb/html/tool_add_block.html'
+                            'template' => '/bundles/lpfactorycore/html/tool_add_block.html'
                         ),
                         'priority' => 10,
                         'post_normalizers' => array(

@@ -1,0 +1,2 @@
+parameters:
+    lp_factory.block.text.class: LpFactory\Block\TextBlockBundle\Entity\TextBlock

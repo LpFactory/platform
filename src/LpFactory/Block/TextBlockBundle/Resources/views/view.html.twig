@@ -13,7 +13,7 @@
             {% if block_is_empty(block) %}
                 {{ 'default_text'|trans({}, block.alias) }}
             {% else %}
-                {{ block.content|raw }}
+                {{ block.content|purify|raw }}
             {% endif %}
         </div>
     </div>

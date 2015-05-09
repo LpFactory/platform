@@ -4,5 +4,7 @@ parameters:
 services:
     lp_factory.block.form.text:
         class: %lp_factory.block.form.text.class%
+        arguments:
+            - %lp_factory.block.text.class%
         tags:
             - { name: form.type, alias: block_text }

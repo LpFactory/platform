@@ -1,10 +1,11 @@
-{% extends 'LpFactoryCoreBundle::base.html.twig' %}
+{% extends 'LpFactoryCoreBundle::layout.html.twig' %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/lpfactorycore/css/edit.css') }}">
 {% endblock %}
 
-{% block body %}
+{% block content %}
     <div id="test" ng-controller="PageControllerImpl" ng-cloak>
         {% include 'LpFactoryCoreBundle:Page:_tools.html.twig' with {
             tools: tools,
@@ -13,18 +14,10 @@
 
         {{ '{{page.title}}' }}
 
-        <div ng-repeat-start="block in page.blocks"
-             class="lpfactory-draw-drop-zone" style="display: none; height: 100px"
-             ng-drop="true"
-             ng-drop-success="onDropComplete($index,$data,$event)"
-             ng-drag-move="onDragMove($data,$event)">
-            Insert HTML here
-        </div>
-        <div ng-repeat-end="block in page.blocks"
+        <div ng-repeat="block in page.blocks"
              id="block-{{ '{{ block.id }}'  }}"
              ng-drop="true"
-             ng-drop-success="onDropComplete($index,$data,$event)"
-             ng-drag-move="onDragMove($data,$event)">
+             ng-drop-success="onDropComplete($index,$data,$event)">
             {% for type in get_block_types() %}
                 <div ng-if="block.type === 'text'"
                      lpfactory-block

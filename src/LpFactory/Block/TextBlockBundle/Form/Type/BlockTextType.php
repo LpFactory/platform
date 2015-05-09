@@ -22,6 +22,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BlockTextType extends AbstractType
 {
     /**
+     * @var string
+     */
+    protected $blockClass;
+
+    /**
+     * Constructor
+     *
+     * @param $blockClass
+     */
+    public function __construct($blockClass)
+    {
+        $this->blockClass = $blockClass;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,7 +45,7 @@ class BlockTextType extends AbstractType
             ->add('title')
             ->add('content', 'textarea', array(
                 'attr' => array(
-                    'lp-factory-ck-editor' => null
+                    'lpfactory-ck-editor' => null
                 )
             ));
     }
@@ -41,7 +56,7 @@ class BlockTextType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LpFactory\Block\TextBlockBundle\Entity\TextBlock',
+            'data_class' => $this->blockClass,
         ));
     }
 

@@ -9,7 +9,7 @@
 (function(angular, CKEDITOR) {
     'use strict';
 
-    angular.module('LpFactoryApp').directive('lpFactoryCkEditor', [function () {
+    angular.module('LpFactoryApp').directive('lpfactoryCkEditor', [function () {
         return {
             require: '?ngModel',
             link: function ($scope, elm, attr, ngModel) {

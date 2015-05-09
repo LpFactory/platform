@@ -1,0 +1,12 @@
+{% extends 'LpFactoryCoreBundle::base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('components/bootstrap/dist/css/bootstrap.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+{% endblock %}

@@ -9,10 +9,6 @@
 (function(lpfactoryconf, angular, $) {
     'use strict';
 
-    function hideDropZone() {
-        $('.lpfactory-draw-drop-zone').removeClass('lpfactory-displayed').hide();
-    }
-
     /**
      * Angular controller PageController
      *
@@ -53,7 +49,6 @@
                     // Remove block from position and insert it in new one
                     $scope.page.blocks.splice(currentIndex, 1);
                     $scope.page.blocks.splice($index, 0, $data);
-                    hideDropZone();
                     pageService.moveBlock($scope.page, $data, $index);
                 };
 
@@ -77,34 +72,6 @@
                             hideDropZone();
                             $scope.page.blocks.splice($index, 0, newObjectData);
                         });
-                };
-
-                $rootScope.$on('draggable:end', function () {
-                    hideDropZone();
-                });
-
-                $scope.onDragMove = function ($data, $event) {
-                    // No event hovered, hide all draw drop zone
-                    if ($('.drag-enter').length === 0 && !$('.lpfactory-draw-drop-zone').is(':animated')) {
-                        hideDropZone();
-                    }
-
-                    // Hover an existing block. Display draw drop zone
-                    var wrappedResult = $('.drag-enter');
-                    // Do not display draw drop zone for dragging element
-                    if (wrappedResult.find('.dragging').length) {
-                        return;
-                    }
-                    // Check if dragged element is hover a draw zone
-                    var drawDropZone = wrappedResult;
-                    if (!wrappedResult.hasClass('.lpfactory-draw-drop-zone')) {
-                        drawDropZone = wrappedResult.prev();
-                    }
-                    // Show right drop zone and hide all other
-                    if (!drawDropZone.is(':animated') && !drawDropZone.hasClass('lpfactory-displayed')) {
-                        drawDropZone.addClass('lpfactory-displayed').show();
-                        drawDropZone.siblings('.lpfactory-draw-drop-zone').not(drawDropZone).removeClass('lpfactory-displayed').hide();
-                    }
                 };
             }
         ]

@@ -32,6 +32,7 @@ class LpFactoryTextBlockExtension extends Extension implements PrependExtensionI
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
+        $loader->load('entities.yml');
         $loader->load('form_type.yml');
     }
 

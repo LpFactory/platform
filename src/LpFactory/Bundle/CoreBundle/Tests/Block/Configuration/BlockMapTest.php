@@ -27,6 +27,9 @@ class BlockMapTest extends \PHPUnit_Framework_TestCase
     {
         $map = ConfigurationHelper::createBlockMap();
         $this->assertEquals('Test1', $map->getClass());
+        $this->assertEquals('Label1', $map->getLabel());
+        $this->assertEquals('Picto1', $map->getPicto());
+        $this->assertEquals('Text1', $map->getText());
     }
 
     /**

@@ -1,3 +1,15 @@
-<div ng-repeat="(type, block) in blocks" ng-drag="true" ng-drag-data="{onDropComplete: 'addBlock', type: type, data: block}">
-    {{ type }}
+<button ng-click="addBlockClick()" type="button" class="btn btn-default btn-sm">Add block</button>
+
+<div id="tool-list" style="display: none;">
+    <div
+        class="tool-item"
+        ng-repeat="(type, block) in blocks"
+        ng-drag="true"
+        ng-drag-data="{onDropComplete: 'addBlock', type: type, data: block}">
+        <div class="tool-block">
+            {{ block.label }}
+            <span class="{{ block.picto }}"></span>
+        </div>
+        <p>{{ block.text }}</p>
+    </div>
 </div>

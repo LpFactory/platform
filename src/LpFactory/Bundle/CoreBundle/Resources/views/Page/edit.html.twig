@@ -5,13 +5,17 @@
     <link rel="stylesheet" href="{{ asset('bundles/lpfactorycore/css/edit.css') }}">
 {% endblock %}
 
+{% block body_class %}page-editing{% endblock %}
+
+{% block toolbar %}
+    {% include 'LpFactoryCoreBundle:Page:_tools.html.twig' with {
+        tools: tools,
+        page: page
+    } %}
+{% endblock %}
+
 {% block content %}
     <div id="test" ng-controller="PageControllerImpl" ng-cloak>
-        {% include 'LpFactoryCoreBundle:Page:_tools.html.twig' with {
-            tools: tools,
-            page: page
-        } %}
-
         {{ '{{page.title}}' }}
 
         <div ng-repeat="block in page.blocks"

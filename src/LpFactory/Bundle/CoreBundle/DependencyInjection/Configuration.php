@@ -63,6 +63,9 @@ class Configuration implements ConfigurationInterface
             ->prototype('array')
                 ->children()
                     ->scalarNode('class')->isRequired()->end()
+                    ->scalarNode('label')->defaultValue('tool.default_label')->end()
+                    ->scalarNode('picto')->defaultValue('glyphicon glyphicon-file')->end()
+                    ->scalarNode('text')->defaultValue('tool.default_text')->end()
                 ->end()
             ->end()
         ;

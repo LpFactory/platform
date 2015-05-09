@@ -21,6 +21,10 @@
             },
             link: function (scope, element, attrs) {
                 scope.blocks = window.lpfactoryconf.configuration.blocks;
+
+                scope.addBlockClick = function () {
+                    angular.element('#tool-list').toggle();
+                };
             }
         };
     });

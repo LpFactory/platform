@@ -69,7 +69,6 @@
                     $http
                         .post(addBlockUrl)
                         .success(function (newObjectData) {
-                            hideDropZone();
                             $scope.page.blocks.splice($index, 0, newObjectData);
                         });
                 };

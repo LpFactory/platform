@@ -18,7 +18,30 @@ namespace LpFactory\Bundle\CoreBundle\Block\Configuration;
 interface BlockMapInterface
 {
     /**
-     * {@inheritdoc}
+     * Get the class with the code for the block
+     *
+     * @return string
      */
     public function getClass();
+
+    /**
+     * Get the label for the block
+     *
+     * @return string
+     */
+    public function getLabel();
+
+    /**
+     * Get the class (HTML) to display a picto
+     *
+     * @return string
+     */
+    public function getPicto();
+
+    /**
+     * Get the description to display what do the block
+     *
+     * @return string
+     */
+    public function getText();
 }

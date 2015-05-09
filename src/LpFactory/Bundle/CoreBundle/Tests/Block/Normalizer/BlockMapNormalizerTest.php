@@ -26,8 +26,23 @@ class BlockMapNormalizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetter()
     {
-        $normalizer = new BlockMapNormalizer();
-        $this->assertEquals(array(), $normalizer->normalize(null));
+        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+
+        $translator
+            ->expects($this->exactly(2))
+            ->method('trans')
+            ->will($this->onConsecutiveCalls('Label1', 'Text1'));
+
+
+        $normalizer = new BlockMapNormalizer($translator);
+        $this->assertEquals(
+            array(
+                'label' => 'Label1',
+                'picto' => 'Picto1',
+                'text'  => 'Text1'
+            ),
+            $normalizer->normalize(ConfigurationHelper::createBlockMap())
+        );
 
         $this->assertEquals(false, $normalizer->supportsNormalization(null));
         $this->assertEquals(true, $normalizer->supportsNormalization(ConfigurationHelper::createBlockMap()));

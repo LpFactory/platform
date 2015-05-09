@@ -1,3 +1,33 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
+
+.page-editing > .container {
+    margin-top: 30px;
+}
+
+#tool-list {
+    position: fixed;
+    top: 25px;
+    left: 0px;
+    background-color: lightgray;
+    max-width: 200px;
+}
+
+.tool-item {
+    border: 1px solid #000000;
+    background-color: white;
+    margin: 5px;
+}
+
+.tool-item p {
+    display: none;
+}
+
+.tool-item:hover .tool-block {
+    display: none;
+}
+
+.tool-item:hover p {
+    display: block;
+}

@@ -11,6 +11,7 @@ namespace LpFactory\Bundle\CoreBundle\Block\Normalizer;
 
 use LpFactory\Bundle\CoreBundle\Block\Configuration\BlockMapInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class BlockMapNormalizer
@@ -20,6 +21,21 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class BlockMapNormalizer implements NormalizerInterface
 {
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * Constructor
+     *
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Normalize a BlockMap
      *
@@ -31,7 +47,11 @@ class BlockMapNormalizer implements NormalizerInterface
      */
     public function normalize($object, $format = null, array $context = array())
     {
-        return array();
+        return array(
+            'label' => $this->translator->trans($object->getLabel()),
+            'picto' => $object->getPicto(),
+            'text'  => $this->translator->trans($object->getText()),
+        );
     }
 
     /**

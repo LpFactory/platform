@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    {% block content %}
+    {% block toolbar %}
     {% endblock %}
-</div>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 {% endblock %}

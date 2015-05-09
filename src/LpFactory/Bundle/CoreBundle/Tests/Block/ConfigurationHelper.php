@@ -68,6 +68,13 @@ class ConfigurationHelper
      */
     public static function createBlockMap($suffix = 1)
     {
-        return new BlockMap(array('class' => 'Test'.$suffix));
+        return new BlockMap(
+            array(
+                'class' => 'Test'.$suffix,
+                'label' => 'Label'.$suffix,
+                'picto' => 'Picto'.$suffix,
+                'text'  => 'Text'.$suffix,
+            )
+        );
     }
 }

@@ -14,7 +14,7 @@ services:
             - @lp_factory.block.normalizer
             - @router.default
         tags:
-             - { name: serializer.normalizer }
+            - { name: serializer.normalizer }
 
     lp_factory.block.normalizer:
         class: %lp_factory.block.normalizer.class%
@@ -22,7 +22,7 @@ services:
             - @router.default
             - @lp_factory.block.configuration.chain
         tags:
-             - { name: serializer.normalizer }
+            - { name: serializer.normalizer }
 
     lp_factory.page.post_normalizer.add_block:
         class: %lp_factory.page.post_normalizer.add_block.class%
@@ -34,9 +34,11 @@ services:
         arguments:
             - @lp_factory.block_map.normalizer
         tags:
-             - { name: serializer.normalizer }
+            - { name: serializer.normalizer }
 
     lp_factory.block_map.normalizer:
         class: %lp_factory.block_map.normalizer.class%
+        arguments:
+            - @translator
         tags:
              - { name: serializer.normalizer }

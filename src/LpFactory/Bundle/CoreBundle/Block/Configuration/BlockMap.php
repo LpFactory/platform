@@ -31,7 +31,16 @@ class BlockMap extends AbstractConfigurableItem implements BlockMapInterface
             'class'
         ));
 
+        $resolver->setDefaults(array(
+            'label' => null,
+            'picto' => null,
+            'text' => null,
+        ));
+
         $resolver->setAllowedTypes('class', 'string');
+        $resolver->setAllowedTypes('label', array('null', 'string'));
+        $resolver->setAllowedTypes('picto', array('null', 'string'));
+        $resolver->setAllowedTypes('text', array('null', 'string'));
     }
 
     /**
@@ -40,5 +49,29 @@ class BlockMap extends AbstractConfigurableItem implements BlockMapInterface
     public function getClass()
     {
         return $this->get('class');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLabel()
+    {
+        return $this->get('label');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPicto()
+    {
+        return $this->get('picto');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getText()
+    {
+        return $this->get('text');
     }
 }

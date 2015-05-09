@@ -52,10 +52,13 @@
                 blocks: {{ block_map_chain|lpfactory_serialize }}
             }
         };
+
+        window.CKEDITOR_BASEPATH = '/components/ckeditor/';
     </script>
 
     {% javascripts
         'components/jquery/dist/jquery.js'
+        'components/ckeditor/ckeditor.js'
         'components/angular/angular.js'
         'components/ngDraggable/ngDraggable.js'
         'bundles/lpfactorycore/js/app.js'
@@ -63,6 +66,7 @@
         'bundles/lpfactorycore/js/controllers/page-controller-impl.js'
         'bundles/lpfactorycore/js/services/pageservice.js'
         'bundles/lpfactorycore/js/services/blockservice.js'
+        'bundles/lpfactorycore/js/directives/lpfactory-ckeditor.js'
         'bundles/lpfactorycore/js/directives/lpfactory-block.js'
         'bundles/lpfactorycore/js/directives/ng-really-click.js'
         'bundles/lpfactorycore/js/directives/lpfactory-tool-add-block.js'

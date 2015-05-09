@@ -28,7 +28,11 @@ class BlockTextType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('content');
+            ->add('content', 'textarea', array(
+                'attr' => array(
+                    'lp-factory-ck-editor' => null
+                )
+            ));
     }
 
     /**

@@ -35,6 +35,10 @@
                  * @param $event
                  */
                 $scope.onDropComplete = function ($index, $data, $event) {
+                    if (!$data) {
+                        return;
+                    }
+
                     // If data has a onDropComplete method then call it (custom tool action)
                     if (typeof $data.onDropComplete !== "undefined") {
                         $scope[$data.onDropComplete]($data, $index);

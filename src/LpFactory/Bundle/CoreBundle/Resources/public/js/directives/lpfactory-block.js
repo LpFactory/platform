@@ -6,7 +6,7 @@
  * @link https://github.com/jbouzekri/LpFactory
  */
 
-(function(angular, jQuery){
+(function(angular, jQuery, CKEDITOR){
     'use strict';
 
     /**
@@ -44,7 +44,6 @@
                         .success(function(html) {
                             $scope.loading = false;
                             $element.html($compile(html)($scope));
-
                         });
                 };
 
@@ -54,6 +53,12 @@
                  */
                 $scope.simpleSubmit = function(element) {
                     $scope.loading = true;
+
+                    // Manage ckeditor
+                    for (var instanceName in CKEDITOR.instances) {
+                        CKEDITOR.instances[instanceName].updateElement();
+                    }
+
                     var formData = jQuery(element.target).serialize();
                     blockService
                         .submitEditBlock($scope.block, formData)
@@ -89,4 +94,4 @@
         };
     });
 
-})(angular, jQuery);
+})(angular, jQuery, CKEDITOR);

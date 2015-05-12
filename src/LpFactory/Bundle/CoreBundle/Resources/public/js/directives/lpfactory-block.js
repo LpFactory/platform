@@ -14,7 +14,7 @@
      *
      * Provides all basic block handling action on events
      */
-    angular.module('LpFactoryApp').directive('lpfactoryBlock', function($compile, blockService) {
+    angular.module('LpFactoryApp').directive('lpfactoryBlock', ['$compile', 'blockService', function($compile, blockService) {
         return {
             controller: function ($scope, $element) {
                 $scope.loading = false;
@@ -92,6 +92,6 @@
                 };
             }
         };
-    });
+    }]);
 
 })(angular, jQuery, CKEDITOR);

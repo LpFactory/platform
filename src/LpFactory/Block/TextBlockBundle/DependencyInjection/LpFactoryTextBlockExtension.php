@@ -44,6 +44,40 @@ class LpFactoryTextBlockExtension extends Extension implements PrependExtensionI
     public function prepend(ContainerBuilder $container)
     {
         // Bundle prepend default configuration
+        $this->prependBlockConfiguration($container);
+
+        // Bundle prepend map
+        $this->prependBlockMap($container);
+    }
+
+    /**
+     * Preprend block map
+     *
+     * @param ContainerBuilder $container
+     */
+    public function prependBlockMap(ContainerBuilder $container)
+    {
+        $container->prependExtensionConfig(
+            'lp_factory_core',
+            array(
+                'block_map' => array(
+                    'text' => array(
+                        'class' => 'LpFactory\Block\TextBlockBundle\Entity\TextBlock',
+                        'label' => 'tools.text.label',
+                        'text'  => 'tools.text.text'
+                    )
+                )
+            )
+        );
+    }
+
+    /**
+     * Prepend block configuration
+     *
+     * @param ContainerBuilder $container
+     */
+    protected function prependBlockConfiguration(ContainerBuilder $container)
+    {
         $container->prependExtensionConfig(
             'lp_factory_core',
             array(

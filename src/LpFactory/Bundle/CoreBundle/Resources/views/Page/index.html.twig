@@ -1,5 +1,10 @@
 {% extends 'LpFactoryCoreBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/lpfactorycore/css/styles.css') }}">
+{% endblock %}
+
 {% block content %}
     {% if is_granted('lp_factory_PAGE_EDIT', page) %}
         <a href="{{ lp_path_page(page, 'edit') }}">{{ 'page_edit_link'|trans }}</a>

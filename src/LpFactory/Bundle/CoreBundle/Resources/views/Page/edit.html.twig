@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/lpfactorycore/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/lpfactorycore/css/edit.css') }}">
 {% endblock %}
 
@@ -16,8 +17,6 @@
 
 {% block content %}
     <div id="test" ng-controller="PageControllerImpl" ng-cloak>
-        {{ '{{page.title}}' }}
-
         <div ng-repeat="block in page.blocks"
              id="block-{{ '{{ block.id }}'  }}"
              ng-drop="true"
@@ -35,8 +34,6 @@
             {% endfor %}
         </div>
     </div>
-
-    <a href="{{ lp_path_page(page, 'view') }}">Return to view page</a>
 {% endblock %}
 
 {% block javascripts %}

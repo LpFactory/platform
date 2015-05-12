@@ -1,5 +1,5 @@
 {% if block.isEditable %}
-    <a href ng-cancel-drag ng-click="editAction()">
-        {{ 'tools.edit'|trans }}
+    <a class="btn btn-default btn-sm" href ng-cancel-drag ng-click="editAction()">
+        <span class="glyphicon glyphicon-pencil"></span> {{ 'tools.edit'|trans }}
     </a>
 {% endif %}

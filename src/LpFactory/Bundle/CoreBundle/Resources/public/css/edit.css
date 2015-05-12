@@ -6,18 +6,31 @@
     margin-top: 30px;
 }
 
+#toolbar {
+    min-height: 0px;
+    margin-bottom: 0px;
+}
+
+#toolbar ul {
+    margin-bottom: 0;
+}
+
 #tool-list {
     position: fixed;
-    top: 25px;
+    top: 30px;
     left: 0px;
     background-color: lightgray;
     max-width: 200px;
 }
 
+
+
 .tool-item {
     border: 1px solid #000000;
     background-color: white;
     margin: 5px;
+    width: 100px;
+    height: 100px;
 }
 
 .tool-item p {
@@ -30,4 +43,11 @@
 
 .tool-item:hover p {
     display: block;
+}
+
+.drag-enter .zone-block {
+    border: 1px dashed #000000;
+}
+.drag-enter .dragging .zone-block {
+    border: none;
 }

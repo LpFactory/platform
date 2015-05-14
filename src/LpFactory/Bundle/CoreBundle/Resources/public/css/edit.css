@@ -6,6 +6,9 @@
     margin-top: 30px;
 }
 
+/**
+* Start Toolbar
+*/
 #toolbar {
     min-height: 0px;
     margin-bottom: 0px;
@@ -21,9 +24,8 @@
     left: 0px;
     background-color: lightgray;
     max-width: 200px;
+    margin-left: -110px;
 }
-
-
 
 .tool-item {
     border: 1px solid #000000;
@@ -33,12 +35,47 @@
     height: 100px;
 }
 
-.tool-item p {
+.tool-item .tool-detail {
+    width: 100px;
+    height: 100px;
+    display: table;
+    text-align: center;
+}
+
+.tool-item .tool-detail .glyphicon {
+    font-size: 2em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.tool-item .tool-hover {
+    width: 100px;
+    height: 100px;
+    opacity: 0.85;
+    filter: alpha(opacity=85);
+    background: #000000 !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: 5px;
+}
+
+.tool-item .tool-hover {
     display: none;
 }
 
-.tool-item:hover .tool-block {
-    display: none;
+.tool-item:hover .tool-hover {
+    display: table;
+}
+
+.tool-item .tool-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.tool-item:hover .tool-hover .tool-middle {
+    color: white;
 }
 
 .tool-item:hover p {
@@ -48,6 +85,14 @@
 .drag-enter .zone-block {
     border: 1px dashed #000000;
 }
+
 .drag-enter .dragging .zone-block {
     border: none;
 }
+
+.tool-item.dragging .tool-hover {
+    display: none;
+}
+/**
+* End Toolbar
+*/

@@ -20,10 +20,20 @@
                 return tAttrs.template;
             },
             link: function (scope, element, attrs) {
-                scope.blocks = window.lpfactoryconf.configuration.blocks;
+                var expanded = false;
+
+                scope.blocks = lpfactoryconf.configuration.blocks;
 
                 scope.addBlockClick = function () {
-                    angular.element('#tool-list').toggle();
+                    expanded = !expanded;
+
+                    if (expanded) {
+                        angular.element('#tool-list').animate({ "margin-left": 0 }, "slow");
+                    } else {
+                        angular.element('#tool-list').animate({
+                            "margin-left": - (angular.element('#tool-list').width())
+                        }, "slow");
+                    }
                 };
             }
         };

@@ -2,16 +2,23 @@
     <span class="glyphicon glyphicon-modal-window"></span> Add block
 </button>
 
-<div id="tool-list" style="display: none;">
+<div id="tool-list">
     <div
         class="tool-item"
         ng-repeat="(type, block) in blocks"
         ng-drag="true"
         ng-drag-data="{onDropComplete: 'addBlock', type: type, data: block}">
-        <div class="tool-block">
-            {{ block.label }}
-            <span class="{{ block.picto }}"></span>
+            <div class="tool-detail">
+                <div class="tool-middle">
+                    <span class="{{ block.picto }}"></span>
+                    {{ block.label }}
+                </div>
+            </div>
+            <div class="tool-hover">
+                <span class="tool-middle">
+                    <span>{{ block.text }}</span>
+                </span>
+            </div>
         </div>
-        <p>{{ block.text }}</p>
     </div>
 </div>

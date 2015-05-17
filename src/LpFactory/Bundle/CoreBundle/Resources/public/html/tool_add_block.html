@@ -7,7 +7,8 @@
         class="tool-item"
         ng-repeat="(type, block) in blocks"
         ng-drag="true"
-        ng-drag-data="{onDropComplete: 'addBlock', type: type, data: block}">
+        ng-drag-data="{onDropComplete: 'addBlock', type: type, data: block}"
+        data-allow-transform="false">
             <div class="tool-detail">
                 <div class="tool-middle">
                     <span class="{{ block.picto }}"></span>

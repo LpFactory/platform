@@ -24,7 +24,7 @@
              ng-drop-success="onDropComplete($index,$data,$event)">
 
             {% for type in get_block_types() %}
-                <div ng-if="block.type === 'text'"
+                <div ng-if="block.type === '{{ type }}'"
                      lpfactory-block
                      {{ type }}-block
                      block="block"

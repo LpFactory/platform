@@ -12,7 +12,10 @@
     left: 0px;
     background-color: lightgray;
     max-width: 200px;
-    margin-left: -110px;
+    margin-left: -125px;
+    height: calc(100% - 30px);
+    overflow-y: scroll;
+    z-index: 99999;
 }
 
 .tool-item {
@@ -21,6 +24,7 @@
     margin: 5px;
     width: 100px;
     height: 100px;
+    z-index: 9999;
 }
 
 .tool-item .tool-detail {

@@ -31,7 +31,7 @@
                         angular.element('#tool-list').animate({ "margin-left": 0 }, "slow");
                     } else {
                         angular.element('#tool-list').animate({
-                            "margin-left": - (angular.element('#tool-list').width())
+                            "margin-left": - (angular.element('#tool-list').outerWidth())
                         }, "slow");
                     }
                 };

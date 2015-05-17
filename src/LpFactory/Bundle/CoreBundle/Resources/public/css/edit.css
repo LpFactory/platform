@@ -2,24 +2,8 @@
     display: none !important;
 }
 
-.page-editing {
-    margin-top: 30px;
-}
-
 .block-editing {
     margin: 15px;
-}
-
-/**
-* Start Toolbar
-*/
-#toolbar {
-    min-height: 0px;
-    margin-bottom: 0px;
-}
-
-#toolbar ul {
-    margin-bottom: 0;
 }
 
 #tool-list {

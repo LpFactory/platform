@@ -1,3 +1,22 @@
+/**
+* Start Default Toolbar
+*/
+.toolbar-available {
+    margin-top: 30px;
+}
+
+#toolbar {
+    min-height: 0px;
+    margin-bottom: 0px;
+}
+
+#toolbar ul {
+    margin-bottom: 0;
+}
+/**
+* End Default Toolbar
+*/
+
 .zone-block {
     border-bottom: 1px solid grey;
 }

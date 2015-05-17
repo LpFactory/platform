@@ -1,0 +1,13 @@
+{% extends 'LpFactoryCoreBundle:Page:_toolbar_layout.html.twig' %}
+
+{% block toolbar_content %}
+    <ul class="nav navbar-nav">
+    </ul>
+    <ul class="list-unstyled list-inline navbar-right">
+        <li>
+            <a class="btn btn-default btn-sm" href="{{ lp_path_page(page, 'edit') }}">
+                <span class="glyphicon glyphicon-edit"></span> {{ 'page_edit_link'|trans }}
+            </a>
+        </li>
+    </ul>
+{% endblock %}

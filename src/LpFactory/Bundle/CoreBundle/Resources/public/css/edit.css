@@ -2,8 +2,12 @@
     display: none !important;
 }
 
-.page-editing > .container {
+.page-editing {
     margin-top: 30px;
+}
+
+.block-editing {
+    margin: 15px;
 }
 
 /**
@@ -82,11 +86,12 @@
     display: block;
 }
 
-.drag-enter .zone-block {
+.drag-enter .zone-block .block-editing {
     border: 1px dashed #000000;
 }
 
-.drag-enter .dragging .zone-block {
+.dragging .zone-block,
+.drag-enter .dragging .zone-block .block-editing {
     border: none;
 }
 

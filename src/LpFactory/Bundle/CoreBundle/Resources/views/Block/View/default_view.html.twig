@@ -6,7 +6,6 @@
         edit: edit
     } %}
 
-
     <div {% if edit %}ng-cancel-drag{% endif %} class="block-content">
         <h2>{{ block.title|default( 'default_title'|trans({}, block.alias) ) }}</h2>
 

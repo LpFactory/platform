@@ -81,7 +81,8 @@ class BlockController extends Controller
         $this->isGrantedPageEdit($block);
 
         return $this->render('LpFactoryCoreBundle:Block/View:default_edit.html.twig', array(
-            'block' => $block
+            'block' => $block,
+            'edit' => true
         ));
     }
 
@@ -113,7 +114,8 @@ class BlockController extends Controller
 
         return $this->render($configuration->getEditTemplate(), array(
             'form' => $form->createView(),
-            'block' => $block
+            'block' => $block,
+            'edit' => true
         ));
     }
 

@@ -17,10 +17,12 @@
 
 {% block content %}
     <div id="test" ng-controller="PageControllerImpl" ng-cloak>
+
         <div ng-repeat="block in page.blocks"
              id="block-{{ '{{ block.id }}'  }}"
              ng-drop="true"
              ng-drop-success="onDropComplete($index,$data,$event)">
+
             {% for type in get_block_types() %}
                 <div ng-if="block.type === 'text'"
                      lpfactory-block
@@ -32,7 +34,9 @@
             {% else %}
                 No block type enabled in project
             {% endfor %}
+
         </div>
+
     </div>
 {% endblock %}
 

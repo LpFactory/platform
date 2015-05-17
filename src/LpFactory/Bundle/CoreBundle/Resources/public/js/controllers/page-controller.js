@@ -65,7 +65,7 @@
 
                     // Build url to add a block
                     var addBlockUrl = lpfactoryconf.page.actions.add_block.replace('__BLOCK_TYPE__', $data.type);
-                    addBlockUrl += '?position=' + $index;
+                    addBlockUrl += '?position=' + ($index+1);
                     $http
                         .post(addBlockUrl)
                         .success(function (newObjectData) {

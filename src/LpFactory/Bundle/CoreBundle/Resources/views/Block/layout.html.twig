@@ -1,4 +1,10 @@
 <div id="zone-{{ block.alias }}-{{ block.id }}" class="zone-block zone-{{ block.alias }}">
-    {% block content %}
-    {% endblock %}
+    <div class="container">
+        {% if edit %}<div class="block-editing">{% endif %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% if edit %}</div>{% endif %}
+    </div>
 </div>

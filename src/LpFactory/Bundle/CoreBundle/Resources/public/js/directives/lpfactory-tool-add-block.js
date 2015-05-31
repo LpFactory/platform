@@ -6,7 +6,7 @@
  * @link https://github.com/jbouzekri/LpFactory
  */
 
-(function(angular, lpfactoryconf){
+(function(angular, lpfactoryconf, $){
     'use strict';
 
     /**
@@ -20,23 +20,16 @@
                 return tAttrs.template;
             },
             link: function (scope, element, attrs) {
-                var expanded = false;
-
                 scope.blocks = lpfactoryconf.configuration.blocks;
 
+                /**
+                 * Toggle addBlock tool panel
+                 */
                 scope.addBlockClick = function () {
-                    expanded = !expanded;
-
-                    if (expanded) {
-                        angular.element('#tool-list').animate({ "margin-left": 0 }, "slow");
-                    } else {
-                        angular.element('#tool-list').animate({
-                            "margin-left": - (angular.element('#tool-list').outerWidth())
-                        }, "slow");
-                    }
+                    $('#tool-list').lpSlidePanel('toggle');
                 };
             }
         };
     });
 
-})(angular, window.lpfactoryconf);
+})(angular, window.lpfactoryconf, jQuery);

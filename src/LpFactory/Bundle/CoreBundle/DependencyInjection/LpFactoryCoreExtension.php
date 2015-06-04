@@ -187,7 +187,10 @@ class LpFactoryCoreExtension extends Extension implements PrependExtensionInterf
         $this->prependLpFactoryBlockConfig($container);
 
         // Tool add block configuration
-        $this->prependLpFactoryToolConfig($container);
+        $this->prependLpFactoryToolAddBlockConfig($container);
+
+        // Tool manage page configuration
+        $this->prependLpFactoryToolManagePageConfig($container);
     }
 
     /**
@@ -217,18 +220,44 @@ class LpFactoryCoreExtension extends Extension implements PrependExtensionInterf
     }
 
     /**
+     * Tool manage page configuration
+     *
+     * @param ContainerBuilder $container
+     */
+    protected function prependLpFactoryToolManagePageConfig(ContainerBuilder $container)
+    {
+        $container->prependExtensionConfig(
+            'lp_factory_core',
+            array(
+                'tools' => array(
+                    'manage_page' => array(
+                        'directive' => 'lpfactory-tool-slide-panel lpfactory-tool-manage-page',
+                        'directive_attributes' => array(
+                            'template' => '/bundles/lpfactorycore/html/tool_manage_page.html'
+                        ),
+                        'priority' => 20,
+                        'post_normalizers' => array(
+                            //'lp_factory.page.post_normalizer.add_block'
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    /**
      * Tool add block configuration
      *
      * @param ContainerBuilder $container
      */
-    protected function prependLpFactoryToolConfig(ContainerBuilder $container)
+    protected function prependLpFactoryToolAddBlockConfig(ContainerBuilder $container)
     {
         $container->prependExtensionConfig(
             'lp_factory_core',
             array(
                 'tools' => array(
                     'add_block' => array(
-                        'directive' => 'lpfactory-tool-add-block',
+                        'directive' => 'lpfactory-tool-slide-panel lpfactory-tool-add-block',
                         'directive_attributes' => array(
                             'template' => '/bundles/lpfactorycore/html/tool_add_block.html'
                         ),

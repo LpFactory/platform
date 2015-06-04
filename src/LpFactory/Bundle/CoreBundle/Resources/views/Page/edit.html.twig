@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/lpfactorycore/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('components/jstree/dist/themes/default/style.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/lpfactorycore/css/edit.css') }}">
 {% endblock %}
 
@@ -56,9 +57,11 @@
 
     {% javascripts
         'components/jquery/dist/jquery.js'
+        'components/jstree/dist/jstree.js'
         'components/ckeditor/ckeditor.js'
         'components/angular/angular.js'
         'components/ngDraggable/ngDraggable.js'
+        'components/ng-js-tree/dist/ngJsTree.js'
         'components/jquery-lp-factory-slide-panel/dist/jquery.lpfactory-slide-panel.js'
         'bundles/lpfactorycore/js/app.js'
         'bundles/lpfactorycore/js/controllers/page-controller.js'
@@ -68,7 +71,9 @@
         'bundles/lpfactorycore/js/directives/lpfactory-ckeditor.js'
         'bundles/lpfactorycore/js/directives/lpfactory-block.js'
         'bundles/lpfactorycore/js/directives/ng-really-click.js'
+        'bundles/lpfactorycore/js/directives/lpfactory-tool-slide-panel.js'
         'bundles/lpfactorycore/js/directives/lpfactory-tool-add-block.js'
+        'bundles/lpfactorycore/js/directives/lpfactory-tool-manage-page.js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

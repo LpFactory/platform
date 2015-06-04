@@ -14,6 +14,6 @@
      *
      * Application is bootstraped in an inline script in page edit twig template
      */
-    angular.module('LpFactoryApp', ['ngDraggable']);
+    angular.module('LpFactoryApp', ['ngDraggable', 'ngJsTree']);
 
 })(window.lpfactoryconf, angular, jQuery);

@@ -237,7 +237,7 @@ class LpFactoryCoreExtension extends Extension implements PrependExtensionInterf
                         ),
                         'priority' => 20,
                         'post_normalizers' => array(
-                            //'lp_factory.page.post_normalizer.add_block'
+                            'lp_factory.page.post_normalizer.manage_page'
                         )
                     )
                 )

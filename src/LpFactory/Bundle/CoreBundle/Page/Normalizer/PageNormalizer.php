@@ -12,7 +12,6 @@ namespace LpFactory\Bundle\CoreBundle\Page\Normalizer;
 use LpFactory\Bundle\CoreBundle\Model\AbstractPage;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use LpFactory\Bundle\CoreBundle\Page\Normalizer\ToolPostNormalizerInterface;
 
 /**
  * Class PageNormalizer
@@ -50,11 +49,13 @@ class PageNormalizer implements NormalizerInterface
     /**
      * Constructor
      *
-     * @param NormalizerInterface   $blockNormalize
-     * @param UrlGeneratorInterface $urlGenerator
+     * @param NormalizerInterface                  $blockNormalize
+     * @param UrlGeneratorInterface                $urlGenerator
      */
-    public function __construct(NormalizerInterface $blockNormalize, UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        NormalizerInterface $blockNormalize,
+        UrlGeneratorInterface $urlGenerator
+    ) {
         $this->blockNormalize = $blockNormalize;
         $this->urlGenerator = $urlGenerator;
     }
@@ -83,12 +84,14 @@ class PageNormalizer implements NormalizerInterface
                     'blockId' => static::BLOCK_ID_PLACEHOLDER
                 )),
             ),
-            'blocks' => array()
+            'blocks' => array(),
         );
 
         // Normalize blocks (waiting for new serializer component)
-        foreach ($object->getBlocks() as $block) {
-            $page['blocks'][] = $this->blockNormalize->normalize($block, $format, $context);
+        if (!isset($context['without_block'])) {
+            foreach ($object->getBlocks() as $block) {
+                $page['blocks'][] = $this->blockNormalize->normalize($block, $format, $context);
+            }
         }
 
         // Post normalize using tool normalizers
@@ -124,8 +127,6 @@ class PageNormalizer implements NormalizerInterface
      *
      * @param array        $normalizedData
      * @param AbstractPage $page
-     *
-     * @return array
      */
     protected function postNormalize(array &$normalizedData, AbstractPage $page)
     {

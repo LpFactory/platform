@@ -14,28 +14,31 @@
      *
      * Provides basic tool to add block in a page
      */
-    angular.module('LpFactoryApp').directive('lpfactoryToolManagePage', function() {
+    angular.module('LpFactoryApp').directive('lpfactoryToolManagePage', ['$http', function($http) {
         return {
             require: '^lpfactoryToolSlidePanel',
             templateUrl: function (tElement, tAttrs) {
                 return tAttrs.template;
             },
             link: function (scope, element, attrs, slidePanelCtrl) {
-                scope.treeData = [
-                    { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" },
-                    { "id" : "ajson2", "parent" : "#", "text" : "Root node 2" },
-                    { "id" : "ajson3", "parent" : "ajson2", "text" : "Child 1" },
-                    { "id" : "ajson4", "parent" : "ajson2", "text" : "Child 2" },
-                ];
+                scope.treeConfig = {
+                    version : 1
+                };
+
+                $http.get(lpfactoryconf.page.actions.load_tree).then(function(result) {
+                    scope.treeData = result.data;
+                    scope.treeConfig.version++;
+                });
 
                 /**
                  * Toggle managePage tool panel
                  */
                 scope.managePageClick = function () {
                     slidePanelCtrl.toggleSlidePanel('#manage-page');
+
                 };
             }
         };
-    });
+    }]);
 
 })(angular, window.lpfactoryconf);

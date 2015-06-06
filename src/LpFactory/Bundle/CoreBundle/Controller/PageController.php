@@ -139,4 +139,39 @@ class PageController extends Controller
 
         return new Response('', 204);
     }
+
+    /**
+     * Get children for page
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function getChildrenAction($id)
+    {
+        $pageRepository = $this->get('lp_factory.repository.page');
+        $page = $pageRepository->find($id);
+        if (!$page) {
+            throw $this->createNotFoundException('Unknown page id ' . $id);
+        }
+
+        $rootPage = $pageRepository->find($page->getRoot());
+        if (!$this->isGranted(SecurityAttributes::PAGE_EDIT, $rootPage)) {
+            throw $this->createAccessDeniedException('Cannot see tree for page ' . $rootPage->getId());
+        }
+
+        $data = array();
+
+        $tree = $pageRepository->getChildren($rootPage);
+        array_unshift($tree, $rootPage);
+        foreach ($tree as $item) {
+            $normalized = $this->get('serializer')->normalize($item, null, array('without_block' => true));
+            if ($item->getId() === $page->getId()) {
+                $normalized['state'] = array('selected' => true);
+            }
+            $data[] = $normalized;
+        }
+
+        return new JsonResponse($data);
+    }
 }

@@ -43,6 +43,10 @@ class AddBlockPostNormalizer implements ToolPostNormalizerInterface
      */
     public function postNormalize(array &$normalizedData, AbstractPage $page)
     {
+        if (!isset($normalizedData['actions'])) {
+            $normalizedData['actions'] = array();
+        }
+
         $normalizedData['actions']['add_block'] = $this->urlGenerator->generate(
             'lp_factory_api_add_block_to_page',
             array(

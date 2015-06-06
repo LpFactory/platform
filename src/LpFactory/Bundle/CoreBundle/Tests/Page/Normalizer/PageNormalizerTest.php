@@ -64,8 +64,11 @@ class PageNormalizerTest extends \PHPUnit_Framework_TestCase
     {
         $generator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
         $normalizer = $this->getMock('Symfony\Component\Serializer\Normalizer\NormalizerInterface');
+        $lpGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $routeConfiguration = $this
+            ->getMock('LpFactory\Bundle\NestedSetRoutingBundle\Configuration\PageRouteConfigurationChainInterface');
 
-        $normalizer = new PageNormalizer($normalizer, $generator);
+        $normalizer = new PageNormalizer($normalizer, $generator, $lpGenerator, $routeConfiguration);
         $this->assertFalse($normalizer->supportsNormalization(PageBlockHelper::createBlock()));
         $this->assertTrue($normalizer->supportsNormalization(PageBlockHelper::createPageWithBlock()));
     }

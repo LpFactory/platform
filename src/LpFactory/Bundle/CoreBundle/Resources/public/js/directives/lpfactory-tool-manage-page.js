@@ -37,6 +37,10 @@
                     slidePanelCtrl.toggleSlidePanel('#manage-page');
 
                 };
+
+                scope.selectPage = function (e, item) {
+                    window.location = item.node.original.actions.edit;
+                };
             }
         };
     }]);
